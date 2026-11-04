@@ -342,7 +342,7 @@ Explicit permission from the business contact to receive commercial communicatio
 | Domain | customer |
 | Owner · Steward | Taylor Dummond · Alex Exampleton |
 | Source | `silver.customers.marketing_consent` |
-| Quality rules | `consent_not_null` |
+| Quality rules | `marketing_consent_not_null` |
 | Related | [Business contact](#business-contact) |
 
 <a id="material"></a>

@@ -2,9 +2,9 @@
 PY ?= python
 GOVKIT = $(PY) -m govkit
 
-.PHONY: all install lint validate generate run docs docs-check test app clean
+.PHONY: all install lint validate generate run verify docs docs-check test app clean
 
-all: lint validate generate run docs test
+all: lint validate generate run verify docs test
 
 install:
 	$(PY) -m pip install -r requirements.txt && $(PY) -m pip install -e .
@@ -20,6 +20,9 @@ generate:
 
 run:
 	$(GOVKIT) run
+
+verify:
+	$(GOVKIT) verify
 
 docs:
 	$(GOVKIT) docs

@@ -182,7 +182,31 @@ document.querySelectorAll('article').forEach(a=>{a.style.display=a.dataset.text.
 """
 
 
-GENERATORS = [operating_model, access_model, glossary]
+def contract_catalog() -> Path:
+    from . import contracts as contracts_mod
+
+    users = {u["id"]: u["name"] for u in governance("users")["users"]}
+    lines = ["# Data contracts", "", "One ODCS v3 contract per published dataset, in `contracts/`. "
+             "Rules marked *derived* come from `required`, keys and SLAs.", "",
+             "| Dataset | Version | Domain | Class | Owner | Steward | SLA | Columns | Rules (derived) |",
+             "|---|---|---|---|---|---|---|:-:|:-:|"]
+    for c in contracts_mod.load_all():
+        sla = (f"latency {c.latency_days:g} d" if c.latency_days is not None else
+               next((f"{s['property']} {s['value']} {s.get('unit', '')}" for s in c.raw.get("slaProperties", [])), ""))
+        derived = sum(1 for r in c.rules if r.origin == "derived")
+        lines.append(f"| `{c.name}` | {c.version} | {c.domain} | {c.classification} | {users.get(c.owner, c.owner)} | "
+                     f"{users.get(c.steward, c.steward)} | {sla} | {len(c.properties)} | {len(c.rules)} ({derived}) |")
+    lines += ["", "## Change policy", "", "Same policy in every contract (`customProperties.changePolicy`):", ""]
+    pol = contracts_mod.load_all()[0].change_policy
+    lines += [f"- **Breaking** (major version + Data Owner approval): {', '.join(pol['breaking'])}.",
+              f"- **Non-breaking:** {', '.join(pol['nonBreaking'])}.",
+              f"- **Deprecation notice:** {pol['deprecationNoticeDays']} days.", "",
+              "Enforced by `govkit verify` (data vs contract) and `govkit compat` (contract vs previous version). "
+              "Worked example: [breaking-change.md](../examples/breaking-change.md)."]
+    return _write("contracts.md", "\n".join(lines))
+
+
+GENERATORS = [operating_model, access_model, glossary, contract_catalog]
 
 
 def build_all() -> list[Path]:

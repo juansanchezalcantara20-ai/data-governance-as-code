@@ -40,3 +40,43 @@ GRANT SELECT ON bronze.materials TO gov_supply_chain_data_steward;
 GRANT SELECT ON bronze.service_orders TO gov_data_custodian;
 GRANT SELECT ON bronze.service_orders TO gov_operations_data_steward;
 GRANT SELECT ON bronze.technicians TO gov_operations_data_steward;
+GRANT SELECT ON gold.customer_value TO gov_customer_data_owner;
+GRANT SELECT ON gold.customer_value TO gov_customer_data_steward;
+GRANT SELECT ON gold.customer_value TO gov_data_custodian;  -- personal data masked
+GRANT SELECT ON gold.customer_value TO gov_governance_council;  -- personal data masked
+GRANT SELECT ON gold.inventory_position TO gov_data_custodian;
+GRANT SELECT ON gold.inventory_position TO gov_data_sponsor;
+GRANT SELECT ON gold.inventory_position TO gov_governance_council;
+GRANT SELECT ON gold.inventory_position TO gov_supply_chain_data_consumer;
+GRANT SELECT ON gold.inventory_position TO gov_supply_chain_data_owner;
+GRANT SELECT ON gold.inventory_position TO gov_supply_chain_data_steward;
+GRANT SELECT ON gold.service_order_economics TO gov_data_custodian;
+GRANT SELECT ON gold.service_order_economics TO gov_governance_council;
+GRANT SELECT ON gold.service_order_economics TO gov_operations_data_owner;
+GRANT SELECT ON gold.service_order_economics TO gov_operations_data_steward;
+GRANT SELECT ON gold.service_order_economics TO "jamie.fakeley@example.org";  -- AR-0001, expires 2026-12-30
+GRANT SELECT ON gold.site_monthly_kpis TO gov_data_custodian;
+GRANT SELECT ON gold.site_monthly_kpis TO gov_governance_council;
+GRANT SELECT ON gold.site_monthly_kpis TO gov_operations_data_owner;
+GRANT SELECT ON gold.site_monthly_kpis TO gov_operations_data_steward;
+GRANT SELECT ON gold.site_monthly_kpis TO "jamie.fakeley@example.org";  -- AR-0001, expires 2026-12-30
+GRANT SELECT ON silver.assets TO gov_data_custodian;
+GRANT SELECT ON silver.assets TO gov_operations_data_owner;
+GRANT SELECT ON silver.assets TO gov_operations_data_steward;
+GRANT SELECT ON silver.customers TO gov_customer_data_owner;
+GRANT SELECT ON silver.customers TO gov_customer_data_steward;
+GRANT SELECT ON silver.customers TO gov_data_custodian;  -- personal data masked
+GRANT SELECT ON silver.labor_entries TO gov_data_custodian;
+GRANT SELECT ON silver.labor_entries TO gov_operations_data_owner;
+GRANT SELECT ON silver.labor_entries TO gov_operations_data_steward;
+GRANT SELECT ON silver.material_issues TO gov_data_custodian;
+GRANT SELECT ON silver.material_issues TO gov_supply_chain_data_owner;
+GRANT SELECT ON silver.material_issues TO gov_supply_chain_data_steward;
+GRANT SELECT ON silver.materials TO gov_data_custodian;
+GRANT SELECT ON silver.materials TO gov_supply_chain_data_owner;
+GRANT SELECT ON silver.materials TO gov_supply_chain_data_steward;
+GRANT SELECT ON silver.service_orders TO gov_data_custodian;
+GRANT SELECT ON silver.service_orders TO gov_operations_data_owner;
+GRANT SELECT ON silver.service_orders TO gov_operations_data_steward;
+GRANT SELECT ON silver.technicians TO gov_operations_data_owner;
+GRANT SELECT ON silver.technicians TO gov_operations_data_steward;

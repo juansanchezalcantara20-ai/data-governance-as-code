@@ -46,6 +46,17 @@ Default is **deny**; every cell below is derived from the policy.
 | `bronze.materials` | internal |  |  |  |  |  | ✔ |  |  | ✔ |  |  |
 | `bronze.service_orders` | confidential |  |  |  | ✔ |  |  |  |  | ✔ |  |  |
 | `bronze.technicians` | restricted |  |  |  | ✔ |  |  |  |  |  |  |  |
+| `silver.assets` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  |
+| `silver.customers` | confidential |  |  |  |  |  |  | ✔ | ✔ | ✔ |  |  |
+| `silver.labor_entries` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  |
+| `silver.material_issues` | internal |  |  |  |  | ✔ | ✔ |  |  | ✔ |  |  |
+| `silver.materials` | internal |  |  |  |  | ✔ | ✔ |  |  | ✔ |  |  |
+| `silver.service_orders` | confidential |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  |
+| `silver.technicians` | restricted |  |  | ✔ | ✔ |  |  |  |  |  |  |  |
+| `gold.customer_value` | confidential |  | ✔ |  |  |  |  | ✔ | ✔ | ✔ |  |  |
+| `gold.inventory_position` | internal | ✔ | ✔ |  |  | ✔ | ✔ |  |  | ✔ | ✔ |  |
+| `gold.service_order_economics` | confidential |  | ✔ | ✔ | ✔ |  |  |  |  | ✔ | ⏱ |  |
+| `gold.site_monthly_kpis` | confidential |  | ✔ | ✔ | ✔ |  |  |  |  | ✔ | ⏱ |  |
 
 ## Compiled grants
 

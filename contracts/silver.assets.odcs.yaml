@@ -1,0 +1,48 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:operations:silver.assets
+name: silver.assets
+version: 1.0.0
+status: active
+domain: operations
+dataProduct: Asset master
+description:
+  purpose: Single source of truth for the equipment the company maintains and where it is installed.
+  usage: Join key for service orders; site attribution for operational KPIs.
+  limitations: Operating hours are as last reported by the hour meter, not real time.
+tags: [silver, master-data]
+team:
+  - {username: riley.placeholder, role: data_owner}
+  - {username: sam.samplewood, role: data_steward}
+slaProperties:
+  - {property: frequency, value: 1, unit: d}
+customProperties:
+  - {property: dataClassification, value: internal}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: assets
+    physicalName: silver.assets
+    physicalType: table
+    description: One row per asset.
+    properties:
+      - {name: asset_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,
+         businessName: Asset, description: Asset code AS-nnnn.,
+         quality: [{name: asset_id_format, type: library, rule: pattern, arguments: {pattern: '^AS-\d{4}$'}, dimension: validity}]}
+      - {name: asset_type, logicalType: string, physicalType: VARCHAR, required: true, businessName: Asset type,
+         description: Equipment family.,
+         quality: [{name: asset_type_valid, type: library, rule: validValues,
+                    arguments: {values: [Haul truck, Wheel loader, Drill rig, Pump station, Generator set]}}]}
+      - {name: manufacturer, logicalType: string, physicalType: VARCHAR, description: Fictional manufacturer label.}
+      - {name: site, logicalType: string, physicalType: VARCHAR, required: true, businessName: Site, description: Installation site.}
+      - {name: operating_hours, logicalType: integer, physicalType: INTEGER, businessName: Operating hours,
+         description: Cumulative hour-meter reading.,
+         quality: [{name: operating_hours_non_negative, type: library, rule: range, arguments: {min: 0}, severity: warning}]}
+      - {name: commissioned_on, logicalType: date, physicalType: DATE, description: Date the asset entered service.}
+    quality:
+      - {name: asset_volume, type: library, rule: rowCount, arguments: {min: 10}}

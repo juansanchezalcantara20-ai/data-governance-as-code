@@ -161,7 +161,7 @@ terms:
   - {id: marketing_consent, name: Marketing consent, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
      type: attribute, status: approved, next_review: 2027-01-31,
      definition: Explicit permission from the business contact to receive commercial communications.,
-     source: {table: silver.customers, column: marketing_consent}, quality_rules: [consent_not_null],
+     source: {table: silver.customers, column: marketing_consent}, quality_rules: [marketing_consent_not_null],
      related: [business_contact]}
   - {id: customer_revenue, name: Customer revenue, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
      type: metric, status: approved, next_review: 2027-03-31,

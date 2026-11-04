@@ -85,3 +85,35 @@ Each decision records the choice, the alternatives considered and why. Newest la
 - **Decision:** `docs/generated/glossary.md` (readable on GitHub, with anchors) and a self-contained
   `docs/generated/glossary.html` with client-side search, no external assets.
 - **Why:** Markdown is what a reviewer opens on GitHub; the HTML page is what a business user would actually browse.
+
+## D-014 · ODCS v3 for contracts, with a documented rule vocabulary
+- **Decision:** contracts follow Open Data Contract Standard v3 (`apiVersion: v3.0.2`, `kind: DataContract`,
+  `schema[].properties[]`, `quality`, `slaProperties`, `team`, `customProperties`). Quality rules keep the ODCS
+  shape (`type: library | sql`, `dimension`, `severity`); the library rule names (`pattern`, `validValues`,
+  `range`, `references`, `expression`, `tolerance`, `rowCount`) are govkit's own, listed in
+  `src/govkit/contracts.py`. Classification and change policy live in `customProperties`; PII categories are
+  property tags `pii:<category>`; the glossary link is `businessName`.
+- **Why:** ODCS is vendor-neutral and maps to Databricks, Snowflake or dbt. dbt model contracts were not an
+  option because the stack has no dbt (D-001).
+
+## D-015 · Contract obligations become executable rules automatically
+- **Decision:** `required` → completeness rule, `unique`/single `primaryKey` → uniqueness rule, composite key →
+  SQL uniqueness check, `latency` SLA → timeliness rule against the run's as-of date.
+- **Why:** what the contract promises is exactly what gets tested; no second place to keep in sync.
+
+## D-016 · Schema conformance runs before quality rules
+- **Decision:** a built table is first compared with its contract (missing column, undeclared column, logical
+  type). On a schema break its rules are skipped and the run fails.
+- **Why:** found while writing the breaking-change test: rules on a mis-shaped table fail with confusing SQL
+  errors. Checking the shape first gives the developer the actual cause.
+
+## D-017 · Silver blocks bad rows, gold blocks the release
+- **Decision:** on silver, rows failing an `error` rule go to `quarantine.<table>` and the run continues. On gold, a
+  failing `error` rule or any schema violation makes `govkit verify` fail.
+- **Why:** bad source rows are expected and handled by stewards; a broken published KPI is not acceptable.
+
+## D-018 · One known open finding is left in on purpose
+- **Decision:** `labor_entries.approver_email` holds email addresses but is not tagged as personal data. The
+  pipeline reports it as a high-severity finding on every run.
+- **Why:** shows that discovery catches what declarations miss. Remediation is in the roadmap; fixing it is a
+  one-line contract change (`tags: ["pii:email"]`) plus a classification review.

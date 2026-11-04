@@ -1,0 +1,50 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:operations:silver.technicians
+name: silver.technicians
+version: 1.0.0
+status: active
+domain: operations
+dataProduct: Field workforce
+description:
+  purpose: Field technicians with trade and fully loaded hourly cost, used to cost labor.
+  usage: Labor costing in gold.service_order_economics. Personal data is masked outside the owning domain.
+  limitations: Restricted. Never granted through access requests.
+tags: [silver, people, restricted]
+team:
+  - {username: riley.placeholder, role: data_owner}
+  - {username: sam.samplewood, role: data_steward}
+slaProperties:
+  - {property: frequency, value: 7, unit: d}
+customProperties:
+  - {property: dataClassification, value: restricted}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: technicians
+    physicalName: silver.technicians
+    physicalType: table
+    description: One row per technician.
+    properties:
+      - {name: technician_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,
+         businessName: Technician, description: Technician code TE-nnn.}
+      - {name: national_id, logicalType: string, physicalType: VARCHAR, classification: restricted, tags: ["pii:national_id"],
+         description: National identity number (8 digits).,
+         quality: [{name: national_id_format, type: library, rule: pattern, arguments: {pattern: '^\d{8}$'}, severity: warning}]}
+      - {name: first_name, logicalType: string, physicalType: VARCHAR, tags: ["pii:name"], description: Given name.}
+      - {name: last_name, logicalType: string, physicalType: VARCHAR, tags: ["pii:name"], description: Family name.}
+      - {name: email, logicalType: string, physicalType: VARCHAR, tags: ["pii:email"], description: Work email.,
+         quality: [{name: technician_email_format, type: library, rule: pattern,
+                    arguments: {pattern: '^[^@\s]+@[^@\s]+\.[a-z]{2,}$'}, severity: warning}]}
+      - {name: phone, logicalType: string, physicalType: VARCHAR, tags: ["pii:phone"], description: Mobile number.}
+      - {name: trade, logicalType: string, physicalType: VARCHAR, businessName: Trade, description: Craft or specialty.,
+         quality: [{name: trade_valid, type: library, rule: validValues,
+                    arguments: {values: [Mechanic, Electrician, Instrument technician, Welder, Supervisor]}}]}
+      - {name: hourly_cost, logicalType: number, physicalType: DOUBLE, required: true, tags: ["pii:compensation"],
+         businessName: Hourly labor cost, description: Fully loaded cost per hour.,
+         quality: [{name: hourly_cost_range, type: library, rule: range, arguments: {min: 10, max: 200}}]}

@@ -1,0 +1,48 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:customer:silver.customers
+name: silver.customers
+version: 1.0.0
+status: active
+domain: customer
+dataProduct: Customer accounts
+description:
+  purpose: Customer accounts with their business contact and marketing consent.
+  usage: Customer attribution of orders; key-account analysis.
+  limitations: Contact data is personal data and is masked unless the role allows it.
+tags: [silver, master-data, personal-data]
+team:
+  - {username: taylor.dummond, role: data_owner}
+  - {username: alex.exampleton, role: data_steward}
+slaProperties:
+  - {property: frequency, value: 1, unit: d}
+customProperties:
+  - {property: dataClassification, value: confidential}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: customers
+    physicalName: silver.customers
+    physicalType: table
+    description: One row per customer account.
+    properties:
+      - {name: customer_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,
+         businessName: Customer, description: Account code CU-nnnn.}
+      - {name: company_name, logicalType: string, physicalType: VARCHAR, required: true, description: Legal name (fictional).}
+      - {name: segment, logicalType: string, physicalType: VARCHAR, businessName: Customer segment, description: Industry.,
+         quality: [{name: segment_valid, type: library, rule: validValues, arguments: {values: [Mining, Energy, Construction, Agriculture]}}]}
+      - {name: country, logicalType: string, physicalType: VARCHAR, description: Country of the account.}
+      - {name: contact_name, logicalType: string, physicalType: VARCHAR, tags: ["pii:name"], businessName: Business contact,
+         description: Contact person.}
+      - {name: contact_email, logicalType: string, physicalType: VARCHAR, tags: ["pii:email"], description: Contact email.,
+         quality: [{name: contact_email_format, type: library, rule: pattern,
+                    arguments: {pattern: '^[^@\s]+@[^@\s]+\.[a-z]{2,}$'}, severity: warning}]}
+      - {name: contact_phone, logicalType: string, physicalType: VARCHAR, tags: ["pii:phone"], description: Contact phone.}
+      - {name: created_on, logicalType: date, physicalType: DATE, required: true, description: Account creation date.}
+      - {name: marketing_consent, logicalType: boolean, physicalType: BOOLEAN, required: true, businessName: Marketing consent,
+         description: Consent to commercial communications.}
