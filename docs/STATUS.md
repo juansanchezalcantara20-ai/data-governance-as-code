@@ -37,7 +37,7 @@ a working engine; see `docs/DECISIONS.md` (D-001).
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | English port, fictional operations dataset, tooling (`make all`, ruff, CI) | ✅ done |
-| 1 | Roles, responsibilities, RACI + validator | ⏳ pending |
+| 1 | Roles, responsibilities, RACI + validator | ✅ done |
 | 2 | Users, domains, classification, access policy, SoD, generated GRANTs | ⏳ pending |
 | 3 | Business glossary + validator + generated browsable glossary | ⏳ pending |
 | 4 | ODCS v3 data contracts, data-vs-contract verification, breaking-change detection | ⏳ pending |

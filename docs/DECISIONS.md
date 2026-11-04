@@ -36,3 +36,15 @@ Each decision records the choice, the alternatives considered and why. Newest la
 - **Decision:** Python package `govkit` (CLI `govkit`), governance-as-code files in `governance/`, contracts in
   `contracts/`, SQL models in `models/`, raw-source registry in `models/sources.yaml`.
 - **Why:** English, short, and the folder layout mirrors the governance artifacts a reviewer looks for.
+
+## D-006 · RACI validation rules
+- **Decision:** exactly one Accountable and at least one Responsible per activity; every role cited must exist;
+  the escalation chain must be acyclic with a single top role (the Data Sponsor).
+- **Why:** these are the properties that make a RACI usable in practice: one person answers for the outcome,
+  someone does the work, and every escalation ends somewhere.
+
+## D-007 · Generated documentation is committed and checked
+- **Decision:** `govkit docs` renders `docs/generated/*.md` from YAML and run metadata; CI regenerates them and
+  fails on any diff (`make docs-check`).
+- **Why:** reviewers can read the governance model on GitHub without running anything, and the docs can never
+  drift from the YAML that is actually enforced.

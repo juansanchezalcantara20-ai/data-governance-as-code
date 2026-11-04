@@ -56,6 +56,14 @@ def _lineage(args) -> int:
     return 0
 
 
+def _docs(_args) -> int:
+    from . import docs
+
+    for path in docs.build_all():
+        print(f"wrote {path}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="govkit", description="Governance as code on a Medallion lakehouse")
     sub = p.add_subparsers(dest="command", required=True)
@@ -71,6 +79,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("target")
     s.add_argument("--impact", action="store_true")
     s.set_defaults(func=_lineage)
+    s = sub.add_parser("docs", help="generate documentation from governance YAML and run metadata")
+    s.set_defaults(func=_docs)
     return p
 
 

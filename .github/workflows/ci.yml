@@ -18,3 +18,5 @@ jobs:
         run: make install
       - name: Reproduce everything (lint, validate governance, generate, run, test)
         run: make all
+      - name: Generated docs are up to date
+        run: make docs-check

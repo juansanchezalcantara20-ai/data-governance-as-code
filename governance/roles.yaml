@@ -1,0 +1,76 @@
+# Governance roles (operating model). Referenced by raci.yaml, users.yaml and access_policy.yaml.
+# Validated by govkit/validate/roles.py.
+roles:
+  data_sponsor:
+    name: Data Sponsor
+    purpose: Executive who funds the governance programme and owns its outcomes at board level.
+    responsibilities:
+      - Secure budget and people for the governance programme.
+      - Set data priorities aligned with company strategy.
+      - Chair escalations the Governance Council cannot resolve.
+    decisions:
+      - Approve the governance charter and yearly roadmap.
+      - Resolve cross-domain conflicts escalated by the Council.
+    escalates_to: null   # top of the escalation chain
+
+  governance_council:
+    name: Governance Council
+    purpose: Cross-domain body that sets policies and standards and arbitrates between domains.
+    responsibilities:
+      - Approve enterprise policies (classification, access, retention, change management).
+      - Approve glossary terms shared by more than one domain.
+      - Review quality and maturity metrics every month.
+      - Approve the retirement of datasets with downstream consumers.
+    decisions:
+      - Approve or reject policy changes.
+      - Arbitrate disputed definitions and ownership.
+    escalates_to: data_sponsor
+
+  data_owner:
+    name: Data Owner
+    purpose: Business leader accountable for the data of one domain and the decisions about it.
+    responsibilities:
+      - Be accountable for the quality, classification and use of the domain's data.
+      - Approve access to confidential and restricted data of the domain.
+      - Approve breaking changes to the domain's data contracts.
+      - Appoint at least one Data Steward for the domain.
+    decisions:
+      - Grant or deny access to the domain's data.
+      - Accept or reject quality rules and their thresholds.
+      - Classify the domain's datasets.
+    escalates_to: governance_council
+
+  data_steward:
+    name: Data Steward
+    purpose: Subject-matter expert who manages the domain's data day to day.
+    responsibilities:
+      - Draft and maintain glossary terms and data contracts.
+      - Define quality rules and triage quality incidents and quarantined rows.
+      - Approve access to internal data of the domain.
+      - Keep documentation current and run periodic reviews.
+    decisions:
+      - Accept a glossary definition for review by the Owner.
+      - Decide how a quality incident is remediated at source.
+    escalates_to: data_owner
+
+  data_custodian:
+    name: Data Custodian
+    purpose: Technical role that operates the platform where data is stored, moved and secured.
+    responsibilities:
+      - Run and monitor pipelines; implement contracts and quality rules in code.
+      - Implement access grants and masking exactly as the policy states.
+      - Manage backups, retention and decommissioning of datasets.
+    decisions:
+      - Choose technical implementation within the agreed contract and policy.
+    escalates_to: data_steward
+
+  data_consumer:
+    name: Data Consumer
+    purpose: Analyst or application that uses published data for decisions.
+    responsibilities:
+      - Use data according to its classification and contract.
+      - Report suspected quality issues through the incident process.
+      - Request access through the access workflow, never ad hoc.
+    decisions:
+      - None on the data itself; decides how to use data within policy.
+    escalates_to: data_steward
