@@ -1,0 +1,14 @@
+# Downstream consumers of gold datasets. Closes the lineage from source to use.
+exposures:
+  - name: Service profitability dashboard
+    type: dashboard
+    owner: riley.placeholder
+    depends_on: [gold.service_order_economics, gold.site_monthly_kpis]
+  - name: Replenishment report
+    type: report
+    owner: jordan.mockwell
+    depends_on: [gold.inventory_position]
+  - name: Key-account review
+    type: analysis
+    owner: taylor.dummond
+    depends_on: [gold.customer_value]

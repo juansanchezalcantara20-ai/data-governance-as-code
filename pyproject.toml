@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "govkit"
+version = "1.0.0"
+description = "Governance as code on a Medallion lakehouse: roles, RACI, access policy, glossary, ODCS data contracts, quality and lineage."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Juan Luis Sánchez Alcántara" }]
+dependencies = ["duckdb>=1.1", "pyyaml>=6", "sqlglot>=25", "pandas>=2"]
+
+[project.optional-dependencies]
+app = ["streamlit>=1.40"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+govkit = "govkit.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = ["SIM108"]

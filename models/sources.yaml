@@ -1,0 +1,55 @@
+# Raw source registry (bronze). Each entry is ingested as-is, all columns as text.
+# Bronze is not published to consumers, so it has no data contract; it does declare
+# its domain, classification and personal-data columns.
+sources:
+  - name: bronze.assets
+    file: assets.csv
+    system: Enterprise asset register (fictional)
+    domain: operations
+    classification: internal
+    refresh: daily
+    description: Asset master as exported by the asset register.
+  - name: bronze.technicians
+    file: technicians.csv
+    system: HR system (fictional)
+    domain: operations
+    classification: restricted
+    refresh: weekly
+    description: Field technicians with personal and compensation data.
+    pii: {national_id: national_id, first_name: name, last_name: name, email: email, phone: phone, hourly_cost: compensation}
+  - name: bronze.customers
+    file: customers.csv
+    system: CRM (fictional)
+    domain: customer
+    classification: confidential
+    refresh: daily
+    description: Customer accounts with a contact person.
+    pii: {contact_name: name, contact_email: email, contact_phone: phone}
+  - name: bronze.materials
+    file: materials.csv
+    system: ERP materials module (fictional)
+    domain: supply_chain
+    classification: internal
+    refresh: daily
+    description: Material master with stock and reorder parameters.
+  - name: bronze.service_orders
+    file: service_orders.csv
+    system: Field service management (fictional)
+    domain: operations
+    classification: confidential
+    refresh: hourly
+    description: Service orders with plan, price and status. Dates arrive in two formats.
+  - name: bronze.labor_entries
+    file: labor_entries.csv
+    system: Timesheet app (fictional)
+    domain: operations
+    classification: internal
+    refresh: daily
+    description: Hours booked by technicians against service orders.
+  - name: bronze.material_issues
+    file: material_issues.csv
+    system: ERP materials module (fictional)
+    domain: supply_chain
+    classification: internal
+    refresh: daily
+    description: Materials issued from the warehouse to service orders.
