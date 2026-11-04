@@ -275,4 +275,6 @@ GENERATORS = [operating_model, access_model, glossary, contract_catalog, quality
 
 
 def build_all() -> list[Path]:
-    return [p for p in (g() for g in GENERATORS) if p is not None]
+    from . import unity
+
+    return [p for p in (g() for g in GENERATORS) if p is not None] + unity.build()

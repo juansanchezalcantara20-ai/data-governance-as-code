@@ -102,6 +102,29 @@ def _compat(args) -> int:
     return 1 if problems else 0
 
 
+def _deploy(_args) -> int:
+    from . import unity
+
+    for path in unity.build():
+        print(f"wrote {path}  (NOT EXECUTED: apply manually, see deploy/unity_catalog/README.md)")
+    return 0
+
+
+def _export(_args) -> int:
+    from . import contracts as contracts_mod
+    from .db import connect
+    from .paths import data_dir
+
+    out = data_dir() / "export"
+    out.mkdir(parents=True, exist_ok=True)
+    con = connect(read_only=True)
+    for c in contracts_mod.load_all():
+        path = out / f"{c.name}.parquet"
+        con.execute(f"COPY {c.name} TO '{path}' (FORMAT parquet)")
+        print(f"wrote {path}")
+    return 0
+
+
 def _docs(_args) -> int:
     from . import docs
 
@@ -130,6 +153,10 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("compat", help="check contract changes against a git ref follow the change policy")
     s.add_argument("--base", default="origin/main")
     s.set_defaults(func=_compat)
+    s = sub.add_parser("deploy", help="generate Unity Catalog SQL in deploy/unity_catalog (not executed)")
+    s.set_defaults(func=_deploy)
+    s = sub.add_parser("export", help="export governed silver and gold tables to Parquet for upload")
+    s.set_defaults(func=_export)
     s = sub.add_parser("docs", help="generate documentation from governance YAML and run metadata")
     s.set_defaults(func=_docs)
     return p

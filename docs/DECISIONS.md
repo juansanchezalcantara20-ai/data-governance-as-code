@@ -148,3 +148,22 @@ Each decision records the choice, the alternatives considered and why. Newest la
   repository only. Each score lists files as evidence; CI fails if a file is missing, and any score of 3 or more
   needs at least three pieces of evidence. No area is scored 4: nothing is yet tracked over time against targets.
 - **Why:** a self-assessment is only credible if it is falsifiable and errs low.
+
+## D-024 · The prototype Streamlit UI was not ported
+- **Decision:** the Spanish prototype had an 8-page Streamlit app. It was removed during the English port and not
+  rebuilt; the governance artefacts are published as generated Markdown/HTML instead.
+- **Why:** the brief is a programme that verifies itself; a UI adds surface without adding a control. Publishing
+  to a real catalog is on the roadmap and is the better next step.
+
+## D-025 · Unity Catalog SQL generated, never executed here
+- **Decision:** `govkit deploy` compiles catalog, schemas, tables (types, NOT NULL, informational primary keys,
+  comments), tags (classification, domain, owner, steward, `pii`, `glossary_term`), grants per group and column
+  masks from the same YAML. Every file starts with "NOT EXECUTED IN THIS REPO"; CI checks the files are current.
+- **Why:** no Databricks access in this environment and no credentials should be requested. Generating from the
+  policy keeps the platform configuration a derivative of governance, not a parallel copy.
+- **Masks:** clear text only for groups whose role has `unmasked_pii: true` and only in their own domain, using
+  `is_account_group_member`; numeric compensation is masked to NULL.
+
+## D-026 · Repository name
+- **Decision:** `data-governance-as-code`. The local working folder kept its prototype name; it is not visible
+  in the repository.

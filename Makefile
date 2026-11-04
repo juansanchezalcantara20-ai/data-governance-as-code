@@ -2,7 +2,7 @@
 PY ?= python
 GOVKIT = $(PY) -m govkit
 
-.PHONY: all install lint validate generate run verify docs docs-check test app clean
+.PHONY: all install lint validate generate run verify docs docs-check test deploy clean
 
 all: lint validate generate run verify docs test
 
@@ -29,13 +29,13 @@ docs:
 
 # Fails if generated docs are stale (used in CI).
 docs-check: docs
-	git diff --exit-code -- docs/generated
+	git diff --exit-code -- docs/generated deploy/unity_catalog
 
 test:
 	$(PY) -m pytest -q
 
-app:
-	streamlit run app/app.py
+deploy:
+	$(GOVKIT) deploy
 
 clean:
 	rm -rf data reports .pytest_cache
