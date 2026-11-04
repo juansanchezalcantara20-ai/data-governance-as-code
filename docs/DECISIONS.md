@@ -117,3 +117,28 @@ Each decision records the choice, the alternatives considered and why. Newest la
   pipeline reports it as a high-severity finding on every run.
 - **Why:** shows that discovery catches what declarations miss. Remediation is in the roadmap; fixing it is a
   one-line contract change (`tags: ["pii:email"]`) plus a classification review.
+
+## D-019 · Six quality dimensions and how each is measured
+- **Decision:** completeness (`required`, row counts), uniqueness (keys), validity (patterns, domains, ranges),
+  consistency (referential integrity, cross-column logic, formula checks), accuracy (agreement with an
+  authoritative reference: issued cost vs material master within 25 %, gold totals reconciled to silver), and
+  timeliness (latency SLA vs the run's as-of date).
+- **Why:** accuracy is the dimension most projects skip because it needs a reference; using the master data and
+  cross-layer reconciliation makes it measurable without external sources.
+
+## D-020 · Glossary-to-rule traceability
+- **Decision:** glossary terms list the contract rules that protect them; the quality report shows, per term,
+  how many rules apply and their pass rate. Metric formulas are themselves tested (`margin_definition_holds`,
+  reconciliation rules).
+- **Why:** this closes the loop business definition → executable rule → measured result.
+
+## D-021 · Report on every run, published copy in docs
+- **Decision:** `govkit run` writes `reports/quality_report.{md,json}` (git-ignored, one per run). `govkit docs`
+  publishes the latest run to `docs/generated/quality_report.md`. Reports contain no timestamps or run ids, so the
+  published copy is reproducible and checked in CI like the other generated docs.
+- **Why:** reviewers see real output on GitHub; CI proves it is current.
+
+## D-022 · Lineage as Mermaid generated from SQL
+- **Decision:** dataset-level lineage is emitted as a Mermaid flowchart (renders natively on GitHub) plus a
+  column-level table for every gold column; consumers come from `models/exposures.yaml`.
+- **Why:** no extra tooling to view it, and it cannot drift because it is computed from the SQL on every run.

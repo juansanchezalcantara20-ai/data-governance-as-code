@@ -41,6 +41,6 @@ a working engine; see `docs/DECISIONS.md` (D-001).
 | 2 | Users, domains, classification, access policy, SoD, generated GRANTs | ✅ done |
 | 3 | Business glossary + validator + generated browsable glossary | ✅ done |
 | 4 | ODCS v3 data contracts, data-vs-contract verification, breaking-change detection | ✅ done |
-| 5 | Executable quality rules (6 dimensions), quality report, generated lineage | ⏳ pending |
+| 5 | Executable quality rules (6 dimensions), quality report, generated lineage | ✅ done |
 | 6 | DAMA-DMBOK2 maturity self-assessment + roadmap | ⏳ pending |
 | 7 | Unity Catalog deployment SQL (not executed), final README, pull request | ⏳ pending |

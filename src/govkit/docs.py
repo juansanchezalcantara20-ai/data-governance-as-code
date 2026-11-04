@@ -206,8 +206,47 @@ def contract_catalog() -> Path:
     return _write("contracts.md", "\n".join(lines))
 
 
-GENERATORS = [operating_model, access_model, glossary, contract_catalog]
+def quality_report() -> Path | None:
+    from . import report
+    from .db import connect
+    from .paths import db_path
+
+    if not db_path().exists():
+        return None
+    con = connect(read_only=True)
+    try:
+        return _write("quality_report.md", report.markdown(report.data(con)))
+    finally:
+        con.close()
+
+
+def lineage_doc() -> Path | None:
+    from . import lineage
+    from .db import connect
+    from .paths import db_path
+
+    if not db_path().exists():
+        return None
+    con = connect(read_only=True)
+    try:
+        lines = ["# End-to-end lineage", "",
+                 "Generated from the SQL models with sqlglot (never drawn by hand): source files → bronze → silver → "
+                 "gold → consumers (`models/exposures.yaml`).", "", "```mermaid", lineage.mermaid(con), "```", "",
+                 "## Column-level lineage of gold metrics", "", "| Gold column | Upstream columns (all levels) |",
+                 "|---|---|"]
+        gold = con.execute("SELECT DISTINCT target_dataset, target_column FROM meta.lineage "
+                           "WHERE target_dataset LIKE 'gold.%' ORDER BY 1, 2").fetchall()
+        for ds, col in gold:
+            ups = sorted({f"{u['dataset']}.{u['column']}" for u in lineage.upstream(con, ds, col)
+                          if u["dataset"].startswith(("silver.", "file:"))})
+            lines.append(f"| `{ds}.{col}` | " + ", ".join(f"`{u}`" for u in ups) + " |")
+        return _write("lineage.md", "\n".join(lines))
+    finally:
+        con.close()
+
+
+GENERATORS = [operating_model, access_model, glossary, contract_catalog, quality_report, lineage_doc]
 
 
 def build_all() -> list[Path]:
-    return [g() for g in GENERATORS]
+    return [p for p in (g() for g in GENERATORS) if p is not None]

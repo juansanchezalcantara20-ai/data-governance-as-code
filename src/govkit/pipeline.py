@@ -211,6 +211,9 @@ def run(con: duckdb.DuckDBPyConnection | None = None, actor: str = "pipeline", l
                  report.quarantined, "; ".join(report.errors)])
     audit(con, actor, "pipeline_run", "all",
           f"{report.run_id}: {report.datasets} datasets, {report.quarantined} quarantined, {report.status}")
+    from . import report as report_mod
+
+    report_mod.write(con)
     if own:
         con.close()
     return report
