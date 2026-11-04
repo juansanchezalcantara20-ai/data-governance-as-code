@@ -1,5 +1,14 @@
+import pytest
+
 from govkit.paths import governance
 from govkit.validate import maturity as v
+from tests.conftest import ROOT
+
+
+@pytest.fixture(autouse=True)
+def repo_root(monkeypatch):
+    """Evidence paths point at the real repository, not the temp project copy."""
+    monkeypatch.setenv("GOVKIT_HOME", str(ROOT))
 
 
 def test_assessment_covers_the_11_areas_with_existing_evidence():
