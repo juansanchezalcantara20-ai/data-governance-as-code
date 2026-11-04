@@ -9,12 +9,12 @@ The repository started as a working prototype, written in Spanish, built and run
 | Area | What existed | Location (prototype) |
 |---|---|---|
 | Stack | Python 3.10+, DuckDB (single-file lakehouse), sqlglot (SQL parsing), Streamlit (UI), pytest | `pyproject.toml` |
-| Pipeline | Medallion pipeline bronze → silver → gold, topological ordering from SQL, quarantine of rows that fail blocking rules | `src/gobdatos/pipeline.py`, `calidad.py` |
-| Data | Seeded synthetic generator for two domains with deliberately injected defects | `src/gobdatos/generador.py` |
+| Pipeline | Medallion pipeline bronze → silver → gold, topological ordering from SQL, quarantine of rows that fail blocking rules | prototype modules (since replaced by `src/govkit/`) |
+| Data | Seeded synthetic generator for two domains with deliberately injected defects | prototype modules (since replaced by `src/govkit/`) |
 | Governance config | Roles and users in one file, per-domain glossaries, one YAML contract per table (custom format) | `config/` |
-| Lineage | Column-level lineage computed from SQL with sqlglot, impact analysis | `src/gobdatos/linaje.py` |
-| Privacy | PII discovery by column name and content, role-based masking, access-request workflow with segregation of duties | `clasificacion.py`, `politicas.py`, `flujos.py` |
-| UI | 8-page Streamlit app (catalog, glossary, lineage, quality, privacy, requests, audit) | `app/app.py` |
+| Lineage | Column-level lineage computed from SQL with sqlglot, impact analysis | prototype modules (since replaced by `src/govkit/`) |
+| Privacy | PII discovery by column name and content, role-based masking, access-request workflow with segregation of duties | prototype modules (since replaced by `src/govkit/`) |
+| UI | 8-page Streamlit app (catalog, glossary, lineage, quality, privacy, requests, audit) | prototype UI (removed, see D-024) |
 | Quality of repo | 18 pytest tests, GitHub Actions workflow, Dockerfile, Makefile | `tests/`, `.github/` |
 
 ### Gaps found in the prototype against the plan
