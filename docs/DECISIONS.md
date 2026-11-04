@@ -72,3 +72,16 @@ Each decision records the choice, the alternatives considered and why. Newest la
   grants only for approved exceptions). DuckDB has no GRANT, so the SQL targets PostgreSQL-compatible engines;
   the Databricks Unity Catalog flavour is generated in phase 7.
 - **Why:** permissions must come from the policy, never typed by hand.
+
+## D-012 · What "circular" and "orphan" mean for the glossary
+- **Circular:** a term whose definition contains its own name, or any cycle in the `depends_on` graph that
+  metrics use to declare which terms their formula is built from.
+- **Orphan:** a term that is neither the source column of a SQL model nor the `businessName` of any contract
+  property. Every term must point at real data.
+- **Why:** these are the two failure modes that make glossaries useless in practice: definitions that explain
+  nothing, and terms nobody can find in the data.
+
+## D-013 · Glossary rendered twice
+- **Decision:** `docs/generated/glossary.md` (readable on GitHub, with anchors) and a self-contained
+  `docs/generated/glossary.html` with client-side search, no external assets.
+- **Why:** Markdown is what a reviewer opens on GitHub; the HTML page is what a business user would actually browse.
