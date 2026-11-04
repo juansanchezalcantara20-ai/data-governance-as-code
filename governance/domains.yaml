@@ -1,0 +1,17 @@
+# Data domains and their accountable people. Users are ids from users.yaml.
+domains:
+  operations:
+    name: Field operations
+    description: Assets, field technicians, service orders and hours booked against them.
+    owner: riley.placeholder
+    stewards: [sam.samplewood]
+  supply_chain:
+    name: Supply chain
+    description: Material master, warehouse issues to service orders and inventory position.
+    owner: jordan.mockwell
+    stewards: [casey.testa]
+  customer:
+    name: Customer
+    description: Customer accounts, business contacts and customer value.
+    owner: taylor.dummond
+    stewards: [alex.exampleton]

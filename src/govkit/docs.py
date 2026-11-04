@@ -44,7 +44,48 @@ def operating_model() -> Path:
     return _write("operating_model.md", "\n".join(lines))
 
 
-GENERATORS = [operating_model]
+def access_model() -> Path:
+    from . import access, grants
+
+    users = access.users()
+    lv = access.levels()
+    datasets = access.datasets()
+    lines = ["# Access model", "",
+             "Source: `governance/users.yaml`, `domains.yaml`, `classification.yaml`, `access_policy.yaml`.",
+             "Default is **deny**; every cell below is derived from the policy.", "", "## Domains", "",
+             "| Domain | Owner | Stewards |", "|---|---|---|"]
+    for did, d in access.domains().items():
+        lines.append(f"| {d['name']} (`{did}`) | {users[d['owner']]['name']} | "
+                     + ", ".join(users[s]["name"] for s in d["stewards"]) + " |")
+    lines += ["", "## Classification levels", "", "| Level | Rank | Handling |", "|---|:-:|---|"]
+    for k, v in access.governance("classification")["levels"].items():
+        lines.append(f"| {k} | {v['rank']} | {v['handling']} |")
+    lines += ["", "## Role baseline (least privilege)", "", "| Role | Domains | Layers | Up to | Personal data |",
+              "|---|---|---|---|---|"]
+    for role, b in access.policy()["baseline"].items():
+        lines.append(f"| {role} | {b['domains']} | {', '.join(b['layers'])} | {b['up_to']} | "
+                     f"{'clear' if b.get('unmasked_pii') else 'masked'} |")
+    lines += ["", "## Who can read what", "", "✔ = role baseline · ⏱ = time-bound approved request · blank = denied", "",
+              "| Dataset | Class | " + " | ".join(u["name"] for u in users.values()) + " |",
+              "|---|---|" + "|".join(":-:" for _ in users) + "|"]
+    for ds in sorted(datasets, key=lambda d: (["bronze", "silver", "gold"].index(d["layer"]), d["name"])):
+        cells = []
+        for u in users.values():
+            if access.role_allows(u, ds["domain"], ds["layer"], ds["classification"]):
+                cells.append("✔")
+            elif any(g["domain"] in ("*", ds["domain"]) and ds["layer"] in g["layers"]
+                     and lv[ds["classification"]] <= lv[g["up_to"]]
+                     for g in u.get("access", []) if g.get("basis") == "request"):
+                cells.append("⏱")
+            else:
+                cells.append("")
+        lines.append(f"| `{ds['name']}` | {ds['classification']} | " + " | ".join(cells) + " |")
+    lines += ["", "## Compiled grants", "", "See [`access_grants.sql`](access_grants.sql)."]
+    (out_dir() / "access_grants.sql").write_text(grants.render_postgres(), encoding="utf-8")
+    return _write("access_model.md", "\n".join(lines))
+
+
+GENERATORS = [operating_model, access_model]
 
 
 def build_all() -> list[Path]:
