@@ -245,7 +245,33 @@ def lineage_doc() -> Path | None:
         con.close()
 
 
-GENERATORS = [operating_model, access_model, glossary, contract_catalog, quality_report, lineage_doc]
+def maturity() -> Path:
+    doc = governance("maturity")
+    scale = {int(k): v for k, v in doc["scale"].items()}
+    names = {a["id"]: a["name"] for a in doc["areas"]}
+    mean = sum(a["score"] for a in doc["areas"]) / len(doc["areas"])
+    lines = ["# DAMA-DMBOK2 maturity self-assessment", "",
+             f"Assessed on {doc['assessed_on']} against this repository only, on the project's own 1-5 scale. "
+             f"Mean score **{mean:.1f}**. Every score cites evidence that CI checks exists "
+             "(`govkit/validate/maturity.py`).", "", "## Scale", "", "| Level | Name | Meaning |", "|:-:|---|---|"]
+    lines += [f"| {k} | {v['name']} | {v['meaning']} |" for k, v in sorted(scale.items())]
+    lines += ["", "## Scores", "", "| Knowledge area | Score | | Rationale | Evidence |", "|---|:-:|---|---|---|"]
+    for a in doc["areas"]:
+        bar = "█" * a["score"] + "░" * (5 - a["score"])
+        ev = ", ".join(f"[`{p.split('/')[-1]}`](../../{p})" for p in a["evidence"])
+        lines.append(f"| {a['name']} | {a['score']} | `{bar}` | {a['rationale']} | {ev} |")
+    lines += ["", "## Next level per area", ""]
+    lines += [f"- **{a['name']}** ({a['score']} → {a['score'] + 1}): {a['next_level']}" for a in doc["areas"]
+              if a["score"] < 5]
+    lines += ["", "## Prioritised roadmap", "", "Priority 1 = now, 3 = later. Effort S/M/L.", "",
+              "| # | Priority | Area | Action | Why | Effort |", "|:-:|:-:|---|---|---|:-:|"]
+    items = sorted(doc["roadmap"], key=lambda r: (r["priority"], {"S": 0, "M": 1, "L": 2}[r["effort"]]))
+    for i, r in enumerate(items, 1):
+        lines.append(f"| {i} | P{r['priority']} | {names[r['area']]} | {r['action']} | {r['why']} | {r['effort']} |")
+    return _write("maturity.md", "\n".join(lines))
+
+
+GENERATORS = [operating_model, access_model, glossary, contract_catalog, quality_report, lineage_doc, maturity]
 
 
 def build_all() -> list[Path]:

@@ -9,7 +9,7 @@ dataProduct: Service operations
 description:
   purpose: Validated hours booked by technicians against service orders.
   usage: Actual labor hours and cost per service order.
-  limitations: approver_email is a known open finding (personal data not yet declared); see docs/roadmap.md.
+  limitations: approver_email is a known open finding (personal data not yet declared); see docs/generated/maturity.md.
 tags: [silver, transactions]
 team:
   - {username: riley.placeholder, role: data_owner}

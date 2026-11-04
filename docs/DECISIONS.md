@@ -142,3 +142,9 @@ Each decision records the choice, the alternatives considered and why. Newest la
 - **Decision:** dataset-level lineage is emitted as a Mermaid flowchart (renders natively on GitHub) plus a
   column-level table for every gold column; consumers come from `models/exposures.yaml`.
 - **Why:** no extra tooling to view it, and it cannot drift because it is computed from the SQL on every run.
+
+## D-023 · Maturity assessment is evidence-backed and conservative
+- **Decision:** own 1-5 scale (ad hoc, documented, defined and enforced, measured, optimising) applied to this
+  repository only. Each score lists files as evidence; CI fails if a file is missing, and any score of 3 or more
+  needs at least three pieces of evidence. No area is scored 4: nothing is yet tracked over time against targets.
+- **Why:** a self-assessment is only credible if it is falsifiable and errs low.

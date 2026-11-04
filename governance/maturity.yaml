@@ -1,0 +1,102 @@
+# Self-assessment of THIS repository against the 11 DAMA-DMBOK2 knowledge areas.
+# The scale below is this project's own. Every score must cite evidence that exists in the repo
+# (checked by govkit/validate/maturity.py). Scores are deliberately conservative.
+assessed_on: 2026-11-04
+scale:
+  1: {name: Ad hoc, meaning: Not addressed, or only by individual effort.}
+  2: {name: Documented, meaning: Practice is described and partly applied, but not enforced.}
+  3: {name: Defined and enforced, meaning: Defined as code and checked automatically on every change.}
+  4: {name: Measured, meaning: Tracked over time against targets, with an incident and review loop.}
+  5: {name: Optimising, meaning: Metrics drive continuous improvement across the organisation.}
+areas:
+  - id: data_governance
+    name: Data Governance
+    score: 3
+    rationale: Roles, RACI, domains, policies and escalation are YAML validated in CI; decisions are logged.
+    evidence: [governance/roles.yaml, governance/raci.yaml, governance/domains.yaml, src/govkit/validate/roles.py, docs/DECISIONS.md]
+    next_level: Governance KPIs tracked over time (term approval lead time, open findings, access reviews) with targets.
+  - id: data_architecture
+    name: Data Architecture
+    score: 2
+    rationale: Medallion layering with clear responsibilities per layer; no enterprise or target-state architecture.
+    evidence: [models/sources.yaml, src/govkit/pipeline.py]
+    next_level: Documented target architecture and architecture principles checked against new models.
+  - id: data_modeling
+    name: Data Modeling & Design
+    score: 2
+    rationale: Keys, types and nullability are declared per dataset; no conceptual or logical model.
+    evidence: [contracts/silver.service_orders.odcs.yaml, models/gold.service_order_economics.sql]
+    next_level: Entity-relationship model generated from contracts and kept in sync by CI.
+  - id: data_storage_operations
+    name: Data Storage & Operations
+    score: 2
+    rationale: Reproducible single-file lakehouse with run log; no backup, retention or recovery testing.
+    evidence: [src/govkit/db.py, Makefile]
+    next_level: Retention and backup policy as code; restore tested in CI.
+  - id: data_security
+    name: Data Security
+    score: 3
+    rationale: Classification, least-privilege baseline, segregation of duties, time-bound exceptions, masking and compiled grants. Engine-level enforcement is generated for Unity Catalog but not executed here.
+    evidence: [governance/classification.yaml, governance/access_policy.yaml, src/govkit/validate/access.py, src/govkit/grants.py, src/govkit/privacy.py]
+    next_level: Apply grants and column masks in a real platform and run a periodic access recertification.
+  - id: data_integration
+    name: Data Integration & Interoperability
+    score: 2
+    rationale: Batch file ingestion into bronze with source registry and lineage; no incremental loads or interface contracts with source systems.
+    evidence: [models/sources.yaml, src/govkit/lineage.py]
+    next_level: Incremental ingestion and source-side contracts so breaks are caught before landing.
+  - id: document_content
+    name: Document & Content Management
+    score: 1
+    rationale: Out of scope; only structured data is governed.
+    evidence: [README.md]
+    next_level: Records-retention policy for unstructured content (contracts, reports) as code.
+  - id: reference_master_data
+    name: Reference & Master Data
+    score: 2
+    rationale: Asset, material and customer masters with referential checks and an accuracy check against the material master; valid-value lists live inline in contracts.
+    evidence: [contracts/silver.materials.odcs.yaml, contracts/silver.material_issues.odcs.yaml]
+    next_level: Governed reference tables (code lists with owners and versions) and duplicate detection for masters.
+  - id: dw_bi
+    name: Data Warehousing & Business Intelligence
+    score: 2
+    rationale: Gold marts with contracts and declared consumers; no semantic layer or dashboards.
+    evidence: [models/gold.site_monthly_kpis.sql, models/exposures.yaml]
+    next_level: Metric definitions generated from the glossary into a semantic layer used by dashboards.
+  - id: metadata
+    name: Metadata Management
+    score: 3
+    rationale: Glossary, contracts, catalog tables and column-level lineage are generated or validated automatically and published as docs.
+    evidence: [governance/glossary.yaml, src/govkit/validate/glossary.py, docs/generated/lineage.md, docs/generated/contracts.md]
+    next_level: Push contracts, glossary and lineage into a searchable catalog (e.g. OpenMetadata or Unity Catalog) with usage statistics.
+  - id: data_quality
+    name: Data Quality
+    score: 3
+    rationale: Rules in six dimensions from contracts and glossary, quarantine, per-run report and CI gates. No trend tracking or incident resolution targets yet.
+    evidence: [src/govkit/quality.py, src/govkit/report.py, docs/generated/quality_report.md, docs/examples/breaking-change.md]
+    next_level: Quality score history per dataset with targets, alerting and an incident workflow with resolution SLAs.
+
+# Prioritised roadmap to the next level. priority: 1 (now) … 3 (later); effort: S, M, L.
+roadmap:
+  - {priority: 1, area: data_security, effort: S, action: Declare labor_entries.approver_email as personal data and review its classification,
+     why: Closes the only open high-severity finding.}
+  - {priority: 1, area: data_quality, effort: M, action: Persist quality scores per run and set per-dataset targets with alerting,
+     why: Moves quality from enforced to measured (level 4).}
+  - {priority: 1, area: data_security, effort: M, action: Apply deploy/unity_catalog in Databricks Free Edition and verify grants and masks,
+     why: Proves the policy is enforced by the engine, not only compiled.}
+  - {priority: 2, area: data_governance, effort: M, action: Track governance KPIs (open findings, term review backlog, exception expiry),
+     why: Gives the Council evidence for its monthly review.}
+  - {priority: 2, area: metadata, effort: M, action: Publish contracts, glossary and lineage to a searchable catalog,
+     why: Business users find data without reading YAML.}
+  - {priority: 2, area: reference_master_data, effort: S, action: Move inline valid-value lists into governed reference tables,
+     why: One owner and version for each code list.}
+  - {priority: 2, area: data_modeling, effort: S, action: Generate an entity-relationship diagram from contract keys and references,
+     why: Makes the model reviewable and keeps it in sync.}
+  - {priority: 3, area: data_integration, effort: L, action: Incremental ingestion with source-side contracts,
+     why: Catches breaks before data lands.}
+  - {priority: 3, area: data_storage_operations, effort: M, action: Retention and backup policy as code with a tested restore,
+     why: Required for any production use.}
+  - {priority: 3, area: dw_bi, effort: M, action: Generate semantic-layer metrics from glossary formulas,
+     why: Dashboards and glossary can no longer disagree.}
+  - {priority: 3, area: data_governance, effort: M, action: Support several roles per person and periodic access recertification,
+     why: Closer to how real organisations staff governance.}
