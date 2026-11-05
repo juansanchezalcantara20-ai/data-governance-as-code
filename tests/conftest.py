@@ -9,7 +9,7 @@ from govkit import generator, pipeline
 from govkit.db import connect
 
 ROOT = Path(__file__).resolve().parents[1]
-COPIED = ("governance", "contracts", "models")
+COPIED = ("governance", "contracts", "models", "examples")
 
 
 def make_project(destination: Path) -> Path:
