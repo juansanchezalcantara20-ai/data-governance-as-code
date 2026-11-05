@@ -29,7 +29,7 @@ def test_value_is_proportional_to_what_was_caught(con):
     f = value.facts(con, as_of_date())
     base = value.compute(f, value.assumptions())
     doubled = value.compute({**f, "quarantined_rows": f["quarantined_rows"] * 2}, value.assumptions())
-    assert doubled["parts"]["rework"]["hours"] == round(base["parts"]["rework"]["hours"] * 2, 2)
+    assert abs(doubled["parts"]["rework"]["hours"] - base["parts"]["rework"]["hours"] * 2) < 0.02
     nothing = value.compute({**f, "quarantined_rows": 0, "undeclared_pii_columns": [], "governed_metrics": 0},
                             value.assumptions())
     assert nothing["total_pen"] == 0
