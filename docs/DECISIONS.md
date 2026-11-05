@@ -1,5 +1,7 @@
 # Decision log
 
+**English** · [Español](es/decisiones.md)
+
 Each decision records the choice, the alternatives considered and why. Newest last.
 
 ## D-001 · Keep the existing Python + DuckDB engine instead of switching to dbt
@@ -167,3 +169,21 @@ Each decision records the choice, the alternatives considered and why. Newest la
 ## D-026 · Repository name
 - **Decision:** `data-governance-as-code`. The local working folder kept its prototype name; it is not visible
   in the repository.
+
+## D-027 · Bilingual documentation, English as the source of truth
+- **Context:** the original brief required everything visible in English; the owner later asked for Spanish too.
+- **Decision:** `README.md` (English) and `README.es.md` (Spanish) link to each other. Key narrative documents
+  have Spanish versions in `docs/es/`. Code, YAML keys, file names of governance artefacts, generated
+  documentation and standard vocabulary (ODCS, RACI, DAMA-DMBOK2) stay in English, which remains the source of
+  truth. A test checks that every relative link in every Markdown file resolves, so translations cannot point at
+  missing files.
+- **Why:** reaches both local and international reviewers without maintaining two codebases; generated docs stay
+  single-language so CI can keep checking them.
+
+## D-028 · Standard repository hygiene
+- **Decision:** add `CHANGELOG.md` (Keep a Changelog, semantic versioning), `CONTRIBUTING.md`, `SECURITY.md`,
+  `CODE_OF_CONDUCT.md`, `CODEOWNERS`, a pull-request template with a governance checklist, issue forms for the
+  governance workflows in `raci.yaml` (glossary term, quality incident, access request, contract change),
+  `.editorconfig`, a pre-commit configuration, and a CI matrix on Python 3.10 and 3.12.
+- **Why:** reviewers judge a portfolio repository by these signals first, and the issue forms turn the RACI
+  activities into an actual intake process.

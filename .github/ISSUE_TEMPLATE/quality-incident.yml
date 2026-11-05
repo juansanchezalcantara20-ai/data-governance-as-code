@@ -1,0 +1,23 @@
+name: Data quality incident
+description: Report a quality problem or quarantined rows to the dataset's steward (raci.resolve_quality_incident).
+title: "[Quality] "
+labels: [governance, data-quality]
+body:
+  - type: input
+    id: dataset
+    attributes: {label: Dataset, placeholder: "silver.material_issues"}
+    validations: {required: true}
+  - type: input
+    id: rule
+    attributes: {label: Failing rule or quarantine reason, placeholder: "issue_cost_matches_master"}
+  - type: dropdown
+    id: dimension
+    attributes: {label: Dimension, options: [completeness, uniqueness, validity, consistency, accuracy, timeliness]}
+    validations: {required: true}
+  - type: textarea
+    id: impact
+    attributes: {label: Business impact, description: Which reports or decisions are affected? Use `govkit lineage --impact`.}
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Evidence, description: Paste the relevant lines of the quality report. Synthetic data only.}

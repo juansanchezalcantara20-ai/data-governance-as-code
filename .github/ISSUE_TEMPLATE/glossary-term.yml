@@ -1,0 +1,30 @@
+name: Glossary term
+description: Propose a new business term or a change to an existing one (raci.define_glossary_term).
+title: "[Glossary] "
+labels: [governance, glossary]
+body:
+  - type: input
+    id: term
+    attributes: {label: Term name, placeholder: "e.g. First-time fix rate"}
+    validations: {required: true}
+  - type: dropdown
+    id: domain
+    attributes: {label: Domain, options: [operations, supply_chain, customer]}
+    validations: {required: true}
+  - type: dropdown
+    id: type
+    attributes: {label: Type, options: [concept, attribute, metric]}
+    validations: {required: true}
+  - type: textarea
+    id: definition
+    attributes: {label: Definition, description: Must not use the term's own name.}
+    validations: {required: true}
+  - type: input
+    id: formula
+    attributes: {label: Formula (metrics only)}
+  - type: input
+    id: source
+    attributes: {label: Source table and column, placeholder: "gold.service_order_economics.gross_margin"}
+  - type: textarea
+    id: rules
+    attributes: {label: Quality rules that should protect it}

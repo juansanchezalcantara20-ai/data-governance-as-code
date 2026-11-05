@@ -4,19 +4,32 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   governance:
+    name: Governance checks (Python ${{ matrix.python }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12"]
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python }}
+          cache: pip
       - name: Install
         run: make install
-      - name: Reproduce everything (lint, validate governance, generate, run, test)
+      - name: Reproduce everything (lint, validate governance, generate, run, verify, docs, test)
         run: make all
       - name: Generated docs are up to date
         run: make docs-check

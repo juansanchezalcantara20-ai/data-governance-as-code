@@ -12,8 +12,22 @@ license = { text = "MIT" }
 authors = [{ name = "Juan Luis Sánchez Alcántara" }]
 dependencies = ["duckdb>=1.1", "pyyaml>=6", "sqlglot>=25", "pandas>=2"]
 
+keywords = ["data governance", "data quality", "data contracts", "ODCS", "DAMA-DMBOK", "lineage", "duckdb"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Database",
+]
+
+[project.urls]
+Homepage = "https://github.com/juansanchezalcantara20-ai/data-governance-as-code"
+Documentation = "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/tree/main/docs"
+Changelog = "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/blob/main/CHANGELOG.md"
+
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=8", "ruff>=0.6", "pre-commit>=3"]
 
 [project.scripts]
 govkit = "govkit.cli:main"

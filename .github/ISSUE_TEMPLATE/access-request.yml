@@ -1,0 +1,28 @@
+name: Access request
+description: Ask for time-bound access above your role baseline (raci.approve_access_request).
+title: "[Access] "
+labels: [governance, access]
+body:
+  - type: markdown
+    attributes:
+      value: Restricted data is never granted through a request. Exceptions last at most 90 days. You cannot approve your own request.
+  - type: input
+    id: requester
+    attributes: {label: Requester (user id from users.yaml)}
+    validations: {required: true}
+  - type: dropdown
+    id: domain
+    attributes: {label: Domain, options: [operations, supply_chain, customer]}
+    validations: {required: true}
+  - type: dropdown
+    id: classification
+    attributes: {label: Up to classification, options: [internal, confidential]}
+    validations: {required: true}
+  - type: input
+    id: until
+    attributes: {label: Needed until (YYYY-MM-DD, max 90 days)}
+    validations: {required: true}
+  - type: textarea
+    id: reason
+    attributes: {label: Business reason}
+    validations: {required: true}
