@@ -36,8 +36,8 @@ def data(con: duckdb.DuckDBPyConnection) -> dict:
     quarantine = {}
     for (table,) in con.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'quarantine' "
                                 "ORDER BY 1").fetchall():
-        rows = con.execute(f"SELECT unnest(string_split(quarantine_reason, '; ')) AS r, count(*) "
-                           f"FROM quarantine.{table} GROUP BY 1 ORDER BY 2 DESC, 1").fetchall()
+        rows = con.execute(f"SELECT r, count(*) FROM (SELECT unnest(string_split(quarantine_reason, '; ')) AS r "
+                           f"FROM quarantine.{table}) GROUP BY r ORDER BY 2 DESC, 1").fetchall()
         if rows:
             quarantine[f"silver.{table}"] = {r: int(n) for r, n in rows}
     matrix = {}
