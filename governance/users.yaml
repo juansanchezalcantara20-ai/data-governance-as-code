@@ -112,3 +112,21 @@ users:
     domains: [customer]
     access:
       - {basis: role, domain: customer, layers: [gold], up_to: internal}
+
+  - id: rowan.pretendez
+    name: Rowan Pretendez
+    email: rowan.pretendez@example.org
+    role: field_technician
+    area: Field Operations
+    domains: [operations]
+    access:
+      - {basis: role, domain: operations, layers: [silver, gold], up_to: internal}
+
+  - id: ellis.checkwell
+    name: Ellis Checkwell
+    email: ellis.checkwell@example.org
+    role: auditor
+    area: Internal Audit
+    domains: ["*"]
+    access:
+      - {basis: role, domain: "*", layers: [bronze, silver, gold], up_to: restricted}

@@ -1,0 +1,118 @@
+# Spanish names, definitions and examples for every glossary term, plus an English example.
+# Keyed by term id from glossary.yaml. Validated by govkit/validate/glossary.py (complete, non-circular).
+# Examples use the fictional company's synthetic data.
+terms:
+  asset:
+    es: {name: Activo, definition: "Equipo físico que la empresa mantiene para un cliente, identificado con un código AS-nnnn.", example: "AS-0042, un camión de acarreo instalado en Site North."}
+    en: {example: "AS-0042, a haul truck installed at Site North."}
+  asset_type:
+    es: {name: Tipo de activo, definition: "Familia del equipo: camión de acarreo, cargador frontal, perforadora, estación de bombeo o grupo electrógeno.", example: "Perforadora."}
+    en: {example: "Drill rig."}
+  site:
+    es: {name: Sede, definition: "Lugar de operación donde está instalado un equipo y donde se hace el trabajo de campo.", example: "Site East."}
+    en: {example: "Site East."}
+  operating_hours:
+    es: {name: Horas de operación, definition: "Tiempo de funcionamiento acumulado que registra el horómetro del equipo.", example: "12 480 horas."}
+    en: {example: "12,480 hours."}
+  technician:
+    es: {name: Técnico, definition: "Trabajador que hace trabajo de campo y registra sus horas contra las órdenes.", example: "TE-017, electricista."}
+    en: {example: "TE-017, electrician."}
+  trade:
+    es: {name: Especialidad, definition: "Oficio de quien trabaja en campo: mecánico, electricista, instrumentista, soldador o supervisor.", example: "Instrumentista."}
+    en: {example: "Instrument technician."}
+  hourly_labor_cost:
+    es: {name: Costo por hora de mano de obra, definition: "Lo que le cuesta a la empresa una hora de trabajo de una persona de campo, con cargas incluidas. Es información de remuneración, restringida.", example: "S/ 38,50 por hora."}
+    en: {example: "PEN 38.50 per hour."}
+  service_order:
+    es: {name: Orden de servicio, definition: "Trabajo de campo autorizado para un cliente y un equipo, con plan, precio y estado.", example: "SO-000123: mantenimiento preventivo del activo AS-0042."}
+    en: {example: "SO-000123: preventive maintenance on asset AS-0042."}
+  service_type:
+    es: {name: Tipo de servicio, definition: "Naturaleza del trabajo pedido: mantenimiento preventivo, mantenimiento correctivo, instalación o inspección.", example: "Mantenimiento correctivo."}
+    en: {example: "Corrective maintenance."}
+  order_status:
+    es: {name: Estado de la orden, definition: "Etapa del ciclo de vida: abierta, cerrada o cancelada. Solo las cerradas tienen fecha de cierre.", example: "Cerrada."}
+    en: {example: "CLOSED."}
+  order_open_date:
+    es: {name: Fecha de apertura de la orden, definition: "Día en que se creó el trabajo en el sistema de gestión de servicios de campo.", example: "14/10/2026."}
+    en: {example: "2026-10-14."}
+  order_close_date:
+    es: {name: Fecha de cierre de la orden, definition: "Día en que el trabajo terminó y se cerró administrativamente; nunca antes de la fecha de apertura.", example: "21/10/2026."}
+    en: {example: "2026-10-21."}
+  order_price:
+    es: {name: Precio de la orden, definition: "Monto que se factura al cliente por el trabajo, sin impuestos.", example: "S/ 12 800."}
+    en: {example: "PEN 12,800."}
+  planned_cost:
+    es: {name: Costo planificado, definition: "Costo total estimado cuando se cotizó el trabajo.", example: "S/ 9 400 (S/ 3 100 de mano de obra + S/ 6 300 de materiales)."}
+    en: {example: "PEN 9,400 (3,100 labor + 6,300 materials)."}
+  labor_entry:
+    es: {name: Registro de horas, definition: "Horas que una persona trabajó en una orden en un día, tal como se anotaron en la aplicación de tareo.", example: "LE-000881: 8 horas el 15/10/2026."}
+    en: {example: "LE-000881: 8 hours on 2026-10-15."}
+  labor_hours:
+    es: {name: Horas trabajadas, definition: "Tiempo anotado en un registro de tareo, entre media hora y 24 horas.", example: "7,5 horas."}
+    en: {example: "7.5 hours."}
+  actual_labor_cost:
+    es: {name: Costo real de mano de obra, definition: "Lo que costó el tiempo que realmente se trabajó en una orden.", example: "3 registros de 8 horas a S/ 38,50 = S/ 924."}
+    en: {example: "3 entries of 8 hours at PEN 38.50 = PEN 924."}
+  actual_cost:
+    es: {name: Costo real, definition: "Todo lo que se gastó para entregar el trabajo: mano de obra más materiales.", example: "S/ 924 de mano de obra + S/ 5 980 de materiales = S/ 6 904."}
+    en: {example: "PEN 924 labor + PEN 5,980 materials = PEN 6,904."}
+  cost_variance:
+    es: {name: Desviación de costo, definition: "Cuánto se alejó en porcentaje lo gastado de lo estimado al cotizar; positivo significa sobrecosto.", example: "Se estimó S/ 9 400 y se gastó S/ 6 904: −27 %."}
+    en: {example: "Estimated PEN 9,400, spent PEN 6,904: −27%."}
+  gross_margin:
+    es: {name: Margen bruto, definition: "Dinero que queda de un trabajo después de pagar mano de obra y materiales.", example: "S/ 12 800 − S/ 6 904 = S/ 5 896."}
+    en: {example: "PEN 12,800 − PEN 6,904 = PEN 5,896."}
+  gross_margin_pct:
+    es: {name: Margen bruto %, definition: "Rentabilidad del trabajo expresada como parte de lo que se factura al cliente.", example: "S/ 5 896 de S/ 12 800: 46 de cada 100 soles facturados."}
+    en: {example: "PEN 5,896 of PEN 12,800: 46%."}
+  closed_orders:
+    es: {name: Órdenes cerradas, definition: "Cantidad de trabajos terminados en un periodo.", example: "Site North cerró 41 trabajos en setiembre."}
+    en: {example: "Site North closed 41 orders in September."}
+  revenue:
+    es: {name: Ingresos, definition: "Monto facturable de todos los trabajos no cancelados de un periodo.", example: "S/ 1,2 millones en octubre."}
+    en: {example: "PEN 1.2 million in October."}
+  material:
+    es: {name: Material, definition: "Repuesto o consumible que se guarda en almacén, identificado con un código MA-nnnn.", example: "MA-0003, manguera hidráulica."}
+    en: {example: "MA-0003, hydraulic hose."}
+  unit_cost:
+    es: {name: Costo unitario, definition: "Costo estándar de compra de una unidad, registrado en el maestro de materiales.", example: "S/ 420 por manguera hidráulica."}
+    en: {example: "PEN 420 per hydraulic hose."}
+  stock_on_hand:
+    es: {name: Existencias, definition: "Unidades físicamente disponibles en el almacén.", example: "36 unidades."}
+    en: {example: "36 units."}
+  reorder_point:
+    es: {name: Punto de reposición, definition: "Nivel de inventario en el que hay que lanzar una compra para reponer.", example: "20 unidades."}
+    en: {example: "20 units."}
+  material_issue:
+    es: {name: Salida de almacén, definition: "Movimiento que carga una cantidad de un repuesto o consumible a una orden de trabajo.", example: "MI-000412: 2 filtros de aceite para SO-000123."}
+    en: {example: "MI-000412: 2 oil filters for SO-000123."}
+  actual_material_cost:
+    es: {name: Costo real de materiales, definition: "Valor de los repuestos y consumibles cargados a un trabajo.", example: "2 filtros a S/ 85 + 1 manguera a S/ 420 = S/ 590."}
+    en: {example: "2 filters at PEN 85 + 1 hose at PEN 420 = PEN 590."}
+  stock_value:
+    es: {name: Valor del inventario, definition: "Dinero inmovilizado en almacén por cada repuesto o consumible.", example: "36 unidades × S/ 420 = S/ 15 120."}
+    en: {example: "36 units × PEN 420 = PEN 15,120."}
+  days_of_cover:
+    es: {name: Días de cobertura, definition: "Cuántos días alcanzan las existencias al ritmo de consumo reciente. En revisión hasta acordar la ventana de 90 días.", example: "36 unidades con 18 usadas en 90 días: 180 días."}
+    en: {example: "36 units with 18 used in 90 days: 180 days."}
+  below_reorder_point:
+    es: {name: Bajo punto de reposición, definition: "Alerta que se enciende cuando el inventario cayó al nivel de compra o por debajo.", example: "Batería de 12 V con 0 unidades: alerta encendida."}
+    en: {example: "12 V battery with 0 units: flag raised."}
+  customer:
+    es: {name: Cliente, definition: "Empresa que compra servicios de campo, identificada con un código CU-nnnn.", example: "CU-0007, una empresa ficticia del rubro energía."}
+    en: {example: "CU-0007, a fictional energy company."}
+  customer_segment:
+    es: {name: Segmento de cliente, definition: "Industria a la que pertenece la empresa compradora: minería, energía, construcción o agricultura.", example: "Construcción."}
+    en: {example: "Construction."}
+  business_contact:
+    es: {name: Contacto comercial, definition: "Persona de la empresa compradora con la que habla el equipo comercial. Es un dato personal y se enmascara por defecto.", example: "A. F., visto enmascarado."}
+    en: {example: "A. F., shown masked."}
+  marketing_consent:
+    es: {name: Consentimiento comercial, definition: "Permiso expreso del contacto para recibir comunicaciones comerciales.", example: "Sí, otorgado el 02/03/2026."}
+    en: {example: "Yes, given on 2026-03-02."}
+  customer_revenue:
+    es: {name: Ingresos por cliente, definition: "Monto facturable que generó una empresa compradora en sus trabajos no cancelados.", example: "CU-0007: S/ 74 300."}
+    en: {example: "CU-0007: PEN 74,300."}
+  customer_tier:
+    es: {name: Categoría de cliente, definition: "Clasificación A, B o C según lo facturado: A desde S/ 60 000, B desde S/ 25 000, C el resto.", example: "CU-0007 es categoría A."}
+    en: {example: "CU-0007 is tier A."}

@@ -33,6 +33,11 @@ def check_model(roles: dict, levels: dict, policy: dict, domains: dict, users: l
             out.append(Finding("policy", "error", role, f"unknown classification '{b.get('up_to')}'"))
         if b.get("domains") not in ("assigned", "all"):
             out.append(Finding("policy", "error", role, "domains must be 'assigned' or 'all'"))
+    for r in policy.get("quarantine_actions", []):
+        if r not in roles:
+            out.append(Finding("policy", "error", "quarantine_actions", f"unknown role '{r}'"))
+        elif policy.get("baseline", {}).get(r, {}).get("read_only"):
+            out.append(Finding("policy", "error", "quarantine_actions", f"role '{r}' is read_only and cannot act"))
     req = policy.get("requests", {})
     for cls, approvers in req.get("approvers", {}).items():
         if cls not in levels:

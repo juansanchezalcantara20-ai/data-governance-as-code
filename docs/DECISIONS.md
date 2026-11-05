@@ -187,3 +187,24 @@ Each decision records the choice, the alternatives considered and why. Newest la
   `.editorconfig`, a pre-commit configuration, and a CI matrix on Python 3.10 and 3.12.
 - **Why:** reviewers judge a portfolio repository by these signals first, and the issue forms turn the RACI
   activities into an actual intake process.
+
+## D-029 · Two more roles: Field Technician and Data Auditor
+- **Decision:** add `field_technician` (operational data of the assigned domain, silver and gold, up to internal)
+  and `auditor` (every domain and layer up to restricted, personal data masked, `read_only: true`). Only
+  `quarantine_actions` roles (owner, steward, custodian) may release or discard quarantined rows.
+- **Why:** the navigable demo lets a visitor switch persona; these two make least privilege visible in both
+  directions (the technician sees orders but no money; the auditor sees everything but changes nothing).
+
+## D-030 · Column-level classification
+- **Decision:** a contract property may carry its own `classification`, never below its dataset's. The effective
+  level of a column is the higher of both. `silver.service_orders` becomes `internal` with price and planned costs
+  `confidential`. Readers below a column's level do not get it: column-level `GRANT` in the PostgreSQL output,
+  NULL-returning column masks in Unity Catalog. Raising a column's effective level is a breaking change.
+- **Why:** whole-table classification forces a choice between hiding operational data from field teams or
+  exposing money to them; column level removes that trade-off.
+
+## D-031 · Spanish glossary content lives next to the glossary
+- **Decision:** `governance/glossary_translations.yaml` holds, per term id, the Spanish name, definition and
+  example, and an English example. The validator requires every term to be translated and rejects circular Spanish
+  definitions.
+- **Why:** the demo app is Spanish-first; translations are governed content with the same checks, not UI strings.

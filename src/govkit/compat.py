@@ -45,6 +45,9 @@ def diff(old: contracts_mod.Contract, new: contracts_mod.Contract) -> list[Chang
             changes.append(Change(new.name, True, f"column '{name}' type {a.logical_type} -> {b.logical_type}"))
         if b.required and not a.required:
             changes.append(Change(new.name, True, f"column '{name}' became required"))
+        before_cls, after_cls = old.column_classification(name, levels), new.column_classification(name, levels)
+        if levels.get(after_cls, 0) > levels.get(before_cls, 0):
+            changes.append(Change(new.name, True, f"column '{name}' classification raised {before_cls} -> {after_cls}"))
     if old.primary_key != new.primary_key:
         changes.append(Change(new.name, True, f"primary key {old.primary_key} -> {new.primary_key}"))
     if levels.get(new.classification, 0) > levels.get(old.classification, 0):

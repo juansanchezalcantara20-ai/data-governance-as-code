@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS governance_demo.silver.service_orders (
   planned_material_cost DOUBLE COMMENT 'Quoted material cost.',
   price DOUBLE NOT NULL COMMENT 'Billable amount excluding tax.',
   CONSTRAINT pk_service_orders PRIMARY KEY (order_id)
-) COMMENT 'Validated service orders. Orders failing a blocking rule are quarantined with the reason. Contract urn:datacontract:operations:silver.service_orders v1.1.0.';
+) COMMENT 'Validated service orders. Orders failing a blocking rule are quarantined with the reason. Contract urn:datacontract:operations:silver.service_orders v1.2.0.';
 
 CREATE TABLE IF NOT EXISTS governance_demo.silver.technicians (
   technician_id STRING NOT NULL COMMENT 'Technician code TE-nnn.',

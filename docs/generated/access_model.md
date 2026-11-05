@@ -32,31 +32,33 @@ Default is **deny**; every cell below is derived from the policy.
 | data_steward | assigned | bronze, silver, gold | restricted | clear |
 | data_custodian | all | bronze, silver, gold | confidential | masked |
 | data_consumer | assigned | gold | internal | masked |
+| field_technician | assigned | silver, gold | internal | masked |
+| auditor | all | bronze, silver, gold | restricted | masked |
 
 ## Who can read what
 
 ✔ = role baseline · ⏱ = time-bound approved request · blank = denied
 
-| Dataset | Class | Morgan Fictive | Quinn Synthia | Riley Placeholder | Sam Samplewood | Jordan Mockwell | Casey Testa | Taylor Dummond | Alex Exampleton | Drew Stubbs | Jamie Fakeley | Robin Notreal |
-|---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| `bronze.assets` | internal |  |  |  | ✔ |  |  |  |  | ✔ |  |  |
-| `bronze.customers` | confidential |  |  |  |  |  |  |  | ✔ | ✔ |  |  |
-| `bronze.labor_entries` | internal |  |  |  | ✔ |  |  |  |  | ✔ |  |  |
-| `bronze.material_issues` | internal |  |  |  |  |  | ✔ |  |  | ✔ |  |  |
-| `bronze.materials` | internal |  |  |  |  |  | ✔ |  |  | ✔ |  |  |
-| `bronze.service_orders` | confidential |  |  |  | ✔ |  |  |  |  | ✔ |  |  |
-| `bronze.technicians` | restricted |  |  |  | ✔ |  |  |  |  |  |  |  |
-| `silver.assets` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  |
-| `silver.customers` | confidential |  |  |  |  |  |  | ✔ | ✔ | ✔ |  |  |
-| `silver.labor_entries` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  |
-| `silver.material_issues` | internal |  |  |  |  | ✔ | ✔ |  |  | ✔ |  |  |
-| `silver.materials` | internal |  |  |  |  | ✔ | ✔ |  |  | ✔ |  |  |
-| `silver.service_orders` | confidential |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  |
-| `silver.technicians` | restricted |  |  | ✔ | ✔ |  |  |  |  |  |  |  |
-| `gold.customer_value` | confidential |  | ✔ |  |  |  |  | ✔ | ✔ | ✔ |  |  |
-| `gold.inventory_position` | internal | ✔ | ✔ |  |  | ✔ | ✔ |  |  | ✔ | ✔ |  |
-| `gold.service_order_economics` | confidential |  | ✔ | ✔ | ✔ |  |  |  |  | ✔ | ⏱ |  |
-| `gold.site_monthly_kpis` | confidential |  | ✔ | ✔ | ✔ |  |  |  |  | ✔ | ⏱ |  |
+| Dataset | Class | Morgan Fictive | Quinn Synthia | Riley Placeholder | Sam Samplewood | Jordan Mockwell | Casey Testa | Taylor Dummond | Alex Exampleton | Drew Stubbs | Jamie Fakeley | Robin Notreal | Rowan Pretendez | Ellis Checkwell |
+|---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| `bronze.assets` | internal |  |  |  | ✔ |  |  |  |  | ✔ |  |  |  | ✔ |
+| `bronze.customers` | confidential |  |  |  |  |  |  |  | ✔ | ✔ |  |  |  | ✔ |
+| `bronze.labor_entries` | internal |  |  |  | ✔ |  |  |  |  | ✔ |  |  |  | ✔ |
+| `bronze.material_issues` | internal |  |  |  |  |  | ✔ |  |  | ✔ |  |  |  | ✔ |
+| `bronze.materials` | internal |  |  |  |  |  | ✔ |  |  | ✔ |  |  |  | ✔ |
+| `bronze.service_orders` | confidential |  |  |  | ✔ |  |  |  |  | ✔ |  |  |  | ✔ |
+| `bronze.technicians` | restricted |  |  |  | ✔ |  |  |  |  |  |  |  |  | ✔ |
+| `silver.assets` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  | ✔ | ✔ |
+| `silver.customers` | confidential |  |  |  |  |  |  | ✔ | ✔ | ✔ |  |  |  | ✔ |
+| `silver.labor_entries` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  | ✔ | ✔ |
+| `silver.material_issues` | internal |  |  |  |  | ✔ | ✔ |  |  | ✔ |  |  |  | ✔ |
+| `silver.materials` | internal |  |  |  |  | ✔ | ✔ |  |  | ✔ |  |  |  | ✔ |
+| `silver.service_orders` | internal |  |  | ✔ | ✔ |  |  |  |  | ✔ |  |  | ✔ | ✔ |
+| `silver.technicians` | restricted |  |  | ✔ | ✔ |  |  |  |  |  |  |  |  | ✔ |
+| `gold.customer_value` | confidential |  | ✔ |  |  |  |  | ✔ | ✔ | ✔ |  |  |  | ✔ |
+| `gold.inventory_position` | internal | ✔ | ✔ |  |  | ✔ | ✔ |  |  | ✔ | ✔ |  |  | ✔ |
+| `gold.service_order_economics` | confidential |  | ✔ | ✔ | ✔ |  |  |  |  | ✔ | ⏱ |  |  | ✔ |
+| `gold.site_monthly_kpis` | confidential |  | ✔ | ✔ | ✔ |  |  |  |  | ✔ | ⏱ |  |  | ✔ |
 
 ## Compiled grants
 

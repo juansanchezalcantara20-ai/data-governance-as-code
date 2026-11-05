@@ -74,7 +74,7 @@ ALTER TABLE governance_demo.silver.materials ALTER COLUMN unit_cost SET TAGS ('g
 ALTER TABLE governance_demo.silver.materials ALTER COLUMN stock_on_hand SET TAGS ('glossary_term' = 'Stock on hand');
 ALTER TABLE governance_demo.silver.materials ALTER COLUMN reorder_point SET TAGS ('glossary_term' = 'Reorder point');
 
-ALTER TABLE governance_demo.silver.service_orders SET TAGS ('classification' = 'confidential', 'domain' = 'operations', 'data_owner' = 'riley.placeholder', 'data_steward' = 'sam.samplewood', 'contract_version' = '1.1.0', 'layer' = 'silver');
+ALTER TABLE governance_demo.silver.service_orders SET TAGS ('classification' = 'internal', 'domain' = 'operations', 'data_owner' = 'riley.placeholder', 'data_steward' = 'sam.samplewood', 'contract_version' = '1.2.0', 'layer' = 'silver');
 ALTER TABLE governance_demo.silver.service_orders ALTER COLUMN order_id SET TAGS ('glossary_term' = 'Service order');
 ALTER TABLE governance_demo.silver.service_orders ALTER COLUMN customer_id SET TAGS ('glossary_term' = 'Customer');
 ALTER TABLE governance_demo.silver.service_orders ALTER COLUMN asset_id SET TAGS ('glossary_term' = 'Asset');

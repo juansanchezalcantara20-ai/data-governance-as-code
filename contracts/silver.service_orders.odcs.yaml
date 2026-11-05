@@ -2,13 +2,13 @@ apiVersion: v3.0.2
 kind: DataContract
 id: urn:datacontract:operations:silver.service_orders
 name: silver.service_orders
-version: 1.1.0
+version: 1.2.0
 status: active
 domain: operations
 dataProduct: Service operations
 description:
   purpose: Validated service orders. Orders failing a blocking rule are quarantined with the reason.
-  usage: Base of all service economics and site KPIs.
+  usage: Base of all service economics and site KPIs. Price and planned costs are confidential columns; the rest is internal so field teams can plan work.
   limitations: Cancelled orders are kept here and excluded in gold.
 tags: [silver, transactions]
 team:
@@ -17,7 +17,7 @@ team:
 slaProperties:
   - {property: latency, value: 3, unit: d, element: silver.service_orders.opened_on}
 customProperties:
-  - {property: dataClassification, value: confidential}
+  - {property: dataClassification, value: internal}
   - property: changePolicy
     value:
       versioning: semver
@@ -51,11 +51,11 @@ schema:
          quality: [{name: status_valid, type: library, rule: validValues, arguments: {values: [OPEN, CLOSED, CANCELLED]}}]}
       - {name: planned_hours, logicalType: integer, physicalType: INTEGER, description: Quoted labor hours.,
          quality: [{name: planned_hours_non_negative, type: library, rule: range, arguments: {min: 0}}]}
-      - {name: planned_labor_cost, logicalType: number, physicalType: DOUBLE, description: Quoted labor cost.,
+      - {name: planned_labor_cost, logicalType: number, physicalType: DOUBLE, classification: confidential, description: Quoted labor cost.,
          quality: [{name: planned_labor_cost_non_negative, type: library, rule: range, arguments: {min: 0}}]}
-      - {name: planned_material_cost, logicalType: number, physicalType: DOUBLE, description: Quoted material cost.,
+      - {name: planned_material_cost, logicalType: number, physicalType: DOUBLE, classification: confidential, description: Quoted material cost.,
          quality: [{name: planned_material_cost_non_negative, type: library, rule: range, arguments: {min: 0}}]}
-      - {name: price, logicalType: number, physicalType: DOUBLE, required: true, businessName: Order price,
+      - {name: price, logicalType: number, physicalType: DOUBLE, required: true, classification: confidential, businessName: Order price,
          description: Billable amount excluding tax.,
          quality: [{name: price_non_negative, type: library, rule: range, arguments: {min: 0}}]}
     quality:

@@ -103,7 +103,7 @@ O con Docker: `docker compose up --build`.
 
 | Lo que pide el puesto | Dónde está en este repositorio |
 |---|---|
-| **Data stewardship** | Seis roles con responsabilidades, decisiones y escalamiento; RACI de nueve actividades; un Owner y un Steward por dominio, contrato y término del glosario ([modelo operativo](docs/generated/operating_model.md)). |
+| **Data stewardship** | Ocho roles con responsabilidades, decisiones y escalamiento; RACI de nueve actividades; un Owner y un Steward por dominio, contrato y término del glosario ([modelo operativo](docs/generated/operating_model.md)). |
 | **Glosario de negocio** | 38 términos con definición, Owner, Steward, fórmula, columna fuente, reglas asociadas, sinónimos, términos relacionados, estado y fecha de revisión; validado contra circularidad y términos huérfanos ([glosario](docs/generated/glossary.md)). |
 | **Contratos de datos** | Contratos ODCS v3 con esquema, tipos, nulabilidad, claves, clasificación, SLA, reglas, versión y política de cambios; verificados contra el dato en cada corrida; los cambios que rompen hacen fallar la CI ([ejemplo](docs/es/ejemplo-cambio-que-rompe.md)). |
 | **Reglas de calidad** | 102 reglas ejecutables en completitud, unicidad, validez, consistencia, exactitud y oportunidad; cuarentena en lugar de pérdida silenciosa; reporte por dataset y por dimensión ([reporte](docs/generated/quality_report.md)). |

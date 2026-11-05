@@ -99,7 +99,7 @@ Or with Docker: `docker compose up --build`.
 
 | Skill the role asks for | Where it is in this repo |
 |---|---|
-| **Data stewardship** | Six roles with responsibilities, decisions and escalation; RACI for nine activities; one Owner and Steward per domain, contract and glossary term ([operating model](docs/generated/operating_model.md)). |
+| **Data stewardship** | Eight roles with responsibilities, decisions and escalation; RACI for nine activities; one Owner and Steward per domain, contract and glossary term ([operating model](docs/generated/operating_model.md)). |
 | **Business glossary** | 38 terms with definition, owner, steward, formula, source column, linked rules, synonyms, related terms, status and review date; validated for circularity and orphans ([glossary](docs/generated/glossary.md)). |
 | **Data contracts** | ODCS v3 contracts with schema, types, nullability, keys, classification, SLA, rules, version and change policy; verified against the data on every run; breaking changes fail CI ([example](docs/examples/breaking-change.md)). |
 | **Data quality rules** | 102 executable rules across completeness, uniqueness, validity, consistency, accuracy and timeliness; quarantine instead of silent loss; report per dataset and dimension ([report](docs/generated/quality_report.md)). |

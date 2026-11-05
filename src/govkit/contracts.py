@@ -127,6 +127,12 @@ class Contract:
     def primary_key(self) -> list[str]:
         return [p.name for p in self.properties if p.primary_key]
 
+    def column_classification(self, name: str, ranks: dict[str, int]) -> str:
+        """Effective classification of a column: the higher of the dataset's and the column's own."""
+        p = self.column(name)
+        own = p.classification if p and p.classification else self.classification
+        return own if ranks.get(own, 0) > ranks.get(self.classification, 0) else self.classification
+
     def column(self, name: str) -> Property | None:
         return next((p for p in self.properties if p.name == name), None)
 

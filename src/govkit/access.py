@@ -36,8 +36,11 @@ def datasets() -> list[dict]:
         out.append({"name": s["name"], "layer": "bronze", "domain": s["domain"], "classification": s["classification"],
                     "pii": dict(s.get("pii") or {}), "description": s.get("description", "")})
     for c in contracts_mod.load_all():
+        cols = {p.name: p.classification for p in c.properties
+                if p.classification and p.classification != c.classification}
         out.append({"name": c.name, "layer": c.layer, "domain": c.domain, "classification": c.classification,
-                    "pii": c.pii_columns, "description": c.purpose})
+                    "pii": c.pii_columns, "description": c.purpose, "column_classification": cols,
+                    "columns": [p.name for p in c.properties]})
     return out
 
 
@@ -73,6 +76,47 @@ def can_read(user_id: str, dataset: dict, on: date | None = None) -> bool:
         return True
     return any(_in_scope(user, dataset["domain"], g["domain"]) and dataset["layer"] in g["layers"]
                and levels()[dataset["classification"]] <= levels()[g["up_to"]] for g in request_grants(user, on))
+
+
+def max_level(user_id: str, dataset: dict, on: date | None = None) -> str | None:
+    """Highest classification this user may read in ``dataset`` (None = no access)."""
+    user = users()[user_id]
+    best = None
+    lv = levels()
+    b = baseline(user["role"])
+    if b and (b["domains"] == "all" or _in_scope(user, dataset["domain"])) and dataset["layer"] in b["layers"]:
+        best = b["up_to"]
+    for g in request_grants(user, on):
+        in_scope = _in_scope(user, dataset["domain"], g["domain"]) and dataset["layer"] in g["layers"]
+        if in_scope and (best is None or lv[g["up_to"]] > lv[best]):
+            best = g["up_to"]
+    if best is None or lv[dataset["classification"]] > lv[best]:
+        return None
+    return best
+
+
+def column_view(user_id: str, dataset: dict, columns: list[str], on: date | None = None) -> dict[str, str]:
+    """Per column: 'visible', 'masked' (personal data shown masked) or 'hidden' (classification too high)."""
+    top = max_level(user_id, dataset, on)
+    lv = levels()
+    out = {}
+    for col in columns:
+        if top is None:
+            out[col] = "hidden"
+            continue
+        cls = dataset.get("column_classification", {}).get(col, dataset["classification"])
+        if lv[cls] > lv[top]:
+            out[col] = "hidden"
+        elif col in dataset["pii"] and not sees_unmasked_pii(user_id, dataset["domain"]):
+            out[col] = "masked"
+        else:
+            out[col] = "visible"
+    return out
+
+
+def can_act_on_quarantine(user_id: str) -> bool:
+    role = users()[user_id]["role"]
+    return role in policy().get("quarantine_actions", []) and not baseline(role).get("read_only")
 
 
 def sees_unmasked_pii(user_id: str, domain: str) -> bool:

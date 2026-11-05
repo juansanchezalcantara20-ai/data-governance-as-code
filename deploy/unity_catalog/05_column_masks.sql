@@ -25,6 +25,12 @@ CREATE OR REPLACE FUNCTION governance_demo.silver.mask_operations_phone(v STRING
 CREATE OR REPLACE FUNCTION governance_demo.silver.mask_operations_compensation(v DOUBLE) RETURNS DOUBLE
   RETURN CASE WHEN is_account_group_member('gov_operations_data_owner') OR is_account_group_member('gov_operations_data_steward') THEN v ELSE CAST(NULL AS DOUBLE) END;
 
+-- Column-level classification: columns classified above their dataset return NULL to readers
+-- whose role baseline does not reach that level (Unity Catalog has no column GRANT).
+
+CREATE OR REPLACE FUNCTION governance_demo.silver.mask_operations_confidential_double(v DOUBLE) RETURNS DOUBLE
+  RETURN CASE WHEN is_account_group_member('gov_governance_council') OR is_account_group_member('gov_operations_data_owner') OR is_account_group_member('gov_operations_data_steward') OR is_account_group_member('gov_data_custodian') OR is_account_group_member('gov_auditor') THEN v ELSE CAST(NULL AS DOUBLE) END;
+
 ALTER TABLE governance_demo.gold.customer_value ALTER COLUMN contact_name SET MASK governance_demo.gold.mask_customer_name;
 ALTER TABLE governance_demo.gold.customer_value ALTER COLUMN contact_email SET MASK governance_demo.gold.mask_customer_email;
 ALTER TABLE governance_demo.silver.customers ALTER COLUMN contact_name SET MASK governance_demo.silver.mask_customer_name;
@@ -36,3 +42,6 @@ ALTER TABLE governance_demo.silver.technicians ALTER COLUMN last_name SET MASK g
 ALTER TABLE governance_demo.silver.technicians ALTER COLUMN email SET MASK governance_demo.silver.mask_operations_email;
 ALTER TABLE governance_demo.silver.technicians ALTER COLUMN phone SET MASK governance_demo.silver.mask_operations_phone;
 ALTER TABLE governance_demo.silver.technicians ALTER COLUMN hourly_cost SET MASK governance_demo.silver.mask_operations_compensation;
+ALTER TABLE governance_demo.silver.service_orders ALTER COLUMN planned_labor_cost SET MASK governance_demo.silver.mask_operations_confidential_double;
+ALTER TABLE governance_demo.silver.service_orders ALTER COLUMN planned_material_cost SET MASK governance_demo.silver.mask_operations_confidential_double;
+ALTER TABLE governance_demo.silver.service_orders ALTER COLUMN price SET MASK governance_demo.silver.mask_operations_confidential_double;

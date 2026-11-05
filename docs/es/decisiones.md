@@ -195,3 +195,27 @@ identificadores coinciden con la versión en inglés, que es la fuente principal
   solicitud de acceso, cambio de contrato), `.editorconfig`, configuración de pre-commit y CI en Python 3.10 y 3.12.
 - **Por qué:** son las primeras señales con las que se juzga un repositorio de portafolio, y los formularios
   convierten las actividades del RACI en un proceso real de entrada.
+
+## D-029 · Dos roles más: Técnico de campo y Auditor de datos
+- **Decisión:** se agregan `field_technician` (datos operativos de su dominio, capas silver y gold, hasta
+  internal) y `auditor` (todos los dominios y capas hasta restricted, datos personales enmascarados,
+  `read_only: true`). Solo los roles de `quarantine_actions` (Owner, Steward, Custodian) pueden liberar o descartar
+  filas en cuarentena.
+- **Por qué:** la demo navegable deja cambiar de perfil; estos dos muestran el mínimo privilegio en ambos sentidos
+  (el técnico ve las órdenes pero no el dinero; el auditor ve todo pero no cambia nada).
+
+## D-030 · Clasificación por columna
+- **Decisión:** una propiedad del contrato puede tener su propia `classification`, nunca por debajo de la de su
+  dataset; la clasificación efectiva es la mayor de las dos. `silver.service_orders` pasa a `internal` con el precio
+  y los costos planificados como `confidential`. Quien está por debajo del nivel de una columna no la recibe:
+  `GRANT` por columna en PostgreSQL y máscaras que devuelven NULL en Unity Catalog. Subir el nivel efectivo de una
+  columna es un cambio que rompe.
+- **Por qué:** clasificar solo tablas completas obliga a elegir entre ocultar datos operativos a los equipos de
+  campo o mostrarles el dinero; por columna desaparece ese dilema.
+
+## D-031 · El contenido en español del glosario vive junto al glosario
+- **Decisión:** `governance/glossary_translations.yaml` guarda, por término, el nombre, la definición y el ejemplo
+  en español, más un ejemplo en inglés. El validador exige que todo término esté traducido y rechaza definiciones
+  circulares en español.
+- **Por qué:** la app es primero en español; las traducciones son contenido gobernado con las mismas
+  verificaciones, no textos de interfaz.
