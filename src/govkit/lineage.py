@@ -140,3 +140,15 @@ def dot(con, focus: str | None = None) -> str:
         out.append(f'  "{n}" [fillcolor="{colors.get(kind, "#ffffff")}"{border}];')
     out += [f'  "{s}" -> "{t}";' for s, t in edges]
     return "\n".join(out + ["}"])
+
+
+def output_columns(sql: str) -> list[str]:
+    """Column names produced by a SQL model (its outermost SELECT)."""
+    return list(parse_one(sql, dialect="duckdb").named_selects)
+
+
+def model_columns() -> dict[str, list[str]]:
+    """Every SQL model in models/ -> its output columns."""
+    from .paths import models_dir
+
+    return {p.stem: output_columns(p.read_text(encoding="utf-8")) for p in sorted(models_dir().glob("*.sql"))}

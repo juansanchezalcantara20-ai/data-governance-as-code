@@ -1,0 +1,50 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:operations:gold.site_monthly_kpis
+name: gold.site_monthly_kpis
+version: 1.0.0
+status: active
+domain: operations
+dataProduct: Service profitability
+description:
+  purpose: Monthly orders, hours, cost, revenue and margin per site.
+  usage: Service profitability dashboard (management view).
+  limitations: Month is the month an order was opened, not closed.
+tags: [gold, kpi]
+team:
+  - {username: riley.placeholder, role: data_owner}
+  - {username: sam.samplewood, role: data_steward}
+slaProperties:
+  - {property: latency, value: 31, unit: d, element: gold.site_monthly_kpis.month}
+customProperties:
+  - {property: dataClassification, value: confidential}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: site_monthly_kpis
+    physicalName: gold.site_monthly_kpis
+    physicalType: table
+    description: One row per site and month.
+    properties:
+      - {name: site, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1, businessName: Site, description: Site.}
+      - {name: month, logicalType: date, physicalType: DATE, primaryKey: true, primaryKeyPosition: 2, description: First day of the month.}
+      - {name: orders, logicalType: integer, physicalType: BIGINT, required: true, description: Non-cancelled orders opened.}
+      - {name: closed_orders, logicalType: integer, physicalType: BIGINT, businessName: Closed orders, description: Orders closed.}
+      - {name: actual_hours, logicalType: number, physicalType: DOUBLE, businessName: Labor hours, description: Hours booked.}
+      - {name: actual_cost, logicalType: number, physicalType: DOUBLE, businessName: Actual cost, description: Cost incurred.}
+      - {name: revenue, logicalType: number, physicalType: DOUBLE, businessName: Revenue, description: Billable amount.}
+      - {name: gross_margin_pct, logicalType: number, physicalType: DOUBLE, businessName: Gross margin %, description: Margin over revenue.}
+    quality:
+      - {name: closed_not_above_total, type: sql, query: "SELECT count(*) FROM {object} WHERE closed_orders > orders",
+         mustBe: 0, dimension: consistency}
+      - name: revenue_reconciles
+        type: sql
+        query: "SELECT abs((SELECT sum(revenue) FROM {object}) - (SELECT sum(price) FROM gold.service_order_economics))"
+        mustBeLessThan: 1
+        dimension: accuracy
+        description: Monthly revenue adds up to order-level revenue.

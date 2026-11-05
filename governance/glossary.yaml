@@ -1,0 +1,176 @@
+# Business glossary. Validated by govkit/validate/glossary.py; rendered by `govkit docs`.
+# type: concept | attribute | metric. Metrics need a formula and a source.
+# depends_on: terms the formula is built from (checked for cycles).
+# quality_rules: rule names in the data contract of the source table.
+defaults: &ops {domain: operations, owner: riley.placeholder, steward: sam.samplewood}
+terms:
+  # ---------------------------------------------------------------- operations
+  - {id: asset, name: Asset, <<: *ops, type: concept, status: approved, next_review: 2027-03-31,
+     definition: A physical piece of equipment the company maintains for a customer, identified by an AS-nnnn code.,
+     source: {table: silver.assets, column: asset_id}, quality_rules: [asset_id_not_null, asset_id_unique, asset_id_format],
+     synonyms: [equipment, unit], related: [asset_type, site, service_order]}
+  - {id: asset_type, name: Asset type, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Family of equipment (haul truck, wheel loader, drill rig, pump station or generator set).,
+     source: {table: silver.assets, column: asset_type}, quality_rules: [asset_type_valid], related: [asset]}
+  - {id: site, name: Site, <<: *ops, type: concept, status: approved, next_review: 2027-03-31,
+     definition: Operating location where an asset is installed and where field work is performed.,
+     source: {table: silver.assets, column: site}, quality_rules: [site_not_null], synonyms: [location], related: [asset]}
+  - {id: operating_hours, name: Operating hours, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Cumulative running time recorded by the equipment hour meter.,
+     source: {table: silver.assets, column: operating_hours}, quality_rules: [operating_hours_non_negative],
+     synonyms: [hour meter reading], related: [asset]}
+  - {id: technician, name: Technician, <<: *ops, type: concept, status: approved, next_review: 2027-03-31,
+     definition: Employee who performs field work and books hours against service orders.,
+     source: {table: silver.technicians, column: technician_id}, quality_rules: [technician_id_not_null, technician_id_unique],
+     related: [trade, labor_entry]}
+  - {id: trade, name: Trade, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Craft or specialty of a technician (mechanic, electrician, instrument technician, welder, supervisor).,
+     source: {table: silver.technicians, column: trade}, quality_rules: [trade_valid], synonyms: [craft], related: [technician]}
+  - {id: hourly_labor_cost, name: Hourly labor cost, <<: *ops, type: attribute, status: approved, next_review: 2027-01-31,
+     definition: Fully loaded cost to the company of one hour of a technician's time. Restricted compensation data.,
+     source: {table: silver.technicians, column: hourly_cost}, quality_rules: [hourly_cost_not_null, hourly_cost_range],
+     synonyms: [labor rate], related: [actual_labor_cost]}
+  - {id: service_order, name: Service order, <<: *ops, type: concept, status: approved, next_review: 2027-03-31,
+     definition: Authorised unit of field work for one customer and one asset, with plan, price and status.,
+     source: {table: silver.service_orders, column: order_id},
+     quality_rules: [order_id_not_null, order_id_unique, order_id_format, asset_id_exists, customer_id_exists],
+     synonyms: [work order, SO], related: [asset, customer, labor_entry, material_issue]}
+  - {id: service_type, name: Service type, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Nature of the work requested (preventive maintenance, corrective maintenance, installation or inspection).,
+     source: {table: silver.service_orders, column: service_type}, quality_rules: [service_type_valid], related: [service_order]}
+  - {id: order_status, name: Order status, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Lifecycle stage of a service order (OPEN, CLOSED or CANCELLED). Only CLOSED orders carry a close date.,
+     source: {table: silver.service_orders, column: status}, quality_rules: [status_valid], related: [order_close_date]}
+  - {id: order_open_date, name: Order open date, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Calendar day on which a service order was created in the field service system.,
+     source: {table: silver.service_orders, column: opened_on}, quality_rules: [opened_on_not_null, freshness_sla],
+     related: [order_close_date]}
+  - {id: order_close_date, name: Order close date, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Calendar day on which work was completed and administratively closed; never earlier than the open date.,
+     source: {table: silver.service_orders, column: closed_on}, quality_rules: [closed_after_opened, closed_orders_have_date],
+     related: [order_open_date, order_status]}
+  - {id: order_price, name: Order price, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Amount billable to the customer for a service order, excluding sales tax.,
+     source: {table: silver.service_orders, column: price}, quality_rules: [price_not_null, price_non_negative],
+     synonyms: [billing amount], related: [gross_margin, revenue]}
+  - {id: planned_cost, name: Planned cost, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Total cost estimated when the service order was quoted.,
+     formula: planned labor cost + planned material cost,
+     source: {table: gold.service_order_economics, column: planned_cost}, quality_rules: [], related: [cost_variance]}
+  - {id: labor_entry, name: Labor entry, <<: *ops, type: concept, status: approved, next_review: 2027-03-31,
+     definition: Hours one technician worked on one service order on one day, as booked in the timesheet app.,
+     source: {table: silver.labor_entries, column: entry_id},
+     quality_rules: [entry_id_unique, labor_order_exists, labor_technician_exists], synonyms: [timesheet line],
+     related: [technician, labor_hours]}
+  - {id: labor_hours, name: Labor hours, <<: *ops, type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Time booked in a labor entry, between 0.5 and 24 hours.,
+     source: {table: silver.labor_entries, column: hours}, quality_rules: [hours_not_null, hours_range],
+     synonyms: [man-hours], related: [actual_labor_cost]}
+  - {id: actual_labor_cost, name: Actual labor cost, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Cost of the time technicians actually booked on a service order.,
+     formula: Σ (labor hours × hourly labor cost), depends_on: [labor_hours, hourly_labor_cost],
+     source: {table: gold.service_order_economics, column: actual_labor_cost}, quality_rules: [labor_cost_reconciles],
+     related: [actual_cost]}
+  - {id: actual_cost, name: Actual cost, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Full cost incurred to deliver a service order.,
+     formula: actual labor cost + actual material cost, depends_on: [actual_labor_cost, actual_material_cost],
+     source: {table: gold.service_order_economics, column: actual_cost}, quality_rules: [actual_cost_non_negative],
+     related: [gross_margin, cost_variance]}
+  - {id: cost_variance, name: Cost variance, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Percentage by which incurred cost deviates from the quoted estimate; positive means overrun.,
+     formula: 100 × (actual cost / planned cost − 1), depends_on: [actual_cost, planned_cost],
+     source: {table: gold.service_order_economics, column: cost_variance_pct}, quality_rules: [], synonyms: [cost overrun]}
+  - {id: gross_margin, name: Gross margin, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Money left from a service order after paying for labor and materials.,
+     formula: order price − actual cost, depends_on: [order_price, actual_cost],
+     source: {table: gold.service_order_economics, column: gross_margin}, quality_rules: [margin_definition_holds],
+     related: [gross_margin_pct]}
+  - {id: gross_margin_pct, name: Gross margin %, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Profitability of service work expressed as a share of what the customer is billed.,
+     formula: 100 × gross margin / order price, depends_on: [gross_margin, order_price],
+     source: {table: gold.service_order_economics, column: gross_margin_pct}, quality_rules: [margin_pct_plausible],
+     synonyms: [margin percentage]}
+  - {id: closed_orders, name: Closed orders, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Number of service orders completed in a period.,
+     formula: count of service orders with order status = CLOSED, depends_on: [order_status, service_order],
+     source: {table: gold.site_monthly_kpis, column: closed_orders}, quality_rules: [closed_not_above_total]}
+  - {id: revenue, name: Revenue, <<: *ops, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Billable amount of all non-cancelled service orders in a period.,
+     formula: Σ order price of non-cancelled service orders, depends_on: [order_price],
+     source: {table: gold.site_monthly_kpis, column: revenue}, quality_rules: [revenue_reconciles], synonyms: [sales]}
+  # ---------------------------------------------------------------- supply chain
+  - {id: material, name: Material, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa, type: concept,
+     status: approved, next_review: 2027-03-31,
+     definition: Spare part or consumable kept in the warehouse and identified by an MA-nnnn code.,
+     source: {table: silver.materials, column: material_id}, quality_rules: [material_id_not_null, material_id_unique],
+     synonyms: [part, SKU], related: [material_issue, stock_on_hand]}
+  - {id: unit_cost, name: Unit cost, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa, type: attribute,
+     status: approved, next_review: 2027-03-31,
+     definition: Standard purchase cost of one unit of a material, maintained in the material master.,
+     source: {table: silver.materials, column: unit_cost}, quality_rules: [unit_cost_positive], related: [stock_value]}
+  - {id: stock_on_hand, name: Stock on hand, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa,
+     type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Units of a material physically available in the warehouse.,
+     source: {table: silver.materials, column: stock_on_hand}, quality_rules: [stock_non_negative], synonyms: [on-hand quantity]}
+  - {id: reorder_point, name: Reorder point, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa,
+     type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Inventory level at which a replenishment purchase must be triggered.,
+     source: {table: silver.materials, column: reorder_point}, quality_rules: [reorder_point_non_negative], synonyms: [ROP]}
+  - {id: material_issue, name: Material issue, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa,
+     type: concept, status: approved, next_review: 2027-03-31,
+     definition: Warehouse movement that charges a quantity of a material to a service order.,
+     source: {table: silver.material_issues, column: issue_id},
+     quality_rules: [issue_id_unique, issue_order_exists, issue_material_exists, issue_cost_matches_master],
+     synonyms: [goods issue], related: [material, service_order]}
+  - {id: actual_material_cost, name: Actual material cost, domain: supply_chain, owner: jordan.mockwell,
+     steward: casey.testa, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Value of the materials charged to a service order.,
+     formula: Σ (quantity × issued unit cost) over the order's material issues, depends_on: [material_issue],
+     source: {table: gold.service_order_economics, column: actual_material_cost}, quality_rules: [material_cost_reconciles]}
+  - {id: stock_value, name: Stock value, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa,
+     type: metric, status: approved, next_review: 2027-03-31,
+     definition: Money tied up in warehouse inventory for a material.,
+     formula: stock on hand × unit cost, depends_on: [stock_on_hand, unit_cost],
+     source: {table: gold.inventory_position, column: stock_value}, quality_rules: [stock_value_non_negative],
+     synonyms: [inventory value]}
+  - {id: days_of_cover, name: Days of cover, domain: supply_chain, owner: jordan.mockwell, steward: casey.testa,
+     type: metric, status: draft, next_review: 2026-12-15,
+     definition: How long current inventory lasts at the recent consumption pace. Draft until the 90-day window is agreed.,
+     formula: stock on hand / (units issued in the last 90 days / 90), depends_on: [stock_on_hand, material_issue],
+     source: {table: gold.inventory_position, column: days_of_cover}, quality_rules: []}
+  - {id: below_reorder_point, name: Below reorder point, domain: supply_chain, owner: jordan.mockwell,
+     steward: casey.testa, type: metric, status: approved, next_review: 2027-03-31,
+     definition: Flag raised when inventory has fallen to or under the replenishment trigger level.,
+     formula: stock on hand ≤ reorder point, depends_on: [stock_on_hand, reorder_point],
+     source: {table: gold.inventory_position, column: below_reorder_point}, quality_rules: []}
+  # ---------------------------------------------------------------- customer
+  - {id: customer, name: Customer, domain: customer, owner: taylor.dummond, steward: alex.exampleton, type: concept,
+     status: approved, next_review: 2027-03-31,
+     definition: Company that buys field services, identified by a CU-nnnn account code.,
+     source: {table: silver.customers, column: customer_id}, quality_rules: [customer_id_not_null, customer_id_unique],
+     synonyms: [account, client], related: [service_order, customer_segment]}
+  - {id: customer_segment, name: Customer segment, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
+     type: attribute, status: approved, next_review: 2027-03-31,
+     definition: Industry the buying company belongs to (mining, energy, construction or agriculture).,
+     source: {table: silver.customers, column: segment}, quality_rules: [segment_valid], synonyms: [industry]}
+  - {id: business_contact, name: Business contact, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
+     type: attribute, status: approved, next_review: 2027-01-31,
+     definition: Person at the buying company the account team talks to. Personal data, masked by default.,
+     source: {table: silver.customers, column: contact_name}, quality_rules: [contact_email_format],
+     related: [marketing_consent]}
+  - {id: marketing_consent, name: Marketing consent, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
+     type: attribute, status: approved, next_review: 2027-01-31,
+     definition: Explicit permission from the business contact to receive commercial communications.,
+     source: {table: silver.customers, column: marketing_consent}, quality_rules: [marketing_consent_not_null],
+     related: [business_contact]}
+  - {id: customer_revenue, name: Customer revenue, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
+     type: metric, status: approved, next_review: 2027-03-31,
+     definition: Billable amount generated by one buying company across its non-cancelled service orders.,
+     formula: Σ order price per customer, depends_on: [order_price, customer],
+     source: {table: gold.customer_value, column: revenue}, quality_rules: [customer_revenue_reconciles],
+     related: [customer_tier]}
+  - {id: customer_tier, name: Customer tier, domain: customer, owner: taylor.dummond, steward: alex.exampleton,
+     type: metric, status: approved, next_review: 2027-03-31,
+     definition: "ABC ranking of accounts by billings: A from 60,000, B from 25,000, C otherwise.",
+     formula: A if customer revenue ≥ 60000; B if ≥ 25000; else C, depends_on: [customer_revenue],
+     source: {table: gold.customer_value, column: customer_tier}, quality_rules: [tier_valid], synonyms: [ABC class]}

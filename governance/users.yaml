@@ -1,0 +1,114 @@
+# Fictional people. Names are deliberately invented; emails use the reserved example.org domain.
+# `access` mirrors what is actually provisioned (as an identity-system export would show it).
+# Each entry must be justified by the user's role baseline (basis: role) or by an approved,
+# time-bound request (basis: request). Validated by govkit/validate/access.py.
+users:
+  - id: morgan.fictive
+    name: Morgan Fictive
+    email: morgan.fictive@example.org
+    role: data_sponsor
+    area: Executive Office
+    domains: ["*"]
+    access:
+      - {basis: role, domain: "*", layers: [gold], up_to: internal}
+
+  - id: quinn.synthia
+    name: Quinn Synthia
+    email: quinn.synthia@example.org
+    role: governance_council
+    area: Governance Office
+    domains: ["*"]
+    access:
+      - {basis: role, domain: "*", layers: [gold], up_to: confidential}
+
+  - id: riley.placeholder
+    name: Riley Placeholder
+    email: riley.placeholder@example.org
+    role: data_owner
+    area: Field Operations
+    domains: [operations]
+    access:
+      - {basis: role, domain: operations, layers: [silver, gold], up_to: restricted}
+
+  - id: sam.samplewood
+    name: Sam Samplewood
+    email: sam.samplewood@example.org
+    role: data_steward
+    area: Field Operations
+    domains: [operations]
+    access:
+      - {basis: role, domain: operations, layers: [bronze, silver, gold], up_to: restricted}
+
+  - id: jordan.mockwell
+    name: Jordan Mockwell
+    email: jordan.mockwell@example.org
+    role: data_owner
+    area: Supply Chain
+    domains: [supply_chain]
+    access:
+      - {basis: role, domain: supply_chain, layers: [silver, gold], up_to: restricted}
+
+  - id: casey.testa
+    name: Casey Testa
+    email: casey.testa@example.org
+    role: data_steward
+    area: Supply Chain
+    domains: [supply_chain]
+    access:
+      - {basis: role, domain: supply_chain, layers: [bronze, silver, gold], up_to: restricted}
+
+  - id: taylor.dummond
+    name: Taylor Dummond
+    email: taylor.dummond@example.org
+    role: data_owner
+    area: Commercial
+    domains: [customer]
+    access:
+      - {basis: role, domain: customer, layers: [silver, gold], up_to: restricted}
+
+  - id: alex.exampleton
+    name: Alex Exampleton
+    email: alex.exampleton@example.org
+    role: data_steward
+    area: Commercial
+    domains: [customer]
+    access:
+      - {basis: role, domain: customer, layers: [bronze, silver, gold], up_to: restricted}
+
+  - id: drew.stubbs
+    name: Drew Stubbs
+    email: drew.stubbs@example.org
+    role: data_custodian
+    area: Data Platform
+    domains: ["*"]
+    access:
+      - {basis: role, domain: "*", layers: [bronze, silver, gold], up_to: confidential}
+
+  - id: jamie.fakeley
+    name: Jamie Fakeley
+    email: jamie.fakeley@example.org
+    role: data_consumer
+    area: Business Intelligence
+    domains: [operations, supply_chain]
+    access:
+      - {basis: role, domain: operations, layers: [gold], up_to: internal}
+      - {basis: role, domain: supply_chain, layers: [gold], up_to: internal}
+      - basis: request
+        domain: operations
+        layers: [gold]
+        up_to: confidential
+        ticket: AR-0001
+        reason: Build the service profitability dashboard.
+        requested_by: jamie.fakeley
+        approved_by: riley.placeholder
+        approved_on: 2026-10-01
+        expires_on: 2026-12-30
+
+  - id: robin.notreal
+    name: Robin Notreal
+    email: robin.notreal@example.org
+    role: data_consumer
+    area: Commercial Analytics
+    domains: [customer]
+    access:
+      - {basis: role, domain: customer, layers: [gold], up_to: internal}

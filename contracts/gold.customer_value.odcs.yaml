@@ -1,0 +1,54 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:customer:gold.customer_value
+name: gold.customer_value
+version: 1.0.0
+status: active
+domain: customer
+dataProduct: Customer value
+description:
+  purpose: Orders, revenue, margin and ABC tier per customer account, with the business contact.
+  usage: Key-account review. Contact data is masked unless the reader's role allows clear text.
+  limitations: Only customers with consent may be contacted for marketing.
+tags: [gold, kpi, personal-data]
+team:
+  - {username: taylor.dummond, role: data_owner}
+  - {username: alex.exampleton, role: data_steward}
+slaProperties:
+  - {property: frequency, value: 1, unit: d}
+customProperties:
+  - {property: dataClassification, value: confidential}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: customer_value
+    physicalName: gold.customer_value
+    physicalType: table
+    description: One row per customer account.
+    properties:
+      - {name: customer_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,
+         businessName: Customer, description: Account code.}
+      - {name: company_name, logicalType: string, physicalType: VARCHAR, description: Legal name (fictional).}
+      - {name: segment, logicalType: string, physicalType: VARCHAR, businessName: Customer segment, description: Industry.}
+      - {name: country, logicalType: string, physicalType: VARCHAR, description: Country.}
+      - {name: contact_name, logicalType: string, physicalType: VARCHAR, tags: ["pii:name"], businessName: Business contact,
+         description: Contact person.}
+      - {name: contact_email, logicalType: string, physicalType: VARCHAR, tags: ["pii:email"], description: Contact email.}
+      - {name: marketing_consent, logicalType: boolean, physicalType: BOOLEAN, businessName: Marketing consent, description: Consent flag.}
+      - {name: orders, logicalType: integer, physicalType: BIGINT, description: Non-cancelled orders.}
+      - {name: revenue, logicalType: number, physicalType: DOUBLE, businessName: Customer revenue, description: Billable amount.}
+      - {name: gross_margin, logicalType: number, physicalType: DOUBLE, businessName: Gross margin, description: Margin generated.}
+      - {name: last_order_on, logicalType: date, physicalType: DATE, description: Most recent order date.}
+      - {name: customer_tier, logicalType: string, physicalType: VARCHAR, required: true, businessName: Customer tier, description: ABC tier.,
+         quality: [{name: tier_valid, type: library, rule: validValues, arguments: {values: [A, B, C]}}]}
+    quality:
+      - name: customer_revenue_reconciles
+        type: sql
+        query: "SELECT abs((SELECT sum(revenue) FROM {object}) - (SELECT sum(price) FROM gold.service_order_economics))"
+        mustBeLessThan: 1
+        dimension: accuracy

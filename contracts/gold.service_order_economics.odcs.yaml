@@ -1,0 +1,82 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:operations:gold.service_order_economics
+name: gold.service_order_economics
+version: 2.0.0
+status: active
+domain: operations
+dataProduct: Service profitability
+description:
+  purpose: Plan versus actual cost, cost variance and gross margin for every non-cancelled service order.
+  usage: Service profitability dashboard; customer value.
+  limitations: Costs come only from validated (non-quarantined) labor and material lines.
+tags: [gold, kpi]
+team:
+  - {username: riley.placeholder, role: data_owner}
+  - {username: sam.samplewood, role: data_steward}
+slaProperties:
+  - {property: latency, value: 3, unit: d, element: gold.service_order_economics.opened_on}
+customProperties:
+  - {property: dataClassification, value: confidential}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: service_order_economics
+    physicalName: gold.service_order_economics
+    physicalType: table
+    description: One row per non-cancelled service order.
+    properties:
+      - {name: order_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,
+         businessName: Service order, description: Order number.}
+      - {name: customer_id, logicalType: string, physicalType: VARCHAR, required: true, businessName: Customer, description: Buying company.}
+      - {name: asset_id, logicalType: string, physicalType: VARCHAR, required: true, businessName: Asset, description: Asset serviced.}
+      - {name: site, logicalType: string, physicalType: VARCHAR, required: true, businessName: Site, description: Site of the asset.}
+      - {name: asset_type, logicalType: string, physicalType: VARCHAR, businessName: Asset type, description: Equipment family.}
+      - {name: service_type, logicalType: string, physicalType: VARCHAR, businessName: Service type, description: Nature of work.}
+      - {name: status, logicalType: string, physicalType: VARCHAR, businessName: Order status, description: OPEN or CLOSED.,
+         quality: [{name: no_cancelled_orders, type: library, rule: validValues, arguments: {values: [OPEN, CLOSED]}}]}
+      - {name: opened_on, logicalType: date, physicalType: DATE, required: true, businessName: Order open date, description: Creation date.}
+      - {name: closed_on, logicalType: date, physicalType: DATE, businessName: Order close date, description: Completion date.}
+      - {name: planned_hours, logicalType: integer, physicalType: INTEGER, description: Quoted labor hours.}
+      - {name: actual_hours, logicalType: number, physicalType: DOUBLE, businessName: Labor hours, description: Hours booked.}
+      - {name: planned_cost, logicalType: number, physicalType: DOUBLE, businessName: Planned cost, description: Quoted cost.}
+      - {name: actual_labor_cost, logicalType: number, physicalType: DOUBLE, businessName: Actual labor cost, description: Labor cost incurred.}
+      - {name: actual_material_cost, logicalType: number, physicalType: DOUBLE, businessName: Actual material cost,
+         description: Material cost incurred.}
+      - {name: actual_cost, logicalType: number, physicalType: DOUBLE, required: true, businessName: Actual cost, description: Total cost incurred.,
+         quality: [{name: actual_cost_non_negative, type: library, rule: range, arguments: {min: 0}}]}
+      - {name: cost_variance_pct, logicalType: number, physicalType: DOUBLE, businessName: Cost variance, description: Cost overrun in percent.}
+      - {name: price, logicalType: number, physicalType: DOUBLE, required: true, businessName: Order price, description: Billable amount.}
+      - {name: gross_margin, logicalType: number, physicalType: DOUBLE, businessName: Gross margin, description: Price minus actual cost.}
+      - {name: gross_margin_pct, logicalType: number, physicalType: DOUBLE, businessName: Gross margin %, description: Margin over price.,
+         quality: [{name: margin_pct_plausible, type: library, rule: range, arguments: {min: -100, max: 100}, severity: warning,
+                    description: Margins outside ±100% usually mean a costing or pricing error.}]}
+    quality:
+      - name: margin_definition_holds
+        type: sql
+        query: "SELECT count(*) FROM {object} WHERE abs(gross_margin - (price - actual_cost)) > 0.02"
+        mustBe: 0
+        dimension: consistency
+        description: Gross margin equals price minus actual cost on every row (glossary formula).
+      - name: labor_cost_reconciles
+        type: sql
+        query: >-
+          SELECT abs((SELECT sum(actual_labor_cost) FROM {object}) - (SELECT sum(l.hours * t.hourly_cost)
+          FROM silver.labor_entries l JOIN silver.technicians t USING (technician_id)
+          WHERE l.order_id IN (SELECT order_id FROM {object})))
+        mustBeLessThan: 1
+        dimension: accuracy
+        description: Gold labor cost reconciles with silver hours × rates within one currency unit.
+      - name: material_cost_reconciles
+        type: sql
+        query: >-
+          SELECT abs((SELECT sum(actual_material_cost) FROM {object}) - (SELECT sum(line_cost)
+          FROM silver.material_issues WHERE order_id IN (SELECT order_id FROM {object})))
+        mustBeLessThan: 1
+        dimension: accuracy
+        description: Gold material cost reconciles with silver issue lines.

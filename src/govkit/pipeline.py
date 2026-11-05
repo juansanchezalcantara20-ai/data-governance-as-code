@@ -104,6 +104,11 @@ def _ingest(con: duckdb.DuckDBPyConnection, m: Model) -> None:
                 f"FROM read_csv('{p}', all_varchar = true, header = true)")
 
 
+def table_columns_any(con: duckdb.DuckDBPyConnection, name: str) -> dict[str, str]:
+    """Columns of a persistent or temporary table."""
+    return {r[0]: r[1] for r in con.execute(f"DESCRIBE {name}").fetchall()}
+
+
 def run(con: duckdb.DuckDBPyConnection | None = None, actor: str = "pipeline", log=print) -> Report:
     own = con is None
     con = con or connect()
@@ -114,18 +119,26 @@ def run(con: duckdb.DuckDBPyConnection | None = None, actor: str = "pipeline", l
     column_rows: list[list] = []
 
     for m in order(models()):
+        violations: list[tuple[str, str]] = []
         try:
+            results, quarantined = [], 0
             if m.source:
                 _ingest(con, m)
-                results, quarantined = [], 0
-            elif m.layer == "silver" and m.contract:
-                con.execute(f"CREATE OR REPLACE TEMP TABLE __stage AS {m.sql}")
-                results, quarantined = quality.evaluate(con, m.contract, "__stage", report.as_of, quarantine=True)
-                con.execute("DROP TABLE IF EXISTS __stage")
             else:
-                con.execute(f"CREATE OR REPLACE TABLE {m.name} AS {m.sql}")
-                results, quarantined = (quality.evaluate(con, m.contract, m.name, report.as_of)
-                                        if m.contract else ([], 0))
+                staged = m.layer == "silver" and m.contract is not None
+                target = "__stage" if staged else m.name
+                con.execute(f"CREATE OR REPLACE {'TEMP ' if staged else ''}TABLE {target} AS {m.sql}")
+                if m.contract:
+                    # Schema first: rules are only meaningful on data that has the contracted shape.
+                    violations = conformance(m.contract, table_columns_any(con, target))
+                    if any(sev == "error" for sev, _ in violations):
+                        if staged:
+                            con.execute(f"CREATE OR REPLACE TABLE {m.name} AS SELECT * FROM __stage")
+                    else:
+                        results, quarantined = quality.evaluate(con, m.contract, target, report.as_of,
+                                                                quarantine=staged)
+                if staged:
+                    con.execute("DROP TABLE IF EXISTS __stage")
         except Exception as exc:  # noqa: BLE001 - report and continue with independent models
             report.errors.append(f"{m.name}: {exc}")
             log(f"  ✗ {m.name}: {exc}")
@@ -140,10 +153,11 @@ def run(con: duckdb.DuckDBPyConnection | None = None, actor: str = "pipeline", l
                 report.findings.append((m.name, "undeclared_pii", "high",
                                         f"column '{column}' looks like '{category}' personal data but is not "
                                         "declared, so it is not masked"))
-        if m.contract:
-            for severity, detail in conformance(m.contract, actual):
-                report.findings.append((m.name, "contract_violation", severity, detail))
-        elif not m.source:
+        for severity, detail in violations:
+            report.findings.append((m.name, "contract_violation", severity, detail))
+        if any(sev == "error" for sev, _ in violations):
+            log(f"  ✗ {m.name}: breaks its contract ({len(violations)} schema violation(s)); quality rules skipped")
+        if not m.contract and not m.source:
             report.findings.append((m.name, "no_contract", "medium", "published model without a data contract"))
 
         edges += (lineage.source_edges(con, m.name, m.source["file"]) if m.source
@@ -197,6 +211,9 @@ def run(con: duckdb.DuckDBPyConnection | None = None, actor: str = "pipeline", l
                  report.quarantined, "; ".join(report.errors)])
     audit(con, actor, "pipeline_run", "all",
           f"{report.run_id}: {report.datasets} datasets, {report.quarantined} quarantined, {report.status}")
+    from . import report as report_mod
+
+    report_mod.write(con)
     if own:
         con.close()
     return report

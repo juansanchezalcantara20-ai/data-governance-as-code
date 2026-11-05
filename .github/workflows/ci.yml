@@ -18,3 +18,8 @@ jobs:
         run: make install
       - name: Reproduce everything (lint, validate governance, generate, run, test)
         run: make all
+      - name: Generated docs are up to date
+        run: make docs-check
+      - name: Contract changes follow the change policy (pull requests)
+        if: github.event_name == 'pull_request'
+        run: python -m govkit compat --base origin/${{ github.base_ref }}

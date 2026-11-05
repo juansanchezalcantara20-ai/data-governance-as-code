@@ -1,0 +1,26 @@
+# Access policy: least privilege per role, by domain, layer and classification.
+# Anything not granted here is denied. Validated by govkit/validate/access.py and
+# compiled into GRANT statements by govkit/grants.py.
+default: deny
+
+# Role baseline. `domains: assigned` = only the user's domains; `all` = every domain.
+# `unmasked_pii`: whether personal-data columns are shown in clear text.
+baseline:
+  data_sponsor:       {domains: all,      layers: [gold],                 up_to: internal,     unmasked_pii: false}
+  governance_council: {domains: all,      layers: [gold],                 up_to: confidential, unmasked_pii: false}
+  data_owner:         {domains: assigned, layers: [silver, gold],         up_to: restricted,   unmasked_pii: true}
+  data_steward:       {domains: assigned, layers: [bronze, silver, gold], up_to: restricted,   unmasked_pii: true}
+  data_custodian:     {domains: all,      layers: [bronze, silver, gold], up_to: confidential, unmasked_pii: false}
+  data_consumer:      {domains: assigned, layers: [gold],                 up_to: internal,     unmasked_pii: false}
+
+# Exceptions above baseline go through an access request.
+requests:
+  max_classification: confidential   # restricted data is never granted through a request
+  max_days: 90                       # every exception expires
+  approvers:                         # who may approve, by classification of the data requested
+    internal: [data_steward, data_owner]
+    confidential: [data_owner]
+
+segregation_of_duties:
+  requester_cannot_approve: true     # nobody approves their own request
+  approver_must_govern_domain: true  # approver must be owner/steward of the domain requested

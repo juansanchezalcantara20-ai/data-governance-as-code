@@ -1,0 +1,45 @@
+apiVersion: v3.0.2
+kind: DataContract
+id: urn:datacontract:supply_chain:gold.inventory_position
+name: gold.inventory_position
+version: 1.0.0
+status: active
+domain: supply_chain
+dataProduct: Inventory health
+description:
+  purpose: Stock value, recent consumption, days of cover and reorder alerts per material.
+  usage: Replenishment report.
+  limitations: Consumption window is the last 90 days of issues (days of cover is a draft term).
+tags: [gold, kpi]
+team:
+  - {username: jordan.mockwell, role: data_owner}
+  - {username: casey.testa, role: data_steward}
+slaProperties:
+  - {property: frequency, value: 1, unit: d}
+customProperties:
+  - {property: dataClassification, value: internal}
+  - property: changePolicy
+    value:
+      versioning: semver
+      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]
+      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]
+      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)
+      deprecationNoticeDays: 30
+schema:
+  - name: inventory_position
+    physicalName: gold.inventory_position
+    physicalType: table
+    description: One row per material.
+    properties:
+      - {name: material_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,
+         businessName: Material, description: Material code.}
+      - {name: description, logicalType: string, physicalType: VARCHAR, description: Material description.}
+      - {name: category, logicalType: string, physicalType: VARCHAR, description: Material category.}
+      - {name: stock_on_hand, logicalType: integer, physicalType: INTEGER, businessName: Stock on hand, description: Units in stock.}
+      - {name: reorder_point, logicalType: integer, physicalType: INTEGER, businessName: Reorder point, description: Replenishment trigger.}
+      - {name: stock_value, logicalType: number, physicalType: DOUBLE, businessName: Stock value, description: Value of stock.,
+         quality: [{name: stock_value_non_negative, type: library, rule: range, arguments: {min: 0}}]}
+      - {name: issued_qty_90d, logicalType: integer, physicalType: BIGINT, description: Units issued in the last 90 days.}
+      - {name: days_of_cover, logicalType: number, physicalType: DOUBLE, businessName: Days of cover, description: Days stock lasts.}
+      - {name: below_reorder_point, logicalType: boolean, physicalType: BOOLEAN, required: true, businessName: Below reorder point,
+         description: Replenishment needed.}

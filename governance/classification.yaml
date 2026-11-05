@@ -1,0 +1,22 @@
+# Data classification scheme. Ordered from least to most sensitive (rank).
+levels:
+  public:
+    rank: 0
+    description: Approved for release outside the company.
+    handling: No restrictions.
+    examples: [Published product catalog]
+  internal:
+    rank: 1
+    description: For employees; no personal data and no commercially sensitive figures.
+    handling: Readable by role baseline in the owning domain; steward can approve exceptions.
+    examples: [Asset master, material master, hours booked]
+  confidential:
+    rank: 2
+    description: Commercially sensitive data (prices, costs, margins) or business contact data.
+    handling: Data Owner approval; time-bound exceptions only; personal data masked unless role allows.
+    examples: [Service order economics, customer accounts]
+  restricted:
+    rank: 3
+    description: Personal data of employees, compensation, national identifiers.
+    handling: Data Owner approval; never granted through ad-hoc requests; always masked outside the owning domain.
+    examples: [Technician records with national id and hourly cost]
