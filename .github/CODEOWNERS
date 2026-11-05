@@ -1,0 +1,6 @@
+# Every governance artefact needs a review from its maintainer.
+# In a real organisation each path would map to the domain's Data Owner team (see governance/domains.yaml).
+*                       @juansanchezalcantara20-ai
+/governance/            @juansanchezalcantara20-ai
+/contracts/             @juansanchezalcantara20-ai
+/models/                @juansanchezalcantara20-ai

@@ -1,0 +1,22 @@
+name: Data contract change
+description: Propose a change to a dataset's contract (raci.change_data_contract).
+title: "[Contract] "
+labels: [governance, data-contract]
+body:
+  - type: input
+    id: contract
+    attributes: {label: Contract, placeholder: "gold.service_order_economics"}
+    validations: {required: true}
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of change
+      options: [Non-breaking (new optional column, new rule, description), Breaking (remove or rename column, type change, new required column, key change, higher classification)]
+    validations: {required: true}
+  - type: textarea
+    id: change
+    attributes: {label: Proposed change}
+    validations: {required: true}
+  - type: textarea
+    id: consumers
+    attributes: {label: Affected consumers, description: Output of `govkit lineage <dataset> --impact`.}

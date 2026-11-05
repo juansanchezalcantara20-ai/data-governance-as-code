@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-11-04. This file tracks what exists, what is missing against the plan, and the chosen stack._
+_Last updated: 2026-11-05. This file tracks what exists, what is missing against the plan, and the chosen stack._
 
 ## Starting point (inventory before the governance phases)
 
@@ -43,7 +43,7 @@ a working engine; see `docs/DECISIONS.md` (D-001).
 | 4 | ODCS v3 data contracts, data-vs-contract verification, breaking-change detection | ✅ done |
 | 5 | Executable quality rules (6 dimensions), quality report, generated lineage | ✅ done |
 | 6 | DAMA-DMBOK2 maturity self-assessment + roadmap | ✅ done |
-| 7 | Unity Catalog deployment SQL (not executed), final README, pull request | ✅ done · ⏳ push and PR blocked (see below) |
+| 7 | Unity Catalog deployment SQL (not executed), final README, pull request | ✅ done ([PR #1](https://github.com/juansanchezalcantara20-ai/data-governance-as-code/pull/1), merged) |
 
 ## Current state (end of the governance phases)
 
@@ -52,12 +52,16 @@ a working engine; see `docs/DECISIONS.md` (D-001).
 - 6 roles, 9 RACI activities, 3 domains, 11 fictional users, 4 classification levels, 38 glossary terms,
   11 ODCS v3 contracts, 102 executable quality rules in 6 dimensions, 11 DAMA-DMBOK2 areas assessed.
 
+## After v1.0.0
+
+- Bilingual documentation (English source of truth, Spanish in `README.es.md` and `docs/es/`) — D-027.
+- Repository hygiene: changelog, contributing guide, security policy, code of conduct, CODEOWNERS, PR template,
+  governance issue forms, pre-commit, CI on Python 3.10 and 3.12 — D-028.
+
 ## Pending
 
 | Item | Why it is pending |
 |---|---|
-| Push to GitHub and open the pull request | This session cannot create repositories; the target repo did not exist. All phases are committed locally. |
-| CI run on GitHub Actions | Depends on the push. The same steps pass locally (`make all`, `make docs-check`). |
 | Unity Catalog SQL applied in Databricks | No workspace access by design; generated and labelled "not executed". |
 | Open finding `labor_entries.approver_email` | Kept on purpose to show discovery (D-018); first item of the roadmap. |
 | Roadmap items | See `docs/generated/maturity.md`. |
