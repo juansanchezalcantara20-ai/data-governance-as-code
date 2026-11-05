@@ -1,5 +1,7 @@
 # Data Governance as Code
 
+**English** · [Español](README.es.md)
+
 [![CI](https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/workflows/ci.yml/badge.svg)](https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/workflows/ci.yml)
 
 A working data governance programme for a **fictional** field-services company: roles and RACI, users and
@@ -79,7 +81,7 @@ make all
 ```
 
 `make all` lints, validates every governance YAML, generates the seeded data, runs the pipeline, verifies the data
-against every contract, regenerates the docs and runs the tests (66). Individual steps:
+against every contract, regenerates the docs and runs the tests. Individual steps:
 
 ```bash
 python -m govkit validate                                       # governance-as-code checks
@@ -124,8 +126,8 @@ governance/         roles, RACI, domains, users, classification, access policy, 
 contracts/          one ODCS v3 contract per published dataset
 models/             SQL models (silver, gold), source registry, consumers (exposures)
 src/govkit/         pipeline, quality engine, lineage, privacy, validators, generators, CLI
-tests/              pytest suite (governance validators, contracts, quality, lineage, deployment)
-docs/               STATUS, DECISIONS, worked example, generated documentation
+tests/              pytest suite (governance validators, contracts, quality, lineage, deployment, links)
+docs/               STATUS, DECISIONS, worked example, generated documentation; docs/es/ in Spanish
 deploy/unity_catalog/  generated Databricks SQL — not executed in this repo
 ```
 
@@ -149,6 +151,11 @@ the reasoning behind each choice is recorded in [`docs/DECISIONS.md`](docs/DECIS
 - **Self-assessment, not an audit.** The DAMA-DMBOK2 scores use this project's own scale and apply only to
   this repository.
 - **One role per person**, and governance KPIs are not yet tracked over time (see the roadmap).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md): how to propose a term, a rule or a contract change, and who approves it
+according to the RACI. Release history is in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

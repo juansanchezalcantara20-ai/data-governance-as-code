@@ -1,5 +1,7 @@
 # Unity Catalog deployment — NOT EXECUTED IN THIS REPO
 
+**English** · [Español](../../docs/es/despliegue-unity-catalog.md)
+
 > ⚠️ **Not executed in this repo.** These SQL files are *generated* by `govkit deploy` (also run by `govkit docs`)
 > from the same YAML that CI validates. They have **not** been run against a Databricks workspace. Syntax was
 > checked only by parsing with sqlglot's Databricks dialect, which does not model `SET TAGS`, `SET MASK` or

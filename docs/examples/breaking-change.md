@@ -1,5 +1,7 @@
 # Example: a schema change that breaks a contract fails CI
 
+**English** · [Español](../es/ejemplo-cambio-que-rompe.md)
+
 This is a real run, reproduced by `tests/test_contracts.py::test_breaking_schema_change_fails_the_build`.
 
 ## The change
