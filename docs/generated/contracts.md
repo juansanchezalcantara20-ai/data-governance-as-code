@@ -6,7 +6,7 @@ One ODCS v3 contract per published dataset, in `contracts/`. Rules marked *deriv
 
 | Dataset | Version | Domain | Class | Owner | Steward | SLA | Columns | Rules (derived) |
 |---|---|---|---|---|---|---|:-:|:-:|
-| `gold.customer_value` | 1.0.0 | customer | confidential | Taylor Dummond | Alex Exampleton | frequency 1 d | 12 | 5 (3) |
+| `gold.customer_value` | 1.1.0 | customer | confidential | Taylor Dummond | Alex Exampleton | frequency 1 d | 13 | 5 (3) |
 | `gold.inventory_position` | 1.0.0 | supply_chain | internal | Jordan Mockwell | Casey Testa | frequency 1 d | 9 | 4 (3) |
 | `gold.service_order_economics` | 2.0.0 | operations | confidential | Riley Placeholder | Sam Samplewood | latency 3 d | 19 | 15 (9) |
 | `gold.site_monthly_kpis` | 1.0.0 | operations | confidential | Riley Placeholder | Sam Samplewood | latency 31 d | 8 | 7 (5) |

@@ -8,6 +8,8 @@ CREATE OR REPLACE FUNCTION governance_demo.gold.mask_customer_name(v STRING) RET
   RETURN CASE WHEN is_account_group_member('gov_customer_data_owner') OR is_account_group_member('gov_customer_data_steward') THEN v ELSE concat(left(v, 1), '.') END;
 CREATE OR REPLACE FUNCTION governance_demo.gold.mask_customer_email(v STRING) RETURNS STRING
   RETURN CASE WHEN is_account_group_member('gov_customer_data_owner') OR is_account_group_member('gov_customer_data_steward') THEN v ELSE concat(left(v, 1), '***@', split_part(v, '@', 2)) END;
+CREATE OR REPLACE FUNCTION governance_demo.gold.mask_customer_phone(v STRING) RETURNS STRING
+  RETURN CASE WHEN is_account_group_member('gov_customer_data_owner') OR is_account_group_member('gov_customer_data_steward') THEN v ELSE concat(repeat('*', greatest(length(v) - 4, 4)), right(v, 4)) END;
 CREATE OR REPLACE FUNCTION governance_demo.silver.mask_customer_name(v STRING) RETURNS STRING
   RETURN CASE WHEN is_account_group_member('gov_customer_data_owner') OR is_account_group_member('gov_customer_data_steward') THEN v ELSE concat(left(v, 1), '.') END;
 CREATE OR REPLACE FUNCTION governance_demo.silver.mask_customer_email(v STRING) RETURNS STRING
@@ -33,6 +35,7 @@ CREATE OR REPLACE FUNCTION governance_demo.silver.mask_operations_confidential_d
 
 ALTER TABLE governance_demo.gold.customer_value ALTER COLUMN contact_name SET MASK governance_demo.gold.mask_customer_name;
 ALTER TABLE governance_demo.gold.customer_value ALTER COLUMN contact_email SET MASK governance_demo.gold.mask_customer_email;
+ALTER TABLE governance_demo.gold.customer_value ALTER COLUMN contact_phone SET MASK governance_demo.gold.mask_customer_phone;
 ALTER TABLE governance_demo.silver.customers ALTER COLUMN contact_name SET MASK governance_demo.silver.mask_customer_name;
 ALTER TABLE governance_demo.silver.customers ALTER COLUMN contact_email SET MASK governance_demo.silver.mask_customer_email;
 ALTER TABLE governance_demo.silver.customers ALTER COLUMN contact_phone SET MASK governance_demo.silver.mask_customer_phone;
