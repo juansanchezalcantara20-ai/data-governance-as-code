@@ -8,3 +8,5 @@ __pycache__/
 build/
 dist/
 reports/
+node_modules/
+site/

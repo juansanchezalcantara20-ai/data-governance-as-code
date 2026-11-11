@@ -33,7 +33,7 @@ const slug = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").rep
 const base = (id) => id.split(".").slice(1).join(".");
 const layerOf = (id) => (id.includes(":") ? id.split(":")[0] : id.split(".")[0]);
 function dsName(id) {
-  if (id.startsWith("file:")) return `${t("layers.file")}: ${id.slice(5)}`;
+  if (id.startsWith("file:")) return `${t("layers.file")}: ${t(`datasets.${id.slice(5).replace(/\.csv$/, "")}`)}`;
   if (id.startsWith("exposure:")) return t(`exposures.${id.slice(9)}`);
   return t(`datasets.${base(id)}`);
 }
@@ -375,7 +375,7 @@ function highlightColumn(key) {
     const ds = d.includes(":") ? null : dataset(d);
     const rules = ds ? S.D.quality.rules.filter((r) => r.dataset === d).length : 0;
     return `<li>${layerChip(d)} <strong>${ds ? `<a href="#/catalogo/${d}">${esc(dsName(d))}</a>` : esc(dsName(d))}</strong>
-      · ${esc([...new Set(byDs[d])].map((c) => (d.startsWith("file:") ? c : colName(c))).join(", "))}
+      · ${esc([...new Set(byDs[d])].map((c) => colName(c)).join(", "))}
       ${ds ? `<div class="small muted">${esc(t("screens.linaje.step_owner", { owner: ownerOf(ds) }))} · ${esc(t("screens.linaje.step_rules", { n: rules }))}</div>` : ""}</li>`;
   }).join("");
 }
@@ -648,23 +648,28 @@ function setupTips() {
 // Guided tour: five steps on first visit; never shown again once closed.
 const TOUR_TARGETS = ["#health", "#first-alert", '[data-nav="linaje"]', "#persona", "#value-card"];
 function tour(step = 0) {
-  const box = $("#tour"); const steps = t("tour.steps");
+  const overlay = $("#tour"); const steps = t("tour.steps");
+  let box = $("#tour-box");
+  if (!box) { box = document.createElement("div"); box.id = "tour-box"; box.className = "tour-box"; box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true"); box.setAttribute("aria-labelledby", "tour-t"); document.body.appendChild(box); }
+  const close = () => { overlay.hidden = true; box.hidden = true; document.querySelectorAll(".tour-hl").forEach((e) => e.classList.remove("tour-hl"));
+    $("#nav").classList.remove("open"); store.set("tour_done", "1"); };
   document.querySelectorAll(".tour-hl").forEach((e) => e.classList.remove("tour-hl"));
-  if (step >= steps.length) { box.hidden = true; store.set("tour_done", "1"); return; }
+  if (step >= steps.length) { close(); return; }
   if (!location.hash.startsWith("#/inicio") && location.hash) location.hash = "#/inicio";
-  if (step === 2 || step === 3) { $("#nav").classList.add("open"); } else { $("#nav").classList.remove("open"); }
+  if (step === 2 && window.innerWidth <= 860) $("#nav").classList.add("open"); else $("#nav").classList.remove("open");
   const target = $(TOUR_TARGETS[step]);
   if (target) { target.classList.add("tour-hl"); target.scrollIntoView({ block: "center" }); }
   const s = steps[step];
-  box.hidden = false;
-  box.innerHTML = `<div class="tour-box" role="dialog" aria-modal="true" aria-labelledby="tour-t"><p class="small muted">${step + 1} / ${steps.length}</p>
+  overlay.hidden = false; box.hidden = false;
+  box.innerHTML = `<p class="small muted">${step + 1} / ${steps.length}</p>
     <h3 id="tour-t">${esc(s.title)}</h3><p>${esc(s.text)}</p><div class="row"><button class="btn" id="tour-skip">${esc(t("tour.skip"))}</button>
-    <button class="btn primary" id="tour-next">${esc(step === steps.length - 1 ? t("tour.done") : t("tour.next"))}</button></div></div>`;
-  const b = box.querySelector(".tour-box"); const r = target ? target.getBoundingClientRect() : null;
-  const top = r ? (r.bottom + 12 + b.offsetHeight < window.innerHeight ? r.bottom + 12 : Math.max(12, r.top - b.offsetHeight - 12)) : 80;
-  b.style.top = `${top}px`; b.style.left = `${Math.max(16, Math.min((r ? r.left : 16), window.innerWidth - b.offsetWidth - 16))}px`;
+    <button class="btn primary" id="tour-next">${esc(step === steps.length - 1 ? t("tour.done") : t("tour.next"))}</button></div>`;
+  const r = target ? target.getBoundingClientRect() : null;
+  const top = r ? (r.bottom + 12 + box.offsetHeight < window.innerHeight ? r.bottom + 12 : Math.max(12, r.top - box.offsetHeight - 12)) : 80;
+  box.style.top = `${top}px`; box.style.left = `${Math.max(16, Math.min((r ? r.left : 16), window.innerWidth - box.offsetWidth - 16))}px`;
   $("#tour-next").onclick = () => tour(step + 1);
-  $("#tour-skip").onclick = () => { box.hidden = true; document.querySelectorAll(".tour-hl").forEach((e) => e.classList.remove("tour-hl")); $("#nav").classList.remove("open"); store.set("tour_done", "1"); };
+  $("#tour-skip").onclick = close;
   $("#tour-next").focus();
 }
 

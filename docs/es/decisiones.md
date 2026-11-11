@@ -219,3 +219,39 @@ identificadores coinciden con la versión en inglés, que es la fuente principal
   circulares en español.
 - **Por qué:** la app es primero en español; las traducciones son contenido gobernado con las mismas
   verificaciones, no textos de interfaz.
+
+## D-032 · Una app de demostración estática alimentada solo por el motor (candado de honestidad)
+- **Decisión:** `app/` es una aplicación de una sola página, sin dependencias, publicada en GitHub Pages. Sus datos
+  son `app/data/*.json`, que escribe únicamente `govkit export-app`; `make docs-check`, la CI y el workflow de Pages
+  fallan si el JSON del repositorio difiere de lo que produce el motor.
+- **Por qué:** un revisor entiende una herramienta de gobierno usándola; una maqueta no probaría nada, así que cada
+  número tiene que poder rastrearse hasta el motor y no poder editarse a mano.
+
+## D-033 · Salida determinista: DuckDB en un solo hilo
+- **Decisión:** las conexiones corren con un hilo. La agregación en paralelo sumaba decimales en distinto orden y movía
+  un céntimo redondeado entre corridas (lo detectó el candado de honestidad).
+- **Por qué:** la reproducibilidad es lo que permite verificar artefactos generados y versionados.
+
+## D-034 · Los perfiles de la app son usuarios reales del YAML y la política real
+- **Decisión:** los perfiles de «Ver como» son los usuarios ficticios del YAML (dueño, custodio, analista, técnico de
+  campo y auditor). Lo que cada uno ve por tabla y columna lo calcula `access.column_view` al exportar; la prueba de
+  navegador verifica que la pantalla coincida.
+- **Por qué:** el mínimo privilegio se demuestra con el mismo código que otorgaría los permisos.
+
+## D-035 · El valor se muestra con supuestos ilustrativos
+- **Decisión:** `governance/supuestos_valor.yaml` guarda supuestos en soles, con etiqueta y rango. Los hechos salen solo
+  de la corrida del pipeline. La Ley N.º 29733 se cita como contexto; no se estiman multas. La misma fórmula corre en
+  Python y en JavaScript, ambas redondeando hacia arriba en el medio; la prueba de navegador las compara.
+- **Por qué:** el valor es lo que preguntan quienes deciden, y los supuestos deben verse y poder cambiarse para ser
+  honestos.
+
+## D-036 · El catálogo del proyecto 2 se gobierna como reporte, no como bloqueo
+- **Decisión:** una copia sin red del catálogo de indicadores de `kpi-catalog-storytelling` (commit `67e3e37`) se revisa
+  con reglas de glosario, responsables y contrato; el resultado se ve en la app. Sus brechas no hacen fallar la CI de
+  este repositorio porque el catálogo pertenece a otro.
+- **Por qué:** muestra que el motor se reutiliza sobre metadatos ajenos sin acoplar los dos proyectos.
+
+## D-037 · La bitácora usa ejecuciones registradas de la CI
+- **Decisión:** `docs/ci_history.yaml` registra ejecuciones reales de GitHub Actions con su enlace, y la app lo lee. No se
+  consulta en tiempo de construcción.
+- **Por qué:** consultarlo haría cambiar el JSON en cada corrida y rompería el candado de honestidad.

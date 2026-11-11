@@ -2,74 +2,97 @@
 
 **English** · [Español](README.es.md)
 
+**A data governance programme that checks itself, and that you can walk through like a piece of software.**
+
+### [▶ Open the demo](https://juansanchezalcantara20-ai.github.io/data-governance-as-code/)
+
+[![Demo walkthrough: home, alert, lineage and role switch](docs/capturas/recorrido.gif)](https://juansanchezalcantara20-ai.github.io/data-governance-as-code/)
+
+**What it solves, in 3 bullets**
+
+- **One version of every number.** 38 business terms with an owner, a formula and an exact place in the data, and 11
+  data contracts that state what each table promises.
+- **Bad data never reaches reports.** 102 quality rules hold 103 rows in quarantine, and a change that breaks a
+  contract cannot be merged.
+- **Everyone sees only what they should, and it can be proven.** Roles, responsibilities and permissions live in files
+  checked on every change; in the demo the field technician sees no costs and the auditor can only read.
+
 [![CI](https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/workflows/ci.yml/badge.svg)](https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/workflows/ci.yml)
+[![Published demo](https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/workflows/pages.yml/badge.svg)](https://juansanchezalcantara20-ai.github.io/data-governance-as-code/)
 
-A working data governance programme for a **fictional** field-services company: roles and RACI, users and
-least-privilege access, a business glossary, ODCS v3 data contracts, quality rules in six dimensions,
-end-to-end lineage and a DAMA-DMBOK2 maturity assessment. Every one of them lives in versioned YAML and has an
-automated validator, so **CI fails when the governance breaks**, the same way it fails when code breaks.
+> Fictional company ("Servicios Andinos de Campo S.A.C.") and synthetic data. Figures illustrate the method; they are
+> not results about any real organisation.
 
-## Five-minute tour
+---
 
-| If you want to see… | Open |
+## The demo
+
+A static web app that looks and works like a data governance tool, with its own design. **Every number comes from
+the repository's engine**: `python -m govkit export-app` writes the app's data, and the automatic checks fail if what
+is published differs from what the engine produces. The demo cannot show anything the engine did not do.
+
+| Screen | What it shows |
 |---|---|
-| Who decides what (roles, RACI matrix) | [`docs/generated/operating_model.md`](docs/generated/operating_model.md) |
-| Who can read what, and why | [`docs/generated/access_model.md`](docs/generated/access_model.md) · [`access_grants.sql`](docs/generated/access_grants.sql) |
-| The business glossary (38 terms) | [`docs/generated/glossary.md`](docs/generated/glossary.md) · searchable [`glossary.html`](docs/generated/glossary.html) |
-| The data contracts | [`docs/generated/contracts.md`](docs/generated/contracts.md) · e.g. [`gold.service_order_economics`](contracts/gold.service_order_economics.odcs.yaml) |
-| A schema change failing CI | [`docs/examples/breaking-change.md`](docs/examples/breaking-change.md) |
-| The quality report of the last run | [`docs/generated/quality_report.md`](docs/generated/quality_report.md) |
-| Lineage from source file to dashboard | [`docs/generated/lineage.md`](docs/generated/lineage.md) |
-| Maturity self-assessment and roadmap | [`docs/generated/maturity.md`](docs/generated/maturity.md) |
-| Why things are the way they are | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
+| Home | Governance health, value avoided and open alerts with their details (what happened, which rule caught it, who decides) |
+| Catalog | 18 tables by domain and layer, with owner, contract, quality light, sensitive columns and who uses them |
+| Glossary | 38 terms with definition, example, owner, related terms and where they live in the data |
+| Lineage | Pick a report column and its path back to the source file lights up |
+| Quality | The 6 dimensions explained in words and all 102 rules in plain language |
+| Quarantine | The 103 rows held, aggregated by reason, with no personal data shown |
+| Contracts | What each table promises, who produces and consumes it, and what happens if it breaks |
+| Roles and access | Responsibility matrix and who can see what, with segregation-of-duties checks |
+| Maturity | Radar of the 11 data management areas, current level versus target, and the roadmap |
+| Change log | The real checks on every change, including one blocked and then fixed |
+| What governance avoided | Hours and soles per month, with assumptions you can change live |
 
-Everything under `docs/generated/` and `deploy/unity_catalog/` is produced from the YAML by `govkit docs`;
-CI regenerates it and fails if the committed copy is stale.
+Top right, **"View as"** switches persona (Data owner, Custodian, Analyst, Field technician, Auditor) and the app shows
+exactly what the access policy says. The app opens in Spanish; switch to English with the EN button.
 
-## The problem
+## Capabilities it demonstrates
 
-Governance programmes often stall as documents: a RACI in a slide, a glossary in a spreadsheet, access rules in
-an email. Nothing checks them, so they drift away from the data within weeks. This project treats each
-governance artefact as code with a test:
+| Capability | Where |
+|---|---|
+| **Data stewardship** | 8 roles with responsibilities, decisions and escalation; a responsibility matrix (RACI: who does, who approves, who is consulted, who is informed) for 9 activities; one owner and one steward per domain, contract and term. |
+| **Business glossary** | 38 terms in Spanish and English, validated against circular definitions and unused terms. |
+| **Data contracts** | 11 contracts in the open ODCS v3 standard (Open Data Contract Standard), verified against the real data on every run; a breaking change fails the checks ([example](docs/examples/breaking-change.md)). |
+| **Quality rules** | 102 executable rules across completeness, uniqueness, validity, consistency, accuracy and timeliness, with quarantine and a report on every run. |
+| **Lineage** | Column-level lineage parsed from the SQL code, from source file to dashboard, with impact analysis. |
+| **Classification and access control** | Four classification levels, also per column; least privilege by role; expiring temporary grants; segregation of duties; personal-data masking; grants generated from the policy. |
+| **DAMA-DMBOK2 framework** | Evidence-backed self-assessment across the 11 knowledge areas of the international data management association's guide, plus a prioritised roadmap. |
+| **Value** | What governance avoided, in hours and soles, under illustrative, editable assumptions ([`governance/supuestos_valor.yaml`](governance/supuestos_valor.yaml)). |
+| **Platform readiness** | Databricks Unity Catalog code (catalog, tables, tags, grants and masks) generated from the same policy. [Not executed](deploy/unity_catalog/README.md). |
 
-| Artefact | Lives in | Fails CI when… |
-|---|---|---|
-| Roles and RACI | `governance/roles.yaml`, `raci.yaml` | an activity has zero or two Accountables, no Responsible, or cites an unknown role |
-| Domains, users, access | `governance/domains.yaml`, `users.yaml`, `access_policy.yaml`, `classification.yaml` | a domain has no Owner, an Owner has no Steward, someone holds access no role justifies, or a requester approved their own request |
-| Business glossary | `governance/glossary.yaml` | an owner does not exist, a metric has no formula or source, a definition is circular, or a term is used nowhere |
-| Data contracts (ODCS v3) | `contracts/*.odcs.yaml` | the real data does not match the contract, or a breaking change ships without a major version |
-| Quality rules | contracts + glossary | a blocking rule fails on a published (gold) dataset |
-| Maturity assessment | `governance/maturity.yaml` | a score cites evidence that does not exist in the repo |
+The same engine also governs the KPI catalog of my
+[KPI project](https://github.com/juansanchezalcantara20-ai/kpi-catalog-storytelling); it appears in the demo as the
+domain "KPIs (project 2)".
 
 ## Architecture
 
 ```mermaid
 flowchart LR
     subgraph SRC["Source systems (synthetic CSV)"]
-      F[assets · technicians · customers · materials<br/>service orders · labor entries · material issues]
+      F[equipment · technicians · customers · materials<br/>orders · hours · warehouse issues]
     end
-    subgraph LH["Lakehouse (DuckDB)"]
-      B["Bronze<br/>raw, all text"] --> S["Silver<br/>validated"] --> G["Gold<br/>data products"]
-      S -. failing rows .-> Q["Quarantine<br/>with reason"]
+    subgraph LH["Layered lakehouse (DuckDB)"]
+      B["Raw"] --> S["Clean and checked"] --> G["Report-ready"]
+      S -. rows that break a rule .-> Q["Quarantine"]
     end
     subgraph GOV["Governance as code (YAML)"]
-      R[Roles · RACI] --- U[Users · domains<br/>access policy]
+      R[Roles · responsibilities] --- U[Users · access]
       U --- GL[Glossary]
-      GL --- C[ODCS contracts]
+      GL --- C[Contracts]
     end
     F --> B
-    C -- rules, schema, SLA --> S & G
-    G --> X["Consumers<br/>dashboards, reports"]
-    GOV --> V{{"govkit validate · verify · compat<br/>(CI gates)"}}
-    LH --> M[("meta schema:<br/>catalog, lineage, quality,<br/>findings, audit")]
-    M --> D["Generated docs<br/>quality report · lineage · glossary"]
-    U --> UC["Unity Catalog SQL<br/>grants · tags · masks<br/>(not executed)"]
+    C -- rules, schema, freshness --> S & G
+    GOV --> V{{"Automatic checks<br/>on every change"}}
+    LH --> X["govkit export-app"] --> APP["Navigable demo<br/>(GitHub Pages)"]
+    U --> UC["Unity Catalog code<br/>(not executed)"]
 ```
 
-- **Bronze** keeps the source exactly as received. **Silver** standardises (two date formats, stray casing,
-  duplicates) and quarantines rows that break a blocking rule. **Gold** publishes the data products the
-  contracts promise.
-- Build order, lineage and the catalog are derived from the SQL; nothing is maintained by hand.
+- **Raw** keeps the source exactly as received; **Clean** standardises and holds back what breaks a rule;
+  **Report-ready** publishes the data products the contracts promise.
+- Continuous integration (CI) runs on every change: linter, governance validators, pipeline, data-versus-contract
+  verification, generated docs, app data, the Python test suite and browser tests on desktop and mobile.
 
 ## Run it
 
@@ -80,82 +103,35 @@ make install
 make all
 ```
 
-`make all` lints, validates every governance YAML, generates the seeded data, runs the pipeline, verifies the data
-against every contract, regenerates the docs and runs the tests. Individual steps:
+To view the app locally:
 
 ```bash
-python -m govkit validate                                       # governance-as-code checks
-python -m govkit run                                            # bronze → silver → gold + quality report
-python -m govkit verify                                         # data vs contracts
-python -m govkit lineage gold.site_monthly_kpis.gross_margin_pct  # where does this number come from?
-python -m govkit lineage silver.technicians.hourly_cost --impact  # what breaks if this changes?
-python -m govkit compat --base origin/main                      # contract change policy
-python -m govkit deploy                                         # Unity Catalog SQL (not executed)
+python -m http.server --directory app 8000
 ```
 
-Or with Docker: `docker compose up --build`.
+then open `http://localhost:8000`. Browser tests need Node.js: `npm install`, `npx playwright install chromium` and `npm run e2e`.
 
-## What this demonstrates
-
-| Skill the role asks for | Where it is in this repo |
-|---|---|
-| **Data stewardship** | Eight roles with responsibilities, decisions and escalation; RACI for nine activities; one Owner and Steward per domain, contract and glossary term ([operating model](docs/generated/operating_model.md)). |
-| **Business glossary** | 38 terms with definition, owner, steward, formula, source column, linked rules, synonyms, related terms, status and review date; validated for circularity and orphans ([glossary](docs/generated/glossary.md)). |
-| **Data contracts** | ODCS v3 contracts with schema, types, nullability, keys, classification, SLA, rules, version and change policy; verified against the data on every run; breaking changes fail CI ([example](docs/examples/breaking-change.md)). |
-| **Data quality rules** | 102 executable rules across completeness, uniqueness, validity, consistency, accuracy and timeliness; quarantine instead of silent loss; report per dataset and dimension ([report](docs/generated/quality_report.md)). |
-| **Lineage** | Column-level lineage parsed from SQL, from source file to consumer, with impact analysis ([lineage](docs/generated/lineage.md)). |
-| **Classification and access control** | Four-level classification, least-privilege baseline per role, time-bound exceptions, segregation of duties, personal-data discovery and masking, GRANTs compiled from policy ([access model](docs/generated/access_model.md)). |
-| **DAMA-DMBOK2** | Evidence-backed self-assessment over the 11 knowledge areas and a prioritised roadmap ([maturity](docs/generated/maturity.md)); quality dimensions and roles follow the DMBOK vocabulary. |
-| **Platform readiness** | Unity Catalog catalog, tables, tags, grants and column masks generated from the same YAML ([deploy/unity_catalog](deploy/unity_catalog/README.md)). |
-
-## Illustrative results (synthetic data)
-
-On the seeded dataset (as of 2026-10-31) the pipeline quarantines **103 rows** across three silver tables:
-orders without an asset or closed before they opened, hours outside 0.5–24, orphan lines, and material costs
-shifted by a decimal place (caught by the *accuracy* rule against the material master). It also reports one
-open high-severity finding: an `approver_email` column holds personal data that no contract declares.
-
-> These defects were **injected on purpose** by the generator (listed in `src/govkit/generator.py` and
-> `data/sources/_manifest.json`). The numbers illustrate the method; they are not findings about any real
-> organisation.
-
-## Repository map
-
-```
-governance/         roles, RACI, domains, users, classification, access policy, glossary, maturity (YAML)
-contracts/          one ODCS v3 contract per published dataset
-models/             SQL models (silver, gold), source registry, consumers (exposures)
-src/govkit/         pipeline, quality engine, lineage, privacy, validators, generators, CLI
-tests/              pytest suite (governance validators, contracts, quality, lineage, deployment, links)
-docs/               STATUS, DECISIONS, worked example, generated documentation; docs/es/ in Spanish
-deploy/unity_catalog/  generated Databricks SQL — not executed in this repo
-```
+Technical documentation: [docs/README.md](docs/README.md) · published at
+[/docs/](https://juansanchezalcantara20-ai.github.io/data-governance-as-code/docs/).
 
 ## How this was built
 
-I designed and directed this project and built it with [Claude Code](https://claude.com/claude-code) as the
-coding agent. The governance model, the rules and their thresholds, the trade-offs and the review are mine;
-the reasoning behind each choice is recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md) and progress in
-[`docs/STATUS.md`](docs/STATUS.md).
+I designed and directed this project and built it with [Claude Code](https://claude.com/claude-code) as the coding
+agent. The governance model, the rules and their thresholds, the trade-offs and the review are mine; the reasoning
+behind each choice is in [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
 ## Scope & limitations
 
-- **Synthetic data only.** One fictional company; every person, site and manufacturer is invented. Quality
-  findings illustrate the method, they are not results.
-- **Not a production platform.** Single-node DuckDB, batch CSV ingestion, no scheduler, no backups.
-- **Access control is modelled, not enforced, locally.** DuckDB has no GRANT; the policy is validated and
-  compiled to PostgreSQL and Unity Catalog SQL, and masking is applied in Python. The Unity Catalog SQL has
-  **not** been executed.
-- **No user interface or catalog tool.** Documentation is generated Markdown/HTML; publishing to a catalog
-  (OpenMetadata, Unity Catalog) is on the roadmap.
-- **Self-assessment, not an audit.** The DAMA-DMBOK2 scores use this project's own scale and apply only to
-  this repository.
-- **One role per person**, and governance KPIs are not yet tracked over time (see the roadmap).
+- **Synthetic data only**, for a fictional company, with defects planted on purpose. Findings illustrate the method;
+  they are not results.
+- **The demo is static:** there is no sign-in; the persona switch and the action buttons are simulated.
+- **Value amounts are illustrative assumptions**, not estimates about any company. No fines are estimated.
+- **Not a production platform:** single-node DuckDB and batch loads. The Unity Catalog code has not been executed.
+- **Self-assessment, not an audit:** maturity uses the project's own scale and applies to this repository only.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md): how to propose a term, a rule or a contract change, and who approves it
-according to the RACI. Release history is in [CHANGELOG.md](CHANGELOG.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md). Release history is in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

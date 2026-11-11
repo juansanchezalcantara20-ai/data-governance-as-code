@@ -7,7 +7,7 @@ están solo en inglés porque los produce el código y la CI verifica que estén
 
 | Documento | Qué es |
 |---|---|
-| [decisiones.md](decisiones.md) | Registro de decisiones (D-001 … D-031) |
+| [decisiones.md](decisiones.md) | Registro de decisiones (D-001 … D-037) |
 | [ejemplo-cambio-que-rompe.md](ejemplo-cambio-que-rompe.md) | Ejemplo: un cambio de esquema hace fallar la CI |
 | [despliegue-unity-catalog.md](despliegue-unity-catalog.md) | Cómo aplicar el SQL generado para Unity Catalog (no ejecutado) |
 | [../STATUS.md](../STATUS.md) | Estado del proyecto (en inglés) |
