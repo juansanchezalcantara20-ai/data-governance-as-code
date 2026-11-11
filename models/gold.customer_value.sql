@@ -15,6 +15,7 @@ SELECT
     c.country,
     c.contact_name,
     c.contact_email,
+    c.contact_phone,
     c.marketing_consent,
     coalesce(o.orders, 0)                                AS orders,
     round(coalesce(o.revenue, 0), 2)                     AS revenue,
