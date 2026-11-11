@@ -1,0 +1,61 @@
+# Real continuous-integration events of this repository, recorded from GitHub Actions.
+# Used by the demo app's "Change log" screen. Each entry links to the actual run.
+repository: https://github.com/juansanchezalcantara20-ai/data-governance-as-code
+events:
+  - date: 2026-11-04
+    kind: push
+    outcome: passed
+    commit: d8d49a0
+    title_en: Engine foundation published on main
+    title_es: Se publica la base del motor en la rama principal
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41922730566
+  - date: 2026-11-04
+    kind: pull_request
+    outcome: passed
+    commit: 1856ea1
+    pr: 1
+    title_en: "Pull request #1: roles, access, glossary, contracts, quality, lineage and maturity"
+    title_es: "Propuesta n.º 1: roles, accesos, glosario, contratos, calidad, linaje y madurez"
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41922770527
+  - date: 2026-11-05
+    kind: merge
+    outcome: passed
+    commit: 28238fa
+    pr: 1
+    title_en: "Pull request #1 approved and merged"
+    title_es: "Propuesta n.º 1 aprobada e integrada"
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41951682909
+  - date: 2026-11-05
+    kind: pull_request
+    outcome: blocked
+    commit: ee5455f
+    pr: 2
+    title_en: "Pull request #2 blocked: the check on Python 3.10 failed"
+    title_es: "Propuesta n.º 2 bloqueada: falló la verificación en Python 3.10"
+    message: "_duckdb.BinderException: Binder Error: UNNEST not supported here"
+    explanation_en: The quality report query worked on the newest database engine but not on the older one used with Python 3.10.
+    explanation_es: La consulta del reporte de calidad funcionaba con la versión nueva del motor de base de datos, pero no con la anterior que se instala con Python 3.10.
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41952924252
+  - date: 2026-11-05
+    kind: fix
+    outcome: passed
+    commit: 8bff0b2
+    pr: 2
+    title_en: Fix pushed; every check passes on Python 3.10 and 3.12
+    title_es: Se corrige; todas las verificaciones pasan en Python 3.10 y 3.12
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41953231076
+  - date: 2026-11-05
+    kind: merge
+    outcome: passed
+    commit: 9cc283f
+    pr: 2
+    title_en: "Pull request #2 approved and merged"
+    title_es: "Propuesta n.º 2 aprobada e integrada"
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41954661725
+  - date: 2026-11-05
+    kind: release
+    outcome: passed
+    commit: 28238fa
+    title_en: Version 1.0.0 released
+    title_es: Se publica la versión 1.0.0
+    url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41955291956
