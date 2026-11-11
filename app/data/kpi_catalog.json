@@ -1,0 +1,571 @@
+{
+ "source": "examples/kpi_catalog/catalog.yaml",
+ "origin_commit": "67e3e37",
+ "kpis": 28,
+ "cases": [
+  "customers",
+  "data_quality",
+  "inventory",
+  "maintenance",
+  "service"
+ ],
+ "checks": [
+  {
+   "check": "definition",
+   "family": "glossary",
+   "description": "Has a definition, a formula and a unit",
+   "passed": 28,
+   "failed": 0,
+   "failed_kpis": []
+  },
+  {
+   "check": "not_circular",
+   "family": "glossary",
+   "description": "Definition does not use the KPI's own name",
+   "passed": 27,
+   "failed": 1,
+   "failed_kpis": [
+    "dq_validity"
+   ]
+  },
+  {
+   "check": "related_exist",
+   "family": "glossary",
+   "description": "Every related KPI exists in the catalog",
+   "passed": 28,
+   "failed": 0,
+   "failed_kpis": []
+  },
+  {
+   "check": "owner",
+   "family": "ownership",
+   "description": "An accountable owner is named",
+   "passed": 28,
+   "failed": 0,
+   "failed_kpis": []
+  },
+  {
+   "check": "steward",
+   "family": "ownership",
+   "description": "A data steward is named",
+   "passed": 0,
+   "failed": 28,
+   "failed_kpis": [
+    "first_response_time",
+    "resolution_time",
+    "sla_compliance",
+    "backlog_aged_share",
+    "first_contact_resolution",
+    "reopen_rate",
+    "mtbf",
+    "mttr",
+    "availability",
+    "pm_compliance",
+    "planned_work_share",
+    "fill_rate",
+    "otif",
+    "inventory_turnover",
+    "days_of_cover",
+    "stockout_rate",
+    "obsolescence_share",
+    "mape",
+    "wape",
+    "forecast_bias",
+    "retention_rate",
+    "repeat_purchase_rate",
+    "revenue_at_risk_share",
+    "nps",
+    "dq_completeness",
+    "dq_uniqueness",
+    "dq_validity",
+    "dq_timeliness"
+   ]
+  },
+  {
+   "check": "input_declared",
+   "family": "contract",
+   "description": "Input table is declared for the case and columns are listed",
+   "passed": 24,
+   "failed": 4,
+   "failed_kpis": [
+    "dq_completeness",
+    "dq_uniqueness",
+    "dq_validity",
+    "dq_timeliness"
+   ]
+  },
+  {
+   "check": "reference_sql",
+   "family": "contract",
+   "description": "A reference SQL query exists",
+   "passed": 23,
+   "failed": 5,
+   "failed_kpis": [
+    "retention_rate",
+    "dq_completeness",
+    "dq_uniqueness",
+    "dq_validity",
+    "dq_timeliness"
+   ]
+  },
+  {
+   "check": "thresholds",
+   "family": "contract",
+   "description": "Traffic-light thresholds agree with the direction",
+   "passed": 28,
+   "failed": 0,
+   "failed_kpis": []
+  }
+ ],
+ "pass_rate": 83.0,
+ "per_kpi": [
+  {
+   "id": "first_response_time",
+   "name": "First response time (median)",
+   "case": "service",
+   "owner": "Service Desk Lead",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "resolution_time",
+   "name": "Resolution time (median)",
+   "case": "service",
+   "owner": "Service Desk Manager",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "sla_compliance",
+   "name": "SLA compliance",
+   "case": "service",
+   "owner": "Service Desk Manager",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "backlog_aged_share",
+   "name": "Aged backlog (> 7 days)",
+   "case": "service",
+   "owner": "Queue Team Lead",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "first_contact_resolution",
+   "name": "First contact resolution (FCR)",
+   "case": "service",
+   "owner": "Service Desk Manager",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "reopen_rate",
+   "name": "Reopen rate",
+   "case": "service",
+   "owner": "Quality Lead (Service)",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "mtbf",
+   "name": "Mean time between failures (MTBF)",
+   "case": "maintenance",
+   "owner": "Reliability Engineer",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "mttr",
+   "name": "Mean time to repair (MTTR)",
+   "case": "maintenance",
+   "owner": "Maintenance Supervisor",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "availability",
+   "name": "Availability",
+   "case": "maintenance",
+   "owner": "Maintenance Manager",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "pm_compliance",
+   "name": "Preventive maintenance compliance",
+   "case": "maintenance",
+   "owner": "Maintenance Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "planned_work_share",
+   "name": "Planned maintenance share",
+   "case": "maintenance",
+   "owner": "Maintenance Manager",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "fill_rate",
+   "name": "Fill rate (units)",
+   "case": "inventory",
+   "owner": "Supply Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "otif",
+   "name": "On time in full (OTIF)",
+   "case": "inventory",
+   "owner": "Logistics Manager",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "inventory_turnover",
+   "name": "Inventory turnover",
+   "case": "inventory",
+   "owner": "Inventory Controller",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "days_of_cover",
+   "name": "Days of cover",
+   "case": "inventory",
+   "owner": "Supply Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "stockout_rate",
+   "name": "Stockout rate (SKU-days)",
+   "case": "inventory",
+   "owner": "Supply Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "obsolescence_share",
+   "name": "Obsolete stock share",
+   "case": "inventory",
+   "owner": "Inventory Controller",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "mape",
+   "name": "Forecast error (MAPE)",
+   "case": "inventory",
+   "owner": "Demand Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "wape",
+   "name": "Forecast error (WAPE)",
+   "case": "inventory",
+   "owner": "Demand Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "forecast_bias",
+   "name": "Forecast bias",
+   "case": "inventory",
+   "owner": "Demand Planner",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "retention_rate",
+   "name": "Customer retention (quarter over quarter)",
+   "case": "customers",
+   "owner": "Customer Success / CRM Lead",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": false,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "repeat_purchase_rate",
+   "name": "Repeat purchase rate",
+   "case": "customers",
+   "owner": "CRM Lead",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "revenue_at_risk_share",
+   "name": "Revenue at risk (RFM \"At risk\")",
+   "case": "customers",
+   "owner": "CRM Lead",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "nps",
+   "name": "Net Promoter Score (simulated survey)",
+   "case": "customers",
+   "owner": "Customer Experience Lead",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": true,
+    "reference_sql": true,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "dq_completeness",
+   "name": "Completeness",
+   "case": "data_quality",
+   "owner": "Data Steward",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": false,
+    "reference_sql": false,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "dq_uniqueness",
+   "name": "Uniqueness",
+   "case": "data_quality",
+   "owner": "Data Steward",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": false,
+    "reference_sql": false,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "dq_validity",
+   "name": "Validity",
+   "case": "data_quality",
+   "owner": "Data Steward",
+   "results": {
+    "definition": true,
+    "not_circular": false,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": false,
+    "reference_sql": false,
+    "thresholds": true
+   }
+  },
+  {
+   "id": "dq_timeliness",
+   "name": "Timeliness",
+   "case": "data_quality",
+   "owner": "Data Engineer",
+   "results": {
+    "definition": true,
+    "not_circular": true,
+    "related_exist": true,
+    "owner": true,
+    "steward": false,
+    "input_declared": false,
+    "reference_sql": false,
+    "thresholds": true
+   }
+  }
+ ]
+}

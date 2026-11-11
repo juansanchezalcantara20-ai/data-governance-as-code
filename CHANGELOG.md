@@ -7,6 +7,11 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- Navigable demo app (`app/`, Spanish first with English switch) published on GitHub Pages, fed only by
+  `govkit export-app`; CI fails if the published JSON differs from the engine (D-032).
+- Field technician and auditor roles, column-level classification compiled to column grants and masks (D-029, D-030).
+- Spanish glossary content, illustrative value model in soles, project 2 KPI catalog checks, recorded CI history.
+- Browser end-to-end tests (desktop and 390 px), readability tests, README GIF and social preview, MkDocs site.
 - Spanish documentation: `README.es.md` and `docs/es/` (decision log, breaking-change example, Unity Catalog guide).
 - Repository hygiene: `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `CODEOWNERS`, pull-request template,
   issue forms for the governance workflows, `.editorconfig`, pre-commit configuration, docs index.

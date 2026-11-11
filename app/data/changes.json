@@ -1,0 +1,122 @@
+{
+ "repository": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code",
+ "events": [
+  {
+   "date": "2026-11-04",
+   "kind": "push",
+   "outcome": "passed",
+   "commit": "d8d49a0",
+   "title_en": "Engine foundation published on main",
+   "title_es": "Se publica la base del motor en la rama principal",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41922730566"
+  },
+  {
+   "date": "2026-11-04",
+   "kind": "pull_request",
+   "outcome": "passed",
+   "commit": "1856ea1",
+   "pr": 1,
+   "title_en": "Pull request #1: roles, access, glossary, contracts, quality, lineage and maturity",
+   "title_es": "Propuesta n.º 1: roles, accesos, glosario, contratos, calidad, linaje y madurez",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41922770527"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "merge",
+   "outcome": "passed",
+   "commit": "28238fa",
+   "pr": 1,
+   "title_en": "Pull request #1 approved and merged",
+   "title_es": "Propuesta n.º 1 aprobada e integrada",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41951682909"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "pull_request",
+   "outcome": "blocked",
+   "commit": "ee5455f",
+   "pr": 2,
+   "title_en": "Pull request #2 blocked: the check on Python 3.10 failed",
+   "title_es": "Propuesta n.º 2 bloqueada: falló la verificación en Python 3.10",
+   "message": "_duckdb.BinderException: Binder Error: UNNEST not supported here",
+   "explanation_en": "The quality report query worked on the newest database engine but not on the older one used with Python 3.10.",
+   "explanation_es": "La consulta del reporte de calidad funcionaba con la versión nueva del motor de base de datos, pero no con la anterior que se instala con Python 3.10.",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41952924252"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "fix",
+   "outcome": "passed",
+   "commit": "8bff0b2",
+   "pr": 2,
+   "title_en": "Fix pushed; every check passes on Python 3.10 and 3.12",
+   "title_es": "Se corrige; todas las verificaciones pasan en Python 3.10 y 3.12",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41953231076"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "merge",
+   "outcome": "passed",
+   "commit": "9cc283f",
+   "pr": 2,
+   "title_en": "Pull request #2 approved and merged",
+   "title_es": "Propuesta n.º 2 aprobada e integrada",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41954661725"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "release",
+   "outcome": "passed",
+   "commit": "28238fa",
+   "title_en": "Version 1.0.0 released",
+   "title_es": "Se publica la versión 1.0.0",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/41955291956"
+  },
+  {
+   "date": "2026-11-11",
+   "kind": "pull_request",
+   "outcome": "blocked",
+   "commit": "ef6e03a",
+   "pr": 3,
+   "title_en": "Pull request #3 (this demo app) blocked: the published app data did not match the engine",
+   "title_es": "Propuesta n.º 3 (esta app) bloqueada: los datos publicados de la app no coincidían con el motor",
+   "message": "[ERROR] app/data/meta.json does not match what the engine produces. Run: govkit export-app",
+   "explanation_en": "A rule meant to ignore generated files at the repository root also ignored the app's data, so it was never uploaded. The honesty lock caught it.",
+   "explanation_es": "Una regla pensada para ignorar archivos generados en la raíz también ignoraba los datos de la app, así que nunca se subieron. El candado de honestidad lo detectó.",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/43081127048"
+  },
+  {
+   "date": "2026-11-11",
+   "kind": "fix",
+   "outcome": "passed",
+   "commit": "8c59807",
+   "pr": 3,
+   "title_en": "App data committed and the lock hardened; every check passes, browser tests included",
+   "title_es": "Se suben los datos de la app y se refuerza el candado; pasan todas las verificaciones, incluidas las de navegador",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/43081407052"
+  },
+  {
+   "date": "2026-11-11",
+   "kind": "pull_request",
+   "outcome": "blocked",
+   "commit": "671e88e",
+   "pr": 4,
+   "title_en": "Demo pull request #4: a phone number published without a contract is blocked",
+   "title_es": "Propuesta de demostración n.º 4: se bloquea un teléfono publicado sin contrato",
+   "message": "[error] gold.customer_value · contract_violation: column 'contact_phone' exists in the data but is not declared in the contract",
+   "explanation_en": "The customer value table started publishing the contact's phone without declaring it. The check compares every table with its contract before publishing and also flags it as undeclared personal data.",
+   "explanation_es": "La tabla de valor por cliente empezó a publicar el teléfono del contacto sin declararlo. La verificación compara cada tabla con su contrato antes de publicar y además la marca como dato personal no declarado.",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/43081703953"
+  },
+  {
+   "date": "2026-11-11",
+   "kind": "fix",
+   "outcome": "passed",
+   "commit": "b17ccc1",
+   "pr": 4,
+   "title_en": "Demo fixed and approved: the column is declared as personal data in contract v1.1.0 (kept open, not merged)",
+   "title_es": "Demostración corregida y aprobada: la columna se declara como dato personal en el contrato v1.1.0 (se deja abierta, sin integrar)",
+   "url": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code/actions/runs/43081943942"
+  }
+ ]
+}

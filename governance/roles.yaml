@@ -74,3 +74,24 @@ roles:
     decisions:
       - None on the data itself; decides how to use data within policy.
     escalates_to: data_steward
+
+  field_technician:
+    name: Field Technician
+    purpose: Uses operational data to plan and carry out field work; has no need for financial or personal data.
+    responsibilities:
+      - Use asset, order and labor data of the assigned domain to plan and execute work.
+      - Report data that looks wrong in the field through the quality incident process.
+    decisions:
+      - None on the data itself; decides how to schedule and execute work within policy.
+    escalates_to: data_steward
+
+  auditor:
+    name: Data Auditor
+    purpose: Independent reviewer who checks that governance controls exist and work, in read-only mode.
+    responsibilities:
+      - Review access grants, segregation of duties and exception expiry.
+      - Review quality evidence, quarantine handling and the decision log.
+      - Report audit findings to the Governance Council.
+    decisions:
+      - Raise audit findings and request evidence; never changes data or grants.
+    escalates_to: governance_council

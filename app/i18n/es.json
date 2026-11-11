@@ -1,0 +1,692 @@
+{
+ "meta": {
+  "lang": "es",
+  "other": "EN",
+  "other_lang": "en"
+ },
+ "ui": {
+  "banner": "Demo navegable · Empresa ficticia «{company}» · Datos sintéticos generados por el motor del repositorio",
+  "banner_code": "Ver código",
+  "view_as": "Ver como",
+  "theme": "Cambiar modo claro u oscuro",
+  "language": "Cambiar idioma",
+  "menu": "Menú",
+  "search": "Buscar…",
+  "all": "Todos",
+  "filter": "Filtrar",
+  "close": "Cerrar",
+  "open": "Abrir",
+  "back": "Volver",
+  "no_results": "No hay resultados con ese filtro.",
+  "rows": "filas",
+  "of": "de",
+  "yes": "Sí",
+  "no": "No",
+  "owner": "Dueño",
+  "steward": "Responsable de calidad",
+  "status": "Estado",
+  "domain": "Dominio",
+  "layer": "Capa",
+  "classification": "Clasificación",
+  "contract": "Contrato",
+  "quality": "Calidad",
+  "version": "Versión",
+  "who_decides": "Quién decide",
+  "what_happened": "Qué pasó",
+  "detected_by": "Qué lo detectó",
+  "affects": "Qué datos afecta",
+  "what_to_do": "Qué hacer",
+  "technical": "Técnico",
+  "technical_detail": "Ver detalle técnico",
+  "no_access": "Sin acceso para este perfil",
+  "hidden_column": "Oculta para este perfil",
+  "masked_column": "Se muestra enmascarada",
+  "sensitive": "Dato sensible",
+  "read_only_notice": "Este perfil solo puede leer.",
+  "simulated_action": "En la versión real, esta acción queda registrada en la bitácora.",
+  "as_of": "Datos al {date}",
+  "per_month": "al mes",
+  "hours": "horas",
+  "illustrative": "Supuestos ilustrativos; cámbialos por los de tu empresa.",
+  "skip_to_content": "Saltar al contenido",
+  "loading": "Cargando datos del motor…",
+  "out_of": "{n} de cada 100",
+  "rule_passes": "Cumple",
+  "rule_fails": "No cumple",
+  "rule_warns": "Advierte",
+  "column": "Columna",
+  "type": "Tipo",
+  "access": "Acceso para este perfil",
+  "activity": "Actividad",
+  "role": "Rol",
+  "rule": "Regla",
+  "severity": "Severidad",
+  "check": "Verificación",
+  "table": "Tabla"
+ },
+ "nav": {
+  "inicio": "Inicio",
+  "catalogo": "Catálogo de datos",
+  "glosario": "Glosario de negocio",
+  "linaje": "Linaje",
+  "calidad": "Calidad de datos",
+  "cuarentena": "Cuarentena",
+  "contratos": "Contratos de datos",
+  "roles": "Roles y accesos",
+  "madurez": "Madurez",
+  "bitacora": "Bitácora de cambios",
+  "valor": "Lo que evitó el gobierno",
+  "acerca": "Acerca de esta demo"
+ },
+ "personas": {
+  "data_owner": "Dueño de datos",
+  "data_custodian": "Custodio",
+  "data_consumer": "Analista",
+  "field_technician": "Técnico de campo",
+  "auditor": "Auditor"
+ },
+ "persona_hint": {
+  "data_owner": "Dueño de los datos de Operaciones: ve todo su dominio, incluso datos personales, y decide sobre él.",
+  "data_custodian": "Equipo técnico de la plataforma: ve todas las capas hasta lo confidencial, con datos personales enmascarados.",
+  "data_consumer": "Analista de inteligencia de negocio: solo ve datos listos para reporte y no confidenciales, más un permiso temporal aprobado.",
+  "field_technician": "Técnico de campo: ve órdenes, equipos y horas de Operaciones, pero ninguna columna de dinero.",
+  "auditor": "Auditor interno: ve todo en solo lectura, con datos personales enmascarados, y no puede cambiar nada."
+ },
+ "roles": {
+  "data_sponsor": {
+   "name": "Patrocinador de datos",
+   "line": "Directivo que financia el programa de gobierno y responde por él ante la dirección."
+  },
+  "governance_council": {
+   "name": "Consejo de gobierno",
+   "line": "Grupo que fija políticas comunes y resuelve conflictos entre áreas."
+  },
+  "data_owner": {
+   "name": "Dueño de datos",
+   "line": "Líder de negocio que responde por los datos de su área y decide quién los usa."
+  },
+  "data_steward": {
+   "name": "Responsable de calidad de datos",
+   "line": "Especialista que cuida el día a día: definiciones, reglas e incidentes."
+  },
+  "data_custodian": {
+   "name": "Custodio",
+   "line": "Equipo técnico que opera la plataforma y aplica los permisos tal como dice la política."
+  },
+  "data_consumer": {
+   "name": "Consumidor de datos",
+   "line": "Analista o aplicación que usa los datos publicados para decidir."
+  },
+  "field_technician": {
+   "name": "Técnico de campo",
+   "line": "Usa datos operativos para planificar y ejecutar trabajo; no necesita datos de dinero ni personales."
+  },
+  "auditor": {
+   "name": "Auditor de datos",
+   "line": "Revisa de forma independiente que los controles funcionen, sin cambiar nada."
+  }
+ },
+ "raci_letters": {
+  "R": "Responsable: hace el trabajo.",
+  "A": "Aprueba y rinde cuentas: una sola persona por actividad.",
+  "C": "Consultado: da su opinión antes de decidir.",
+  "I": "Informado: se entera del resultado."
+ },
+ "raci_activities": {
+  "define_glossary_term": "Definir un término del glosario",
+  "approve_glossary_term": "Aprobar un término del glosario",
+  "approve_quality_rule": "Aprobar una regla de calidad",
+  "resolve_quality_incident": "Resolver un incidente de calidad",
+  "approve_access_request": "Aprobar una solicitud de acceso",
+  "change_data_contract": "Cambiar un contrato de datos",
+  "retire_dataset": "Dar de baja una tabla",
+  "classify_dataset": "Clasificar una tabla",
+  "approve_policy": "Aprobar una política de gobierno"
+ },
+ "layers": {
+  "bronze": "Crudo",
+  "silver": "Limpio",
+  "gold": "Listo para reporte",
+  "file": "Archivo de origen",
+  "exposure": "Uso final"
+ },
+ "layer_hint": {
+  "bronze": "Copia exacta de lo que llegó del sistema de origen. No se corrige: es la evidencia.",
+  "silver": "Datos estandarizados y verificados. Lo que no cumple una regla se retiene en cuarentena.",
+  "gold": "Productos de datos listos para tableros y reportes, cada uno con su contrato.",
+  "file": "Archivo que entrega el sistema de origen.",
+  "exposure": "Tablero, reporte o análisis que consume los datos."
+ },
+ "domains": {
+  "operations": "Operaciones",
+  "supply_chain": "Cadena de suministro",
+  "customer": "Clientes",
+  "kpi": "Indicadores (proyecto 2)"
+ },
+ "classification_levels": {
+  "public": "Público",
+  "internal": "Interno",
+  "confidential": "Confidencial",
+  "restricted": "Restringido"
+ },
+ "classification_hint": {
+  "public": "Se puede publicar fuera de la empresa.",
+  "internal": "Para uso interno; sin datos personales ni cifras sensibles.",
+  "confidential": "Cifras de negocio sensibles (precios, costos, márgenes) o datos de contacto.",
+  "restricted": "Datos personales de trabajadores, remuneraciones o documentos de identidad."
+ },
+ "datasets": {
+  "assets": "Equipos",
+  "technicians": "Técnicos",
+  "customers": "Clientes",
+  "materials": "Maestro de materiales",
+  "service_orders": "Órdenes de servicio",
+  "labor_entries": "Registro de horas",
+  "material_issues": "Salidas de almacén",
+  "service_order_economics": "Rentabilidad por orden",
+  "site_monthly_kpis": "Indicadores mensuales por sede",
+  "inventory_position": "Posición de inventario",
+  "customer_value": "Valor por cliente"
+ },
+ "exposures": {
+  "Service profitability dashboard": "Tablero de rentabilidad de servicios",
+  "Replenishment report": "Reporte de reposición",
+  "Key-account review": "Revisión de cuentas clave"
+ },
+ "columns": {
+  "actual_cost": "Costo real",
+  "actual_hours": "Horas reales",
+  "actual_labor_cost": "Costo real de mano de obra",
+  "actual_material_cost": "Costo real de materiales",
+  "approver_email": "Correo de quien aprobó",
+  "asset_id": "Código de equipo",
+  "asset_type": "Tipo de equipo",
+  "below_reorder_point": "Bajo punto de reposición",
+  "category": "Categoría",
+  "closed_on": "Fecha de cierre",
+  "closed_orders": "Órdenes cerradas",
+  "commissioned_on": "Puesta en servicio",
+  "company_name": "Razón social",
+  "contact_email": "Correo del contacto",
+  "contact_name": "Nombre del contacto",
+  "contact_phone": "Teléfono del contacto",
+  "cost_variance_pct": "Desviación de costo (%)",
+  "country": "País",
+  "created_on": "Fecha de alta",
+  "customer_id": "Código de cliente",
+  "customer_tier": "Categoría de cliente",
+  "days_of_cover": "Días de cobertura",
+  "description": "Descripción",
+  "email": "Correo",
+  "entry_id": "Código de registro",
+  "first_name": "Nombres",
+  "gross_margin": "Margen bruto",
+  "gross_margin_pct": "Margen bruto (%)",
+  "hourly_cost": "Costo por hora",
+  "hours": "Horas",
+  "issue_id": "Código de salida",
+  "issued_on": "Fecha de salida",
+  "issued_qty_90d": "Unidades usadas en 90 días",
+  "last_name": "Apellidos",
+  "last_order_on": "Última orden",
+  "lead_time_days": "Días de entrega del proveedor",
+  "line_cost": "Costo de la línea",
+  "manufacturer": "Fabricante",
+  "marketing_consent": "Consentimiento comercial",
+  "material_id": "Código de material",
+  "month": "Mes",
+  "national_id": "Documento de identidad",
+  "opened_on": "Fecha de apertura",
+  "operating_hours": "Horas de operación",
+  "order_id": "Número de orden",
+  "orders": "Órdenes",
+  "phone": "Teléfono",
+  "planned_cost": "Costo planificado",
+  "planned_hours": "Horas planificadas",
+  "planned_labor_cost": "Mano de obra planificada",
+  "planned_material_cost": "Materiales planificados",
+  "price": "Precio",
+  "quantity": "Cantidad",
+  "reorder_point": "Punto de reposición",
+  "revenue": "Ingresos",
+  "segment": "Segmento",
+  "service_type": "Tipo de servicio",
+  "site": "Sede",
+  "status": "Estado",
+  "stock_on_hand": "Existencias",
+  "stock_value": "Valor del inventario",
+  "technician_id": "Código de técnico",
+  "trade": "Especialidad",
+  "unit_cost": "Costo unitario",
+  "work_date": "Día trabajado"
+ },
+ "personal_data": {
+  "national_id": "documento de identidad",
+  "name": "nombre de persona",
+  "email": "correo",
+  "phone": "teléfono",
+  "address": "dirección",
+  "compensation": "remuneración"
+ },
+ "dimensions": {
+  "completeness": {
+   "name": "Completitud",
+   "explain": "¿Están todos los datos que deben estar? Por ejemplo, que ninguna orden llegue sin equipo."
+  },
+  "uniqueness": {
+   "name": "Unicidad",
+   "explain": "¿Cada cosa aparece una sola vez? Por ejemplo, que no haya dos órdenes con el mismo número."
+  },
+  "validity": {
+   "name": "Validez",
+   "explain": "¿Los valores tienen sentido? Por ejemplo, nadie trabaja más de 24 horas en un día."
+  },
+  "consistency": {
+   "name": "Consistencia",
+   "explain": "¿Los datos cuadran entre sí? Por ejemplo, que las horas se carguen a órdenes que existen."
+  },
+  "accuracy": {
+   "name": "Exactitud",
+   "explain": "¿El dato coincide con la fuente de verdad? Por ejemplo, el costo cargado frente al costo del maestro de materiales."
+  },
+  "timeliness": {
+   "name": "Oportunidad",
+   "explain": "¿El dato llegó a tiempo? Por ejemplo, que las órdenes nuevas lleguen en menos de 3 días."
+  }
+ },
+ "rule_text": {
+  "notNull": "«{column}» siempre debe tener valor.",
+  "unique": "«{column}» no se puede repetir.",
+  "pattern": "«{column}» debe tener el formato correcto.",
+  "validValues": "«{column}» solo admite: {values}.",
+  "range": "«{column}» debe estar {range}.",
+  "references": "«{column}» debe existir en «{target}».",
+  "expression": "«{column}» debe ser coherente con las demás columnas de la fila.",
+  "tolerance": "«{column}» no puede diferir más de {pct} % del valor en «{target}».",
+  "rowCount": "La tabla debe tener al menos {min} filas.",
+  "freshness": "El dato más reciente no puede tener más de {days} días.",
+  "sql": "Verificación de cuadre de la tabla completa."
+ },
+ "range_text": {
+  "min": "en {min} o más",
+  "max": "en {max} o menos",
+  "between": "entre {min} y {max}"
+ },
+ "severity": {
+  "high": "Alta",
+  "medium": "Media",
+  "low": "Baja",
+  "error": "Bloqueante",
+  "warning": "Advertencia"
+ },
+ "status_text": {
+  "pass": "Cumple",
+  "fail": "No cumple: filas retenidas",
+  "warn": "Advierte, no bloquea",
+  "approved": "Aprobado",
+  "draft": "En revisión",
+  "active": "Vigente"
+ },
+ "alerts": {
+  "undeclared_personal_data": {
+   "title": "{category} sin base de uso declarada en «{dataset}»",
+   "what": "La columna «{column}» contiene {category} de personas en {rows} filas, pero ningún contrato la declara como dato personal. Por eso no se enmascara.",
+   "rule": "Descubrimiento automático de datos personales: revisa nombres de columnas y una muestra de valores.",
+   "todo": "Declarar la columna como dato personal en su contrato, revisar la clasificación y confirmar con el área legal la base de uso. Mientras tanto, enmascarar."
+  },
+  "rows_quarantined": {
+   "title": "{rows} filas retenidas en «{dataset}»",
+   "what": "{rows} filas no cumplieron la regla y se detuvieron antes de llegar a los reportes.",
+   "rule": "{rule_text}",
+   "todo": "Corregir en el sistema de origen y volver a cargar; o descartar si el registro no corresponde."
+  },
+  "rule_warning": {
+   "title": "Aviso de calidad en «{dataset}»: {rows} filas",
+   "what": "{rows} de {evaluated} filas no cumplen la regla. Es un aviso: no se detienen, pero conviene corregirlas.",
+   "rule": "{rule_text}",
+   "todo": "Revisar con el área de origen y corregir en la próxima carga."
+  }
+ },
+ "decides_text": "{role} de {domain}",
+ "quarantine_flow": [
+  "Llegó del sistema de origen",
+  "No cumplió la regla",
+  "Retenida en cuarentena",
+  "Avisado el responsable",
+  "Corregida o descartada"
+ ],
+ "quarantine_actions": {
+  "release": "Liberar",
+  "discard": "Descartar",
+  "released": "Liberada",
+  "discarded": "Descartada",
+  "pending": "Pendiente"
+ },
+ "maturity_areas": {
+  "data_governance": "Gobierno de datos",
+  "data_architecture": "Arquitectura de datos",
+  "data_modeling": "Modelado y diseño",
+  "data_storage_operations": "Almacenamiento y operación",
+  "data_security": "Seguridad de datos",
+  "data_integration": "Integración e interoperabilidad",
+  "document_content": "Documentos y contenido",
+  "reference_master_data": "Datos maestros y de referencia",
+  "dw_bi": "Almacén de datos e inteligencia de negocio",
+  "metadata": "Metadatos",
+  "data_quality": "Calidad de datos"
+ },
+ "maturity_scale": {
+  "1": "Improvisado",
+  "2": "Documentado",
+  "3": "Definido y verificado",
+  "4": "Medido",
+  "5": "Optimizado"
+ },
+ "maturity_next": {
+  "data_governance": "Seguir en el tiempo los indicadores de gobierno (tiempo de aprobación de términos, hallazgos abiertos, revisiones de acceso) con metas.",
+  "data_architecture": "Documentar la arquitectura objetivo y sus principios, y verificar que los modelos nuevos los cumplan.",
+  "data_modeling": "Generar un diagrama entidad-relación a partir de los contratos y mantenerlo sincronizado automáticamente.",
+  "data_storage_operations": "Política de retención y respaldo como código, con una restauración probada.",
+  "data_security": "Aplicar los permisos y máscaras en una plataforma real y revisar los accesos cada trimestre.",
+  "data_integration": "Cargas incrementales y contratos con los sistemas de origen para detectar cambios antes de que lleguen.",
+  "document_content": "Política de retención para documentos no estructurados (contratos, reportes) como código.",
+  "reference_master_data": "Tablas de referencia gobernadas, con dueño y versión, y detección de duplicados en los maestros.",
+  "dw_bi": "Generar las métricas de los tableros desde las fórmulas del glosario.",
+  "metadata": "Publicar contratos, glosario y linaje en un catálogo con buscador y estadísticas de uso.",
+  "data_quality": "Historial del puntaje de calidad por tabla, con metas, alertas y un flujo de incidentes con plazos."
+ },
+ "kpi_checks": {
+  "definition": "Tiene definición, fórmula y unidad",
+  "not_circular": "La definición no usa el propio nombre del indicador",
+  "related_exist": "Los indicadores relacionados existen",
+  "owner": "Tiene un dueño que responde por él",
+  "steward": "Tiene un responsable de calidad",
+  "input_declared": "Su tabla de origen está declarada y lista sus columnas",
+  "reference_sql": "Tiene una consulta de referencia",
+  "thresholds": "Sus umbrales del semáforo concuerdan con su dirección"
+ },
+ "kpi_families": {
+  "glossary": "Glosario",
+  "ownership": "Responsables",
+  "contract": "Contrato"
+ },
+ "value": {
+  "headline": "En el caso de ejemplo: {hours} horas y {pen} al mes que no se pierden",
+  "rework": "Retrabajo evitado",
+  "rework_detail": "{rows} datos malos al mes se detuvieron antes de llegar a un reporte.",
+  "wrong_decisions": "Decisiones con datos errados evitadas",
+  "wrong_decisions_detail": "Equivale a {count} decisiones al mes que se habrían tomado con datos malos.",
+  "definition_disputes": "Discusiones evitadas sobre «cuál número es el correcto»",
+  "definition_disputes_detail": "{metrics} indicadores tienen una sola definición aprobada en el glosario.",
+  "personal_data_risk": "Riesgo por dato personal detectado",
+  "personal_data_risk_detail": "{columns} columna con datos personales sin declarar ({rows} filas), detectada antes de exponerse.",
+  "rules_fired": "Reglas que habrían fallado en producción",
+  "assumptions": "Supuestos (puedes cambiarlos)",
+  "reset": "Volver a los supuestos originales",
+  "legal": "En el Perú, los datos personales están protegidos por la Ley N.º 29733. Aquí no se estiman multas: solo el esfuerzo interno de atender un incidente.",
+  "how": "Cómo se calcula",
+  "how_text": "Filas retenidas al mes = filas en cuarentena ÷ meses observados. Retrabajo = filas al mes × horas por dato malo. Decisiones = filas al mes ÷ datos malos por decisión × costo por decisión. Discusiones = indicadores × horas × personas. Riesgo personal = columnas × horas por incidente × probabilidad anual ÷ 12."
+ },
+ "screens": {
+  "inicio": {
+   "title": "El gobierno de datos de la empresa está sano, con {alerts} alertas por atender",
+   "health": "Salud del gobierno",
+   "rules": "Reglas de calidad que se cumplen",
+   "rules_detail": "{passing} de {total} reglas",
+   "quarantine": "Filas detenidas en cuarentena",
+   "quarantine_detail": "no llegaron a ningún reporte",
+   "contracts": "Contratos de datos vigentes",
+   "contracts_detail": "cada tabla publicada tiene uno",
+   "terms": "Términos con dueño",
+   "terms_detail": "{n} de {total} términos del glosario",
+   "maturity": "Nivel de madurez promedio",
+   "maturity_detail": "de 5, en 11 áreas",
+   "alerts": "Alertas abiertas",
+   "alerts_hint": "Ordenadas por severidad. Haz clic para ver la ficha.",
+   "value_link": "Ver lo que evitó el gobierno"
+  },
+  "catalogo": {
+   "title": "{n} tablas catalogadas, cada una con su dueño, su capa y su estado de calidad",
+   "tabs": {
+    "summary": "Resumen",
+    "columns": "Columnas",
+    "quality": "Calidad",
+    "lineage": "Linaje",
+    "contract": "Contrato",
+    "users": "Quién la usa",
+    "preview": "Vista previa"
+   },
+   "no_contract": "Sin contrato: es una copia cruda que no se publica",
+   "rows_label": "Filas",
+   "quarantined_label": "En cuarentena",
+   "score_label": "Puntaje de calidad",
+   "upstream": "Viene de",
+   "downstream": "Alimenta a",
+   "consumers": "Tableros y reportes que la usan",
+   "preview_note": "Primeras filas según lo que este perfil puede ver. Los datos personales siempre se publican enmascarados en esta demo.",
+   "kpi_title": "Indicadores (proyecto 2)",
+   "kpi_text": "Este mismo motor gobierna el catálogo de indicadores de mi proyecto de KPI. Resultado de aplicarle las verificaciones de glosario, responsables y contrato:",
+   "kpi_link": "Ver el proyecto de indicadores",
+   "kpi_count": "{n} indicadores revisados · {rate} de cada 100 verificaciones se cumplen"
+  },
+  "glosario": {
+   "title": "{n} términos de negocio con una sola definición, un dueño y su lugar en los datos",
+   "definition": "Definición",
+   "example": "Ejemplo",
+   "formula": "Fórmula",
+   "lives_in": "Dónde vive en los datos",
+   "related": "Términos relacionados",
+   "synonyms": "También se dice",
+   "review": "Próxima revisión",
+   "rules": "Reglas que lo protegen",
+   "kinds": {
+    "concept": "Concepto",
+    "attribute": "Atributo",
+    "metric": "Indicador"
+   }
+  },
+  "linaje": {
+   "title": "Cada número de un reporte se puede seguir hasta el archivo de donde salió",
+   "pick": "Elige una columna de un reporte",
+   "pick_hint": "Se ilumina su camino hasta el origen. Haz clic en una caja para abrir la ficha de la tabla.",
+   "path": "Camino de este dato",
+   "step_owner": "Dueño: {owner}",
+   "step_rules": "{n} reglas de calidad"
+  },
+  "calidad": {
+   "title": "{passing} de cada 100 reglas de calidad se cumplen; las que fallan detienen las filas malas",
+   "by_domain": "Reglas que se cumplen y que fallan, por dominio",
+   "table": "Las {n} reglas",
+   "dimension": "Dimensión",
+   "result": "Resultado",
+   "failed_rows": "Filas que no cumplen",
+   "expression": "Expresión técnica"
+  },
+  "cuarentena": {
+   "title": "{n} filas se detuvieron antes de llegar a un reporte",
+   "flow": "Qué pasa con una fila que no cumple",
+   "by_reason": "Filas retenidas por motivo",
+   "privacy": "Solo se muestran conteos: las filas retenidas nunca se publican."
+  },
+  "contratos": {
+   "title": "{n} contratos de datos dicen qué promete cada tabla y qué pasa si se rompe",
+   "promises": "Qué promete",
+   "produces": "Quién lo produce",
+   "consumes": "Quién lo consume",
+   "freshness": "Frescura",
+   "breaks": "Qué pasa si se rompe",
+   "breaks_text": "La verificación automática detiene la publicación: si cambia una columna o su tipo sin subir la versión mayor, el cambio no se integra.",
+   "breaking": "Rompe (requiere nueva versión mayor y aprobación del dueño)",
+   "non_breaking": "No rompe",
+   "history": "Historial",
+   "history_text": "Simulación ejecutada por el motor: se renombra una columna sin subir la versión mayor.",
+   "engine_said": "Lo que respondió el motor",
+   "with_major": "Con la versión {v} y la aprobación del dueño",
+   "accepted": "Cambio aceptado: sin observaciones.",
+   "freshness_latency": "El dato más reciente debe tener menos de {value} {unit}.",
+   "freshness_frequency": "Se actualiza cada {value} {unit}.",
+   "units": {
+    "d": "días",
+    "h": "horas"
+   }
+  },
+  "roles": {
+   "title": "Cada decisión sobre los datos tiene un solo responsable final, y cada acceso se justifica",
+   "raci": "Matriz de responsabilidades",
+   "raci_hint": "Pasa el mouse sobre cada letra para ver qué significa.",
+   "people": "Los roles en una línea",
+   "matrix": "Quién puede ver qué, por rol y dominio",
+   "matrix_hint": "Nivel máximo de clasificación que cada rol puede leer.",
+   "checks": "Controles de acceso verificados",
+   "checks_list": {
+    "domain_owner": "Todo dominio tiene un dueño",
+    "owner_steward": "Todo dueño tiene un responsable de calidad",
+    "justified_access": "Todo acceso está justificado por un rol o una solicitud aprobada",
+    "segregation_of_duties": "Nadie aprobó su propia solicitud de acceso",
+    "exceptions_expire": "Todo permiso temporal vence en 90 días o menos"
+   },
+   "conflicts": "Conflictos de separación de funciones",
+   "no_conflicts": "Ninguno: quien pidió cada acceso no es quien lo aprobó.",
+   "exceptions": "Permisos temporales vigentes",
+   "exception_line": "{role} pidió acceso hasta «{level}» en {domain}; aprobó {approver}; vence el {expires}.",
+   "all_domains": "Todos",
+   "assigned": "Sus dominios"
+  },
+  "madurez": {
+   "title": "El programa está en nivel {mean} de 5: definido y verificado en lo central, con brechas claras",
+   "current": "Nivel actual",
+   "target": "Meta",
+   "next": "Qué falta para subir un nivel",
+   "roadmap": "Hoja de ruta priorizada",
+   "priority": "Prioridad {p}",
+   "effort": {
+    "S": "esfuerzo bajo",
+    "M": "esfuerzo medio",
+    "L": "esfuerzo alto"
+   }
+  },
+  "bitacora": {
+   "title": "Cada cambio pasa por una verificación automática antes de integrarse",
+   "outcomes": {
+    "passed": "Aprobado",
+    "blocked": "Bloqueado",
+    "failed": "Falló"
+   },
+   "message": "Mensaje real de la verificación",
+   "see_run": "Ver la ejecución",
+   "see_pr": "Ver la propuesta de cambio"
+  },
+  "valor": {
+   "title": "En el caso de ejemplo, el gobierno evita {hours} horas y {pen} de pérdidas al mes"
+  },
+  "acerca": {
+   "title": "Qué es real y qué es simulado en esta demo",
+   "real": "Real",
+   "real_items": [
+    "El motor que construye las tablas, verifica las reglas y calcula todo lo que ves.",
+    "Las reglas, contratos, roles, accesos y el glosario: viven como archivos versionados y se verifican en cada cambio.",
+    "Los resultados: cada número de esta app sale del motor; si no coincide, la verificación automática falla.",
+    "Las pruebas y la bitácora de verificaciones, con enlaces a cada ejecución."
+   ],
+   "simulated": "Simulado",
+   "simulated_items": [
+    "La empresa «Servicios Andinos de Campo S.A.C.» y todas sus personas, sedes y clientes.",
+    "Los datos: generados con una semilla fija y con errores sembrados a propósito.",
+    "Los botones de acción (liberar o descartar filas) y el cambio de perfil: no hay inicio de sesión.",
+    "Los supuestos de valor en soles: ilustrativos."
+   ],
+   "plan": "Cómo se llevaría a una empresa real: plan 30-60-90",
+   "plan_items": [
+    {
+     "t": "Días 1 a 30",
+     "d": "Elegir un dominio y sus 10 indicadores más usados; nombrar dueño y responsable de calidad; escribir el glosario y los primeros contratos; conectar la verificación automática."
+    },
+    {
+     "t": "Días 31 a 60",
+     "d": "Reglas de calidad sobre las tablas de esos indicadores, cuarentena y aviso al responsable; clasificación y permisos por rol; primer reporte de calidad mensual."
+    },
+    {
+     "t": "Días 61 a 90",
+     "d": "Llevar permisos, etiquetas y máscaras a la plataforma; medir la tendencia de calidad con metas; sumar el segundo dominio y presentar la madurez al consejo."
+    }
+   ],
+   "databricks": "En Databricks con Unity Catalog",
+   "databricks_text": "El repositorio genera el código para crear el catálogo, las tablas con sus comentarios, las etiquetas de clasificación y datos personales, los permisos por grupo y las máscaras de columna, todo a partir de la misma política. No se ha ejecutado en una plataforma real.",
+   "links": "Enlaces",
+   "code": "Código del proyecto",
+   "docs": "Documentación técnica",
+   "author": "Proyecto de portafolio de Juan Luis Sánchez Alcántara, construido dirigiendo a Claude Code."
+  }
+ },
+ "tour": {
+  "skip": "Saltar el recorrido",
+  "next": "Siguiente",
+  "done": "Terminar",
+  "steps": [
+   {
+    "title": "Aquí ves la salud del gobierno",
+    "text": "Reglas que se cumplen, datos detenidos, contratos y madurez, calculados por el motor del repositorio."
+   },
+   {
+    "title": "Esta alerta es un dato personal sin permiso",
+    "text": "El motor encontró correos de personas en una columna que ningún contrato declara. Haz clic en ella para ver su ficha."
+   },
+   {
+    "title": "Mira de dónde viene",
+    "text": "En Linaje puedes seguir cualquier número de un reporte hasta el archivo de origen."
+   },
+   {
+    "title": "Mira quién decide",
+    "text": "Arriba a la derecha cambia de perfil: el técnico de campo no ve costos y el auditor solo lee."
+   },
+   {
+    "title": "Esto es lo que se evitó",
+    "text": "Horas y soles que no se pierden al mes, con supuestos que puedes cambiar."
+   }
+  ]
+ },
+ "jargon": {
+  "RACI": "Matriz que dice, para cada actividad, quién la hace (R), quién aprueba y rinde cuentas (A), a quién se consulta (C) y a quién se informa (I).",
+  "ODCS": "Open Data Contract Standard: formato abierto para escribir contratos de datos.",
+  "DAMA": "Asociación internacional de gestión de datos. Su guía, el DMBOK, organiza el trabajo con datos en 11 áreas.",
+  "DMBOK": "Guía de conocimiento de gestión de datos de DAMA, que organiza el trabajo con datos en 11 áreas.",
+  "CI": "Integración continua: verificación automática que corre en cada cambio y bloquea lo que rompe una regla.",
+  "SQL": "Lenguaje estándar para consultar bases de datos.",
+  "KPI": "Indicador clave de desempeño.",
+  "YAML": "Formato de texto simple para escribir configuraciones que se pueden versionar.",
+  "SLA": "Acuerdo de nivel de servicio: por ejemplo, cada cuánto debe llegar el dato.",
+  "GRANT": "Instrucción que da permiso de lectura sobre una tabla o columna.",
+  "PR": "Propuesta de cambio en el repositorio, que se revisa antes de integrarse.",
+  "S.A.C.": "Sociedad anónima cerrada: forma de empresa en el Perú. Aquí, ficticia."
+ },
+ "tecnico": {
+  "rule_id": "Identificador de la regla",
+  "contract_yaml": "Contrato en formato ODCS (YAML)",
+  "table_id": "Nombre físico de la tabla",
+  "column_id": "Nombre físico de la columna"
+ },
+ "types": {
+  "string": "Texto",
+  "integer": "Número entero",
+  "number": "Número",
+  "date": "Fecha",
+  "timestamp": "Fecha y hora",
+  "boolean": "Sí o no",
+  "VARCHAR": "Texto"
+ },
+ "contract_text": {
+  "assets": "Una lista única y verificada de los equipos que se mantienen y de la sede donde está cada uno.",
+  "technicians": "El personal de campo con su especialidad y su costo por hora, para costear la mano de obra. Contiene datos personales y de remuneración.",
+  "customers": "Las cuentas de clientes con su contacto comercial y su consentimiento para recibir comunicaciones.",
+  "materials": "El maestro de materiales con su costo estándar y sus parámetros de reposición.",
+  "service_orders": "Las órdenes de servicio verificadas. Lo que no cumple se retiene en cuarentena con su motivo. El precio y los costos planificados son columnas confidenciales.",
+  "labor_entries": "Las horas que cada técnico registró en cada orden, verificadas.",
+  "material_issues": "Las salidas de almacén cargadas a cada orden, con su costo verificado contra el maestro.",
+  "service_order_economics": "Para cada orden no cancelada: costo planificado frente a real, desviación y margen bruto.",
+  "site_monthly_kpis": "Órdenes, horas, costo, ingresos y margen por sede y por mes.",
+  "inventory_position": "Valor del inventario, consumo reciente, días de cobertura y alertas de reposición por material.",
+  "customer_value": "Órdenes, ingresos, margen y categoría por cliente, con su contacto comercial enmascarado."
+ },
+ "persona_summary": "Este perfil ve {tables} de {total} tablas · {hidden} columnas ocultas · {masked} enmascaradas",
+ "read_only_badge": "Solo lectura"
+}

@@ -9,13 +9,15 @@ from govkit import generator, pipeline
 from govkit.db import connect
 
 ROOT = Path(__file__).resolve().parents[1]
-COPIED = ("governance", "contracts", "models")
+COPIED = ("governance", "contracts", "models", "examples")
 
 
 def make_project(destination: Path) -> Path:
     for folder in COPIED:
         if (ROOT / folder).exists():
             shutil.copytree(ROOT / folder, destination / folder)
+    (destination / "docs").mkdir(exist_ok=True)
+    shutil.copy(ROOT / "docs" / "ci_history.yaml", destination / "docs" / "ci_history.yaml")
     return destination
 
 

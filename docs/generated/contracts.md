@@ -15,7 +15,7 @@ One ODCS v3 contract per published dataset, in `contracts/`. Rules marked *deriv
 | `silver.labor_entries` | 1.0.0 | operations | internal | Riley Placeholder | Sam Samplewood | latency 3 d | 6 | 10 (7) |
 | `silver.material_issues` | 1.0.0 | supply_chain | internal | Jordan Mockwell | Casey Testa | latency 3 d | 7 | 13 (8) |
 | `silver.materials` | 1.0.0 | supply_chain | internal | Jordan Mockwell | Casey Testa | frequency 1 d | 7 | 7 (4) |
-| `silver.service_orders` | 1.1.0 | operations | confidential | Riley Placeholder | Sam Samplewood | latency 3 d | 11 | 19 (7) |
+| `silver.service_orders` | 1.2.0 | operations | internal | Riley Placeholder | Sam Samplewood | latency 3 d | 11 | 19 (7) |
 | `silver.technicians` | 1.0.0 | operations | restricted | Riley Placeholder | Sam Samplewood | frequency 7 d | 8 | 7 (3) |
 
 ## Change policy

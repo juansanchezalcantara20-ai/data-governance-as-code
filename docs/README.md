@@ -5,7 +5,7 @@
 | Document | What it is |
 |---|---|
 | [STATUS.md](STATUS.md) | What exists, what is pending, chosen stack |
-| [DECISIONS.md](DECISIONS.md) | Decision log (D-001 … D-028) |
+| [DECISIONS.md](DECISIONS.md) | Decision log (D-001 … D-037) |
 | [examples/breaking-change.md](examples/breaking-change.md) | Worked example: a schema change fails CI |
 | [../deploy/unity_catalog/README.md](../deploy/unity_catalog/README.md) | Applying the generated Unity Catalog SQL (not executed) |
 

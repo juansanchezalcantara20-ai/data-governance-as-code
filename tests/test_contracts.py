@@ -108,3 +108,10 @@ def test_static_validator_rejects_personal_data_in_internal_contract():
                                 terms={p.business_name for p in c.properties if p.business_name},
                                 datasets={"gold.service_order_economics"})
     assert any("has personal data" in f.message for f in findings)
+
+
+def test_raising_a_column_classification_is_breaking():
+    old = _contract("silver.service_orders")
+    new = copy.deepcopy(old)
+    new.column("status").classification = "confidential"
+    assert any("column 'status' classification raised" in c.detail for c in compat.diff(old, new) if c.breaking)

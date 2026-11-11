@@ -1,0 +1,1385 @@
+{
+ "contracts": [
+  {
+   "id": "gold.customer_value",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "customer",
+   "classification": "confidential",
+   "purpose": "Orders, revenue, margin and ABC tier per customer account, with the business contact.",
+   "usage": "Key-account review. Contact data is masked unless the reader's role allows clear text.",
+   "limitations": "Only customers with consent may be contacted for marketing.",
+   "sla": {
+    "kind": "frequency",
+    "value": 1,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "Key-account review"
+   ],
+   "columns": [
+    {
+     "name": "customer_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Customer",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "company_name",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "segment",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Customer segment",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "country",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "contact_name",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Business contact",
+     "personal_data": "name",
+     "classification": "confidential"
+    },
+    {
+     "name": "contact_email",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "email",
+     "classification": "confidential"
+    },
+    {
+     "name": "marketing_consent",
+     "logical_type": "boolean",
+     "required": false,
+     "key": false,
+     "business_term": "Marketing consent",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "orders",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "revenue",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Customer revenue",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "gross_margin",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Gross margin",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "last_order_on",
+     "logical_type": "date",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "customer_tier",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Customer tier",
+     "personal_data": null,
+     "classification": "confidential"
+    }
+   ],
+   "rules": 5,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:customer:gold.customer_value\nname: gold.customer_value\nversion: 1.0.0\nstatus: active\ndomain: customer\ndataProduct: Customer value\ndescription:\n  purpose: Orders, revenue, margin and ABC tier per customer account, with the business contact.\n  usage: Key-account review. Contact data is masked unless the reader's role allows clear text.\n  limitations: Only customers with consent may be contacted for marketing.\ntags: [gold, kpi, personal-data]\nteam:\n  - {username: taylor.dummond, role: data_owner}\n  - {username: alex.exampleton, role: data_steward}\nslaProperties:\n  - {property: frequency, value: 1, unit: d}\ncustomProperties:\n  - {property: dataClassification, value: confidential}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: customer_value\n    physicalName: gold.customer_value\n    physicalType: table\n    description: One row per customer account.\n    properties:\n      - {name: customer_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Customer, description: Account code.}\n      - {name: company_name, logicalType: string, physicalType: VARCHAR, description: Legal name (fictional).}\n      - {name: segment, logicalType: string, physicalType: VARCHAR, businessName: Customer segment, description: Industry.}\n      - {name: country, logicalType: string, physicalType: VARCHAR, description: Country.}\n      - {name: contact_name, logicalType: string, physicalType: VARCHAR, tags: [\"pii:name\"], businessName: Business contact,\n         description: Contact person.}\n      - {name: contact_email, logicalType: string, physicalType: VARCHAR, tags: [\"pii:email\"], description: Contact email.}\n      - {name: marketing_consent, logicalType: boolean, physicalType: BOOLEAN, businessName: Marketing consent, description: Consent flag.}\n      - {name: orders, logicalType: integer, physicalType: BIGINT, description: Non-cancelled orders.}\n      - {name: revenue, logicalType: number, physicalType: DOUBLE, businessName: Customer revenue, description: Billable amount.}\n      - {name: gross_margin, logicalType: number, physicalType: DOUBLE, businessName: Gross margin, description: Margin generated.}\n      - {name: last_order_on, logicalType: date, physicalType: DATE, description: Most recent order date.}\n      - {name: customer_tier, logicalType: string, physicalType: VARCHAR, required: true, businessName: Customer tier, description: ABC tier.,\n         quality: [{name: tier_valid, type: library, rule: validValues, arguments: {values: [A, B, C]}}]}\n    quality:\n      - name: customer_revenue_reconciles\n        type: sql\n        query: \"SELECT abs((SELECT sum(revenue) FROM {object}) - (SELECT sum(price) FROM gold.service_order_economics))\"\n        mustBeLessThan: 1\n        dimension: accuracy\n"
+  },
+  {
+   "id": "gold.inventory_position",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "purpose": "Stock value, recent consumption, days of cover and reorder alerts per material.",
+   "usage": "Replenishment report.",
+   "limitations": "Consumption window is the last 90 days of issues (days of cover is a draft term).",
+   "sla": {
+    "kind": "frequency",
+    "value": 1,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "Replenishment report"
+   ],
+   "columns": [
+    {
+     "name": "material_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Material",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "description",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "category",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "stock_on_hand",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": "Stock on hand",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "reorder_point",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": "Reorder point",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "stock_value",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Stock value",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "issued_qty_90d",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "days_of_cover",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Days of cover",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "below_reorder_point",
+     "logical_type": "boolean",
+     "required": true,
+     "key": false,
+     "business_term": "Below reorder point",
+     "personal_data": null,
+     "classification": "internal"
+    }
+   ],
+   "rules": 4,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:supply_chain:gold.inventory_position\nname: gold.inventory_position\nversion: 1.0.0\nstatus: active\ndomain: supply_chain\ndataProduct: Inventory health\ndescription:\n  purpose: Stock value, recent consumption, days of cover and reorder alerts per material.\n  usage: Replenishment report.\n  limitations: Consumption window is the last 90 days of issues (days of cover is a draft term).\ntags: [gold, kpi]\nteam:\n  - {username: jordan.mockwell, role: data_owner}\n  - {username: casey.testa, role: data_steward}\nslaProperties:\n  - {property: frequency, value: 1, unit: d}\ncustomProperties:\n  - {property: dataClassification, value: internal}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: inventory_position\n    physicalName: gold.inventory_position\n    physicalType: table\n    description: One row per material.\n    properties:\n      - {name: material_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Material, description: Material code.}\n      - {name: description, logicalType: string, physicalType: VARCHAR, description: Material description.}\n      - {name: category, logicalType: string, physicalType: VARCHAR, description: Material category.}\n      - {name: stock_on_hand, logicalType: integer, physicalType: INTEGER, businessName: Stock on hand, description: Units in stock.}\n      - {name: reorder_point, logicalType: integer, physicalType: INTEGER, businessName: Reorder point, description: Replenishment trigger.}\n      - {name: stock_value, logicalType: number, physicalType: DOUBLE, businessName: Stock value, description: Value of stock.,\n         quality: [{name: stock_value_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: issued_qty_90d, logicalType: integer, physicalType: BIGINT, description: Units issued in the last 90 days.}\n      - {name: days_of_cover, logicalType: number, physicalType: DOUBLE, businessName: Days of cover, description: Days stock lasts.}\n      - {name: below_reorder_point, logicalType: boolean, physicalType: BOOLEAN, required: true, businessName: Below reorder point,\n         description: Replenishment needed.}\n"
+  },
+  {
+   "id": "gold.service_order_economics",
+   "version": "2.0.0",
+   "status": "active",
+   "domain": "operations",
+   "classification": "confidential",
+   "purpose": "Plan versus actual cost, cost variance and gross margin for every non-cancelled service order.",
+   "usage": "Service profitability dashboard; customer value.",
+   "limitations": "Costs come only from validated (non-quarantined) labor and material lines.",
+   "sla": {
+    "kind": "latency",
+    "value": 3,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "Service profitability dashboard",
+    "gold.customer_value",
+    "gold.site_monthly_kpis"
+   ],
+   "columns": [
+    {
+     "name": "order_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Service order",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "customer_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Customer",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "asset_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Asset",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "site",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Site",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "asset_type",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Asset type",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "service_type",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Service type",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "status",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Order status",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "opened_on",
+     "logical_type": "date",
+     "required": true,
+     "key": false,
+     "business_term": "Order open date",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "closed_on",
+     "logical_type": "date",
+     "required": false,
+     "key": false,
+     "business_term": "Order close date",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "planned_hours",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "actual_hours",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Labor hours",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "planned_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Planned cost",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "actual_labor_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Actual labor cost",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "actual_material_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Actual material cost",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "actual_cost",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": "Actual cost",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "cost_variance_pct",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Cost variance",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "price",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": "Order price",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "gross_margin",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Gross margin",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "gross_margin_pct",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Gross margin %",
+     "personal_data": null,
+     "classification": "confidential"
+    }
+   ],
+   "rules": 15,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:operations:gold.service_order_economics\nname: gold.service_order_economics\nversion: 2.0.0\nstatus: active\ndomain: operations\ndataProduct: Service profitability\ndescription:\n  purpose: Plan versus actual cost, cost variance and gross margin for every non-cancelled service order.\n  usage: Service profitability dashboard; customer value.\n  limitations: Costs come only from validated (non-quarantined) labor and material lines.\ntags: [gold, kpi]\nteam:\n  - {username: riley.placeholder, role: data_owner}\n  - {username: sam.samplewood, role: data_steward}\nslaProperties:\n  - {property: latency, value: 3, unit: d, element: gold.service_order_economics.opened_on}\ncustomProperties:\n  - {property: dataClassification, value: confidential}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: service_order_economics\n    physicalName: gold.service_order_economics\n    physicalType: table\n    description: One row per non-cancelled service order.\n    properties:\n      - {name: order_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Service order, description: Order number.}\n      - {name: customer_id, logicalType: string, physicalType: VARCHAR, required: true, businessName: Customer, description: Buying company.}\n      - {name: asset_id, logicalType: string, physicalType: VARCHAR, required: true, businessName: Asset, description: Asset serviced.}\n      - {name: site, logicalType: string, physicalType: VARCHAR, required: true, businessName: Site, description: Site of the asset.}\n      - {name: asset_type, logicalType: string, physicalType: VARCHAR, businessName: Asset type, description: Equipment family.}\n      - {name: service_type, logicalType: string, physicalType: VARCHAR, businessName: Service type, description: Nature of work.}\n      - {name: status, logicalType: string, physicalType: VARCHAR, businessName: Order status, description: OPEN or CLOSED.,\n         quality: [{name: no_cancelled_orders, type: library, rule: validValues, arguments: {values: [OPEN, CLOSED]}}]}\n      - {name: opened_on, logicalType: date, physicalType: DATE, required: true, businessName: Order open date, description: Creation date.}\n      - {name: closed_on, logicalType: date, physicalType: DATE, businessName: Order close date, description: Completion date.}\n      - {name: planned_hours, logicalType: integer, physicalType: INTEGER, description: Quoted labor hours.}\n      - {name: actual_hours, logicalType: number, physicalType: DOUBLE, businessName: Labor hours, description: Hours booked.}\n      - {name: planned_cost, logicalType: number, physicalType: DOUBLE, businessName: Planned cost, description: Quoted cost.}\n      - {name: actual_labor_cost, logicalType: number, physicalType: DOUBLE, businessName: Actual labor cost, description: Labor cost incurred.}\n      - {name: actual_material_cost, logicalType: number, physicalType: DOUBLE, businessName: Actual material cost,\n         description: Material cost incurred.}\n      - {name: actual_cost, logicalType: number, physicalType: DOUBLE, required: true, businessName: Actual cost, description: Total cost incurred.,\n         quality: [{name: actual_cost_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: cost_variance_pct, logicalType: number, physicalType: DOUBLE, businessName: Cost variance, description: Cost overrun in percent.}\n      - {name: price, logicalType: number, physicalType: DOUBLE, required: true, businessName: Order price, description: Billable amount.}\n      - {name: gross_margin, logicalType: number, physicalType: DOUBLE, businessName: Gross margin, description: Price minus actual cost.}\n      - {name: gross_margin_pct, logicalType: number, physicalType: DOUBLE, businessName: Gross margin %, description: Margin over price.,\n         quality: [{name: margin_pct_plausible, type: library, rule: range, arguments: {min: -100, max: 100}, severity: warning,\n                    description: Margins outside ±100% usually mean a costing or pricing error.}]}\n    quality:\n      - name: margin_definition_holds\n        type: sql\n        query: \"SELECT count(*) FROM {object} WHERE abs(gross_margin - (price - actual_cost)) > 0.02\"\n        mustBe: 0\n        dimension: consistency\n        description: Gross margin equals price minus actual cost on every row (glossary formula).\n      - name: labor_cost_reconciles\n        type: sql\n        query: >-\n          SELECT abs((SELECT sum(actual_labor_cost) FROM {object}) - (SELECT sum(l.hours * t.hourly_cost)\n          FROM silver.labor_entries l JOIN silver.technicians t USING (technician_id)\n          WHERE l.order_id IN (SELECT order_id FROM {object})))\n        mustBeLessThan: 1\n        dimension: accuracy\n        description: Gold labor cost reconciles with silver hours × rates within one currency unit.\n      - name: material_cost_reconciles\n        type: sql\n        query: >-\n          SELECT abs((SELECT sum(actual_material_cost) FROM {object}) - (SELECT sum(line_cost)\n          FROM silver.material_issues WHERE order_id IN (SELECT order_id FROM {object})))\n        mustBeLessThan: 1\n        dimension: accuracy\n        description: Gold material cost reconciles with silver issue lines.\n"
+  },
+  {
+   "id": "gold.site_monthly_kpis",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "operations",
+   "classification": "confidential",
+   "purpose": "Monthly orders, hours, cost, revenue and margin per site.",
+   "usage": "Service profitability dashboard (management view).",
+   "limitations": "Month is the month an order was opened, not closed.",
+   "sla": {
+    "kind": "latency",
+    "value": 31,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "Service profitability dashboard"
+   ],
+   "columns": [
+    {
+     "name": "site",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Site",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "month",
+     "logical_type": "date",
+     "required": true,
+     "key": true,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "orders",
+     "logical_type": "integer",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "closed_orders",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": "Closed orders",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "actual_hours",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Labor hours",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "actual_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Actual cost",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "revenue",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Revenue",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "gross_margin_pct",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": "Gross margin %",
+     "personal_data": null,
+     "classification": "confidential"
+    }
+   ],
+   "rules": 7,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:operations:gold.site_monthly_kpis\nname: gold.site_monthly_kpis\nversion: 1.0.0\nstatus: active\ndomain: operations\ndataProduct: Service profitability\ndescription:\n  purpose: Monthly orders, hours, cost, revenue and margin per site.\n  usage: Service profitability dashboard (management view).\n  limitations: Month is the month an order was opened, not closed.\ntags: [gold, kpi]\nteam:\n  - {username: riley.placeholder, role: data_owner}\n  - {username: sam.samplewood, role: data_steward}\nslaProperties:\n  - {property: latency, value: 31, unit: d, element: gold.site_monthly_kpis.month}\ncustomProperties:\n  - {property: dataClassification, value: confidential}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: site_monthly_kpis\n    physicalName: gold.site_monthly_kpis\n    physicalType: table\n    description: One row per site and month.\n    properties:\n      - {name: site, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1, businessName: Site, description: Site.}\n      - {name: month, logicalType: date, physicalType: DATE, primaryKey: true, primaryKeyPosition: 2, description: First day of the month.}\n      - {name: orders, logicalType: integer, physicalType: BIGINT, required: true, description: Non-cancelled orders opened.}\n      - {name: closed_orders, logicalType: integer, physicalType: BIGINT, businessName: Closed orders, description: Orders closed.}\n      - {name: actual_hours, logicalType: number, physicalType: DOUBLE, businessName: Labor hours, description: Hours booked.}\n      - {name: actual_cost, logicalType: number, physicalType: DOUBLE, businessName: Actual cost, description: Cost incurred.}\n      - {name: revenue, logicalType: number, physicalType: DOUBLE, businessName: Revenue, description: Billable amount.}\n      - {name: gross_margin_pct, logicalType: number, physicalType: DOUBLE, businessName: Gross margin %, description: Margin over revenue.}\n    quality:\n      - {name: closed_not_above_total, type: sql, query: \"SELECT count(*) FROM {object} WHERE closed_orders > orders\",\n         mustBe: 0, dimension: consistency}\n      - name: revenue_reconciles\n        type: sql\n        query: \"SELECT abs((SELECT sum(revenue) FROM {object}) - (SELECT sum(price) FROM gold.service_order_economics))\"\n        mustBeLessThan: 1\n        dimension: accuracy\n        description: Monthly revenue adds up to order-level revenue.\n"
+  },
+  {
+   "id": "silver.assets",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "operations",
+   "classification": "internal",
+   "purpose": "Single source of truth for the equipment the company maintains and where it is installed.",
+   "usage": "Join key for service orders; site attribution for operational KPIs.",
+   "limitations": "Operating hours are as last reported by the hour meter, not real time.",
+   "sla": {
+    "kind": "frequency",
+    "value": 1,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.service_order_economics",
+    "gold.site_monthly_kpis"
+   ],
+   "columns": [
+    {
+     "name": "asset_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Asset",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "asset_type",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Asset type",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "manufacturer",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "site",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Site",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "operating_hours",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": "Operating hours",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "commissioned_on",
+     "logical_type": "date",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    }
+   ],
+   "rules": 8,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:operations:silver.assets\nname: silver.assets\nversion: 1.0.0\nstatus: active\ndomain: operations\ndataProduct: Asset master\ndescription:\n  purpose: Single source of truth for the equipment the company maintains and where it is installed.\n  usage: Join key for service orders; site attribution for operational KPIs.\n  limitations: Operating hours are as last reported by the hour meter, not real time.\ntags: [silver, master-data]\nteam:\n  - {username: riley.placeholder, role: data_owner}\n  - {username: sam.samplewood, role: data_steward}\nslaProperties:\n  - {property: frequency, value: 1, unit: d}\ncustomProperties:\n  - {property: dataClassification, value: internal}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: assets\n    physicalName: silver.assets\n    physicalType: table\n    description: One row per asset.\n    properties:\n      - {name: asset_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Asset, description: Asset code AS-nnnn.,\n         quality: [{name: asset_id_format, type: library, rule: pattern, arguments: {pattern: '^AS-\\d{4}$'}, dimension: validity}]}\n      - {name: asset_type, logicalType: string, physicalType: VARCHAR, required: true, businessName: Asset type,\n         description: Equipment family.,\n         quality: [{name: asset_type_valid, type: library, rule: validValues,\n                    arguments: {values: [Haul truck, Wheel loader, Drill rig, Pump station, Generator set]}}]}\n      - {name: manufacturer, logicalType: string, physicalType: VARCHAR, description: Fictional manufacturer label.}\n      - {name: site, logicalType: string, physicalType: VARCHAR, required: true, businessName: Site, description: Installation site.}\n      - {name: operating_hours, logicalType: integer, physicalType: INTEGER, businessName: Operating hours,\n         description: Cumulative hour-meter reading.,\n         quality: [{name: operating_hours_non_negative, type: library, rule: range, arguments: {min: 0}, severity: warning}]}\n      - {name: commissioned_on, logicalType: date, physicalType: DATE, description: Date the asset entered service.}\n    quality:\n      - {name: asset_volume, type: library, rule: rowCount, arguments: {min: 10}}\n"
+  },
+  {
+   "id": "silver.customers",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "customer",
+   "classification": "confidential",
+   "purpose": "Customer accounts with their business contact and marketing consent.",
+   "usage": "Customer attribution of orders; key-account analysis.",
+   "limitations": "Contact data is personal data and is masked unless the role allows it.",
+   "sla": {
+    "kind": "frequency",
+    "value": 1,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.customer_value"
+   ],
+   "columns": [
+    {
+     "name": "customer_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Customer",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "company_name",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "segment",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Customer segment",
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "country",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "contact_name",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Business contact",
+     "personal_data": "name",
+     "classification": "confidential"
+    },
+    {
+     "name": "contact_email",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "email",
+     "classification": "confidential"
+    },
+    {
+     "name": "contact_phone",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "phone",
+     "classification": "confidential"
+    },
+    {
+     "name": "created_on",
+     "logical_type": "date",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "marketing_consent",
+     "logical_type": "boolean",
+     "required": true,
+     "key": false,
+     "business_term": "Marketing consent",
+     "personal_data": null,
+     "classification": "confidential"
+    }
+   ],
+   "rules": 7,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:customer:silver.customers\nname: silver.customers\nversion: 1.0.0\nstatus: active\ndomain: customer\ndataProduct: Customer accounts\ndescription:\n  purpose: Customer accounts with their business contact and marketing consent.\n  usage: Customer attribution of orders; key-account analysis.\n  limitations: Contact data is personal data and is masked unless the role allows it.\ntags: [silver, master-data, personal-data]\nteam:\n  - {username: taylor.dummond, role: data_owner}\n  - {username: alex.exampleton, role: data_steward}\nslaProperties:\n  - {property: frequency, value: 1, unit: d}\ncustomProperties:\n  - {property: dataClassification, value: confidential}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: customers\n    physicalName: silver.customers\n    physicalType: table\n    description: One row per customer account.\n    properties:\n      - {name: customer_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Customer, description: Account code CU-nnnn.}\n      - {name: company_name, logicalType: string, physicalType: VARCHAR, required: true, description: Legal name (fictional).}\n      - {name: segment, logicalType: string, physicalType: VARCHAR, businessName: Customer segment, description: Industry.,\n         quality: [{name: segment_valid, type: library, rule: validValues, arguments: {values: [Mining, Energy, Construction, Agriculture]}}]}\n      - {name: country, logicalType: string, physicalType: VARCHAR, description: Country of the account.}\n      - {name: contact_name, logicalType: string, physicalType: VARCHAR, tags: [\"pii:name\"], businessName: Business contact,\n         description: Contact person.}\n      - {name: contact_email, logicalType: string, physicalType: VARCHAR, tags: [\"pii:email\"], description: Contact email.,\n         quality: [{name: contact_email_format, type: library, rule: pattern,\n                    arguments: {pattern: '^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$'}, severity: warning}]}\n      - {name: contact_phone, logicalType: string, physicalType: VARCHAR, tags: [\"pii:phone\"], description: Contact phone.}\n      - {name: created_on, logicalType: date, physicalType: DATE, required: true, description: Account creation date.}\n      - {name: marketing_consent, logicalType: boolean, physicalType: BOOLEAN, required: true, businessName: Marketing consent,\n         description: Consent to commercial communications.}\n"
+  },
+  {
+   "id": "silver.labor_entries",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "operations",
+   "classification": "internal",
+   "purpose": "Validated hours booked by technicians against service orders.",
+   "usage": "Actual labor hours and cost per service order.",
+   "limitations": "approver_email is a known open finding (personal data not yet declared); see docs/generated/maturity.md.",
+   "sla": {
+    "kind": "latency",
+    "value": 3,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.customer_value",
+    "gold.service_order_economics",
+    "gold.site_monthly_kpis"
+   ],
+   "columns": [
+    {
+     "name": "entry_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Labor entry",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "order_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "technician_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "work_date",
+     "logical_type": "date",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "hours",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": "Labor hours",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "approver_email",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    }
+   ],
+   "rules": 10,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:operations:silver.labor_entries\nname: silver.labor_entries\nversion: 1.0.0\nstatus: active\ndomain: operations\ndataProduct: Service operations\ndescription:\n  purpose: Validated hours booked by technicians against service orders.\n  usage: Actual labor hours and cost per service order.\n  limitations: approver_email is a known open finding (personal data not yet declared); see docs/generated/maturity.md.\ntags: [silver, transactions]\nteam:\n  - {username: riley.placeholder, role: data_owner}\n  - {username: sam.samplewood, role: data_steward}\nslaProperties:\n  - {property: latency, value: 3, unit: d, element: silver.labor_entries.work_date}\ncustomProperties:\n  - {property: dataClassification, value: internal}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: labor_entries\n    physicalName: silver.labor_entries\n    physicalType: table\n    description: One row per technician, order and day.\n    properties:\n      - {name: entry_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Labor entry, description: Entry id LE-nnnnnn.}\n      - {name: order_id, logicalType: string, physicalType: VARCHAR, required: true, description: Service order charged.,\n         quality: [{name: labor_order_exists, type: library, rule: references, arguments: {table: silver.service_orders, column: order_id}}]}\n      - {name: technician_id, logicalType: string, physicalType: VARCHAR, required: true, description: Technician who worked.,\n         quality: [{name: labor_technician_exists, type: library, rule: references, arguments: {table: silver.technicians, column: technician_id}}]}\n      - {name: work_date, logicalType: date, physicalType: DATE, required: true, description: Day worked.}\n      - {name: hours, logicalType: number, physicalType: DOUBLE, required: true, businessName: Labor hours, description: Hours booked.,\n         quality: [{name: hours_range, type: library, rule: range, arguments: {min: 0.5, max: 24},\n                    description: Nobody works more than 24 hours in a day.}]}\n      - {name: approver_email, logicalType: string, physicalType: VARCHAR, description: Email of the supervisor who approved the entry.}\n"
+  },
+  {
+   "id": "silver.material_issues",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "purpose": "Validated warehouse issues to service orders with line cost.",
+   "usage": "Actual material cost per order; consumption for inventory cover.",
+   "limitations": "Issued unit cost must stay within 25% of the material master (accuracy rule).",
+   "sla": {
+    "kind": "latency",
+    "value": 3,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.customer_value",
+    "gold.inventory_position",
+    "gold.service_order_economics",
+    "gold.site_monthly_kpis"
+   ],
+   "columns": [
+    {
+     "name": "issue_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Material issue",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "order_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "material_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "quantity",
+     "logical_type": "integer",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "unit_cost",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "line_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "issued_on",
+     "logical_type": "date",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    }
+   ],
+   "rules": 13,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:supply_chain:silver.material_issues\nname: silver.material_issues\nversion: 1.0.0\nstatus: active\ndomain: supply_chain\ndataProduct: Material consumption\ndescription:\n  purpose: Validated warehouse issues to service orders with line cost.\n  usage: Actual material cost per order; consumption for inventory cover.\n  limitations: Issued unit cost must stay within 25% of the material master (accuracy rule).\ntags: [silver, transactions]\nteam:\n  - {username: jordan.mockwell, role: data_owner}\n  - {username: casey.testa, role: data_steward}\nslaProperties:\n  - {property: latency, value: 3, unit: d, element: silver.material_issues.issued_on}\ncustomProperties:\n  - {property: dataClassification, value: internal}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: material_issues\n    physicalName: silver.material_issues\n    physicalType: table\n    description: One row per issue line.\n    properties:\n      - {name: issue_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Material issue, description: Issue id MI-nnnnnn.}\n      - {name: order_id, logicalType: string, physicalType: VARCHAR, required: true, description: Service order charged.,\n         quality: [{name: issue_order_exists, type: library, rule: references, arguments: {table: silver.service_orders, column: order_id}}]}\n      - {name: material_id, logicalType: string, physicalType: VARCHAR, required: true, description: Material issued.,\n         quality: [{name: issue_material_exists, type: library, rule: references, arguments: {table: silver.materials, column: material_id}}]}\n      - {name: quantity, logicalType: integer, physicalType: INTEGER, required: true, description: Units issued.,\n         quality: [{name: quantity_positive, type: library, rule: range, arguments: {min: 1}}]}\n      - name: unit_cost\n        logicalType: number\n        physicalType: DOUBLE\n        required: true\n        description: Unit cost at issue.\n        quality:\n          - {name: issue_unit_cost_positive, type: library, rule: range, arguments: {min: 0.01}}\n          - name: issue_cost_matches_master\n            type: library\n            rule: tolerance\n            dimension: accuracy\n            arguments: {key: material_id, referenceTable: silver.materials, referenceKey: material_id,\n                        referenceColumn: unit_cost, maxDeviationPct: 25}\n            description: Issued cost must agree with the material master within 25% (catches decimal-shift errors).\n      - {name: line_cost, logicalType: number, physicalType: DOUBLE, description: Quantity times unit cost.}\n      - {name: issued_on, logicalType: date, physicalType: DATE, required: true, description: Issue date.}\n"
+  },
+  {
+   "id": "silver.materials",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "purpose": "Material master with standard cost and stock parameters; reference for issued costs.",
+   "usage": "Inventory position, accuracy check of issued unit costs.",
+   "limitations": "Stock is a daily snapshot.",
+   "sla": {
+    "kind": "frequency",
+    "value": 1,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.inventory_position"
+   ],
+   "columns": [
+    {
+     "name": "material_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Material",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "description",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "category",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "unit_cost",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": "Unit cost",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "stock_on_hand",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": "Stock on hand",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "reorder_point",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": "Reorder point",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "lead_time_days",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    }
+   ],
+   "rules": 7,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:supply_chain:silver.materials\nname: silver.materials\nversion: 1.0.0\nstatus: active\ndomain: supply_chain\ndataProduct: Material master\ndescription:\n  purpose: Material master with standard cost and stock parameters; reference for issued costs.\n  usage: Inventory position, accuracy check of issued unit costs.\n  limitations: Stock is a daily snapshot.\ntags: [silver, master-data]\nteam:\n  - {username: jordan.mockwell, role: data_owner}\n  - {username: casey.testa, role: data_steward}\nslaProperties:\n  - {property: frequency, value: 1, unit: d}\ncustomProperties:\n  - {property: dataClassification, value: internal}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: materials\n    physicalName: silver.materials\n    physicalType: table\n    description: One row per material.\n    properties:\n      - {name: material_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Material, description: Material code MA-nnnn.}\n      - {name: description, logicalType: string, physicalType: VARCHAR, required: true, description: Material description.}\n      - {name: category, logicalType: string, physicalType: VARCHAR, description: Material category.}\n      - {name: unit_cost, logicalType: number, physicalType: DOUBLE, required: true, businessName: Unit cost, description: Standard unit cost.,\n         quality: [{name: unit_cost_positive, type: library, rule: range, arguments: {min: 0.01}}]}\n      - {name: stock_on_hand, logicalType: integer, physicalType: INTEGER, businessName: Stock on hand, description: Units in stock.,\n         quality: [{name: stock_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: reorder_point, logicalType: integer, physicalType: INTEGER, businessName: Reorder point, description: Replenishment trigger.,\n         quality: [{name: reorder_point_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: lead_time_days, logicalType: integer, physicalType: INTEGER, description: Supplier lead time in days.}\n"
+  },
+  {
+   "id": "silver.service_orders",
+   "version": "1.2.0",
+   "status": "active",
+   "domain": "operations",
+   "classification": "internal",
+   "purpose": "Validated service orders. Orders failing a blocking rule are quarantined with the reason.",
+   "usage": "Base of all service economics and site KPIs. Price and planned costs are confidential columns; the rest is internal so field teams can plan work.",
+   "limitations": "Cancelled orders are kept here and excluded in gold.",
+   "sla": {
+    "kind": "latency",
+    "value": 3,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.customer_value",
+    "gold.service_order_economics",
+    "gold.site_monthly_kpis"
+   ],
+   "columns": [
+    {
+     "name": "order_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Service order",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "customer_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Customer",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "asset_id",
+     "logical_type": "string",
+     "required": true,
+     "key": false,
+     "business_term": "Asset",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "service_type",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Service type",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "opened_on",
+     "logical_type": "date",
+     "required": true,
+     "key": false,
+     "business_term": "Order open date",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "closed_on",
+     "logical_type": "date",
+     "required": false,
+     "key": false,
+     "business_term": "Order close date",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "status",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Order status",
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "planned_hours",
+     "logical_type": "integer",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "internal"
+    },
+    {
+     "name": "planned_labor_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "planned_material_cost",
+     "logical_type": "number",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": null,
+     "classification": "confidential"
+    },
+    {
+     "name": "price",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": "Order price",
+     "personal_data": null,
+     "classification": "confidential"
+    }
+   ],
+   "rules": 19,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:operations:silver.service_orders\nname: silver.service_orders\nversion: 1.2.0\nstatus: active\ndomain: operations\ndataProduct: Service operations\ndescription:\n  purpose: Validated service orders. Orders failing a blocking rule are quarantined with the reason.\n  usage: Base of all service economics and site KPIs. Price and planned costs are confidential columns; the rest is internal so field teams can plan work.\n  limitations: Cancelled orders are kept here and excluded in gold.\ntags: [silver, transactions]\nteam:\n  - {username: riley.placeholder, role: data_owner}\n  - {username: sam.samplewood, role: data_steward}\nslaProperties:\n  - {property: latency, value: 3, unit: d, element: silver.service_orders.opened_on}\ncustomProperties:\n  - {property: dataClassification, value: internal}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: service_orders\n    physicalName: silver.service_orders\n    physicalType: table\n    description: One row per service order.\n    properties:\n      - {name: order_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Service order, description: Order number SO-nnnnnn.,\n         quality: [{name: order_id_format, type: library, rule: pattern, arguments: {pattern: '^SO-\\d{6}$'}}]}\n      - {name: customer_id, logicalType: string, physicalType: VARCHAR, required: true, businessName: Customer,\n         description: Buying company.,\n         quality: [{name: customer_id_exists, type: library, rule: references, arguments: {table: silver.customers, column: customer_id}}]}\n      - {name: asset_id, logicalType: string, physicalType: VARCHAR, required: true, businessName: Asset,\n         description: Asset serviced.,\n         quality: [{name: asset_id_exists, type: library, rule: references, arguments: {table: silver.assets, column: asset_id}}]}\n      - {name: service_type, logicalType: string, physicalType: VARCHAR, businessName: Service type, description: Nature of work.,\n         quality: [{name: service_type_valid, type: library, rule: validValues,\n                    arguments: {values: [Preventive maintenance, Corrective maintenance, Installation, Inspection]}}]}\n      - {name: opened_on, logicalType: date, physicalType: DATE, required: true, businessName: Order open date, description: Creation date.}\n      - {name: closed_on, logicalType: date, physicalType: DATE, businessName: Order close date, description: Completion date.,\n         quality: [{name: closed_after_opened, type: library, rule: expression,\n                    arguments: {sql: closed_on IS NULL OR closed_on >= opened_on}, description: An order cannot close before it opens.}]}\n      - {name: status, logicalType: string, physicalType: VARCHAR, businessName: Order status, description: Normalised status.,\n         quality: [{name: status_valid, type: library, rule: validValues, arguments: {values: [OPEN, CLOSED, CANCELLED]}}]}\n      - {name: planned_hours, logicalType: integer, physicalType: INTEGER, description: Quoted labor hours.,\n         quality: [{name: planned_hours_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: planned_labor_cost, logicalType: number, physicalType: DOUBLE, classification: confidential, description: Quoted labor cost.,\n         quality: [{name: planned_labor_cost_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: planned_material_cost, logicalType: number, physicalType: DOUBLE, classification: confidential, description: Quoted material cost.,\n         quality: [{name: planned_material_cost_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n      - {name: price, logicalType: number, physicalType: DOUBLE, required: true, classification: confidential, businessName: Order price,\n         description: Billable amount excluding tax.,\n         quality: [{name: price_non_negative, type: library, rule: range, arguments: {min: 0}}]}\n    quality:\n      - {name: order_volume, type: library, rule: rowCount, arguments: {min: 100}}\n      - name: closed_orders_have_date\n        type: sql\n        query: \"SELECT count(*) FROM {object} WHERE status = 'CLOSED' AND closed_on IS NULL\"\n        mustBe: 0\n        dimension: completeness\n        severity: warning\n"
+  },
+  {
+   "id": "silver.technicians",
+   "version": "1.0.0",
+   "status": "active",
+   "domain": "operations",
+   "classification": "restricted",
+   "purpose": "Field technicians with trade and fully loaded hourly cost, used to cost labor.",
+   "usage": "Labor costing in gold.service_order_economics. Personal data is masked outside the owning domain.",
+   "limitations": "Restricted. Never granted through access requests.",
+   "sla": {
+    "kind": "frequency",
+    "value": 7,
+    "unit": "d"
+   },
+   "change_policy": {
+    "versioning": "semver",
+    "breaking": [
+     "remove a column",
+     "rename a column",
+     "change a logical type",
+     "make a column required",
+     "change the primary key",
+     "raise the classification"
+    ],
+    "nonBreaking": [
+     "add an optional column",
+     "add or relax a quality rule",
+     "improve descriptions"
+    ],
+    "breakingRequires": "major version bump and Data Owner approval (raci.change_data_contract)",
+    "deprecationNoticeDays": 30
+   },
+   "consumers": [
+    "gold.customer_value",
+    "gold.service_order_economics",
+    "gold.site_monthly_kpis"
+   ],
+   "columns": [
+    {
+     "name": "technician_id",
+     "logical_type": "string",
+     "required": true,
+     "key": true,
+     "business_term": "Technician",
+     "personal_data": null,
+     "classification": "restricted"
+    },
+    {
+     "name": "national_id",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "national_id",
+     "classification": "restricted"
+    },
+    {
+     "name": "first_name",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "name",
+     "classification": "restricted"
+    },
+    {
+     "name": "last_name",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "name",
+     "classification": "restricted"
+    },
+    {
+     "name": "email",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "email",
+     "classification": "restricted"
+    },
+    {
+     "name": "phone",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": null,
+     "personal_data": "phone",
+     "classification": "restricted"
+    },
+    {
+     "name": "trade",
+     "logical_type": "string",
+     "required": false,
+     "key": false,
+     "business_term": "Trade",
+     "personal_data": null,
+     "classification": "restricted"
+    },
+    {
+     "name": "hourly_cost",
+     "logical_type": "number",
+     "required": true,
+     "key": false,
+     "business_term": "Hourly labor cost",
+     "personal_data": "compensation",
+     "classification": "restricted"
+    }
+   ],
+   "rules": 7,
+   "yaml": "apiVersion: v3.0.2\nkind: DataContract\nid: urn:datacontract:operations:silver.technicians\nname: silver.technicians\nversion: 1.0.0\nstatus: active\ndomain: operations\ndataProduct: Field workforce\ndescription:\n  purpose: Field technicians with trade and fully loaded hourly cost, used to cost labor.\n  usage: Labor costing in gold.service_order_economics. Personal data is masked outside the owning domain.\n  limitations: Restricted. Never granted through access requests.\ntags: [silver, people, restricted]\nteam:\n  - {username: riley.placeholder, role: data_owner}\n  - {username: sam.samplewood, role: data_steward}\nslaProperties:\n  - {property: frequency, value: 7, unit: d}\ncustomProperties:\n  - {property: dataClassification, value: restricted}\n  - property: changePolicy\n    value:\n      versioning: semver\n      breaking: [remove a column, rename a column, change a logical type, make a column required, change the primary key, raise the classification]\n      nonBreaking: [add an optional column, add or relax a quality rule, improve descriptions]\n      breakingRequires: major version bump and Data Owner approval (raci.change_data_contract)\n      deprecationNoticeDays: 30\nschema:\n  - name: technicians\n    physicalName: silver.technicians\n    physicalType: table\n    description: One row per technician.\n    properties:\n      - {name: technician_id, logicalType: string, physicalType: VARCHAR, primaryKey: true, primaryKeyPosition: 1,\n         businessName: Technician, description: Technician code TE-nnn.}\n      - {name: national_id, logicalType: string, physicalType: VARCHAR, classification: restricted, tags: [\"pii:national_id\"],\n         description: National identity number (8 digits).,\n         quality: [{name: national_id_format, type: library, rule: pattern, arguments: {pattern: '^\\d{8}$'}, severity: warning}]}\n      - {name: first_name, logicalType: string, physicalType: VARCHAR, tags: [\"pii:name\"], description: Given name.}\n      - {name: last_name, logicalType: string, physicalType: VARCHAR, tags: [\"pii:name\"], description: Family name.}\n      - {name: email, logicalType: string, physicalType: VARCHAR, tags: [\"pii:email\"], description: Work email.,\n         quality: [{name: technician_email_format, type: library, rule: pattern,\n                    arguments: {pattern: '^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$'}, severity: warning}]}\n      - {name: phone, logicalType: string, physicalType: VARCHAR, tags: [\"pii:phone\"], description: Mobile number.}\n      - {name: trade, logicalType: string, physicalType: VARCHAR, businessName: Trade, description: Craft or specialty.,\n         quality: [{name: trade_valid, type: library, rule: validValues,\n                    arguments: {values: [Mechanic, Electrician, Instrument technician, Welder, Supervisor]}}]}\n      - {name: hourly_cost, logicalType: number, physicalType: DOUBLE, required: true, tags: [\"pii:compensation\"],\n         businessName: Hourly labor cost, description: Fully loaded cost per hour.,\n         quality: [{name: hourly_cost_range, type: library, rule: range, arguments: {min: 10, max: 200}}]}\n"
+  }
+ ],
+ "history": {
+  "contract": "gold.service_order_economics",
+  "from_version": "2.0.0",
+  "to_version": "2.1.0",
+  "change": "gross_margin renamed to margin_amount in the SQL model",
+  "engine_output": [
+   "gold.service_order_economics: breaking change without a major version bump (2.0.0 -> 2.1.0): column 'gross_margin' removed or renamed"
+  ],
+  "correct_version": "3.0.0",
+  "correct_output": []
+ }
+}

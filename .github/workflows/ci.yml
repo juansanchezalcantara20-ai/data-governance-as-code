@@ -36,3 +36,22 @@ jobs:
       - name: Contract changes follow the change policy (pull requests)
         if: github.event_name == 'pull_request'
         run: python -m govkit compat --base origin/${{ github.base_ref }}
+
+  app-e2e:
+    name: Demo app in a real browser (desktop and mobile)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: The published app data is exactly what the engine produces
+        run: make install && make generate run && python -m govkit export-app --check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright
+        run: npm install && npx playwright install --with-deps chromium
+      - name: End-to-end checks
+        run: npm run e2e

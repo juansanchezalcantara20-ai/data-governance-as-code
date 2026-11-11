@@ -187,3 +187,60 @@ Each decision records the choice, the alternatives considered and why. Newest la
   `.editorconfig`, a pre-commit configuration, and a CI matrix on Python 3.10 and 3.12.
 - **Why:** reviewers judge a portfolio repository by these signals first, and the issue forms turn the RACI
   activities into an actual intake process.
+
+## D-029 · Two more roles: Field Technician and Data Auditor
+- **Decision:** add `field_technician` (operational data of the assigned domain, silver and gold, up to internal)
+  and `auditor` (every domain and layer up to restricted, personal data masked, `read_only: true`). Only
+  `quarantine_actions` roles (owner, steward, custodian) may release or discard quarantined rows.
+- **Why:** the navigable demo lets a visitor switch persona; these two make least privilege visible in both
+  directions (the technician sees orders but no money; the auditor sees everything but changes nothing).
+
+## D-030 · Column-level classification
+- **Decision:** a contract property may carry its own `classification`, never below its dataset's. The effective
+  level of a column is the higher of both. `silver.service_orders` becomes `internal` with price and planned costs
+  `confidential`. Readers below a column's level do not get it: column-level `GRANT` in the PostgreSQL output,
+  NULL-returning column masks in Unity Catalog. Raising a column's effective level is a breaking change.
+- **Why:** whole-table classification forces a choice between hiding operational data from field teams or
+  exposing money to them; column level removes that trade-off.
+
+## D-031 · Spanish glossary content lives next to the glossary
+- **Decision:** `governance/glossary_translations.yaml` holds, per term id, the Spanish name, definition and
+  example, and an English example. The validator requires every term to be translated and rejects circular Spanish
+  definitions.
+- **Why:** the demo app is Spanish-first; translations are governed content with the same checks, not UI strings.
+
+## D-032 · A static demo app fed only by the engine (honesty lock)
+- **Decision:** `app/` is a dependency-free static single-page app published on GitHub Pages. Its data is
+  `app/data/*.json`, written only by `govkit export-app`; `make docs-check`, CI and the Pages workflow fail if the
+  committed JSON differs from what the engine produces. No server, no framework, no external assets at runtime.
+- **Why:** a reviewer understands a governance tool by using it; a mock-up would prove nothing, so every number must be
+  traceable to the engine and impossible to edit by hand.
+
+## D-033 · Deterministic output: single-threaded DuckDB
+- **Decision:** connections run with one thread. Parallel aggregation summed floats in a varying order and moved a
+  rounded cent between runs (found by the honesty lock).
+- **Why:** reproducibility is what makes generated, committed artefacts checkable; the dataset is small.
+
+## D-034 · Personas mapped to real users and the real policy
+- **Decision:** the app's "View as" personas are the users `riley.placeholder` (owner), `drew.stubbs` (custodian),
+  `jamie.fakeley` (analyst), `rowan.pretendez` (field technician) and `ellis.checkwell` (auditor). What each sees per
+  table and column is computed by `access.column_view` at export time; the e2e test checks the screen matches.
+- **Why:** least privilege is demonstrated with the same code that would grant it, not with UI-only rules.
+
+## D-035 · Value shown under illustrative assumptions
+- **Decision:** `governance/supuestos_valor.yaml` (name requested by the owner) holds labelled, ranged assumptions in
+  soles. Facts come only from the pipeline run. Law No. 29733 is cited as context; no fines are estimated. The same
+  formula runs in Python (`govkit/value.py`) and JavaScript (`app/js/value.js`), both rounding half up; the e2e test
+  compares them.
+- **Why:** value is what decision-makers ask for, and assumptions must be visible and changeable to be honest.
+
+## D-036 · Project 2 catalog governed as a report, not a gate
+- **Decision:** an offline copy of the KPI catalog of `kpi-catalog-storytelling` (commit `67e3e37`) is checked with
+  glossary, ownership and contract rules; results are shown in the app. Its gaps (no steward field, KPIs without
+  declared input or reference SQL) do not fail this repository's CI because the catalog belongs to another repo.
+- **Why:** shows the engine is reusable on someone else's metadata without coupling the two projects.
+
+## D-037 · The change log uses recorded CI runs
+- **Decision:** `docs/ci_history.yaml` records real GitHub Actions runs with links, and the app reads it. It is not
+  fetched at build time.
+- **Why:** fetching would make the exported JSON change on every run and break the honesty lock.

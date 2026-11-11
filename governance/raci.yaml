@@ -19,12 +19,12 @@ activities:
   - id: resolve_quality_incident
     name: Resolve a quality incident
     description: Triage quarantined rows or failed checks, fix at source and close the incident.
-    raci: {data_steward: A, data_custodian: R, data_owner: I, data_consumer: I}
+    raci: {data_steward: A, data_custodian: R, data_owner: I, data_consumer: I, field_technician: C}
 
   - id: approve_access_request
     name: Approve an access request
     description: Grant time-bound access above a user's role baseline. Requester can never approve.
-    raci: {data_owner: A, data_steward: R, data_custodian: R, governance_council: I}
+    raci: {data_owner: A, data_steward: R, data_custodian: R, governance_council: I, auditor: I}
 
   - id: change_data_contract
     name: Change a data contract
@@ -44,4 +44,4 @@ activities:
   - id: approve_policy
     name: Approve a governance policy
     description: Adopt or change an enterprise data policy or standard.
-    raci: {governance_council: A, data_steward: R, data_owner: C, data_sponsor: I}
+    raci: {governance_council: A, data_steward: R, data_owner: C, auditor: C, data_sponsor: I}

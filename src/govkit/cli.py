@@ -125,6 +125,20 @@ def _export(_args) -> int:
     return 0
 
 
+def _export_app(args) -> int:
+    from . import export_app
+
+    if args.check:
+        stale = export_app.check()
+        for name in stale:
+            print(f"[ERROR] app/data/{name}.json does not match what the engine produces. Run: govkit export-app")
+        print(f"{len(stale)} stale file(s).")
+        return 1 if stale else 0
+    for path in export_app.write():
+        print(f"wrote {path}")
+    return 0
+
+
 def _docs(_args) -> int:
     from . import docs
 
@@ -157,6 +171,9 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=_deploy)
     s = sub.add_parser("export", help="export governed silver and gold tables to Parquet for upload")
     s.set_defaults(func=_export)
+    s = sub.add_parser("export-app", help="write app/data/*.json for the demo app from the engine output")
+    s.add_argument("--check", action="store_true", help="fail if the published JSON differs from the engine")
+    s.set_defaults(func=_export_app)
     s = sub.add_parser("docs", help="generate documentation from governance YAML and run metadata")
     s.set_defaults(func=_docs)
     return p

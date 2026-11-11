@@ -12,6 +12,14 @@ baseline:
   data_steward:       {domains: assigned, layers: [bronze, silver, gold], up_to: restricted,   unmasked_pii: true}
   data_custodian:     {domains: all,      layers: [bronze, silver, gold], up_to: confidential, unmasked_pii: false}
   data_consumer:      {domains: assigned, layers: [gold],                 up_to: internal,     unmasked_pii: false}
+  field_technician:   {domains: assigned, layers: [silver, gold],         up_to: internal,     unmasked_pii: false}
+  auditor:            {domains: all,      layers: [bronze, silver, gold], up_to: restricted,   unmasked_pii: false, read_only: true}
+
+# Column-level classification: a column may carry a higher classification than its dataset
+# (ODCS `classification` on the property). A reader whose `up_to` is below it does not see the column.
+
+# Who may act on quarantined rows (release or discard). Everyone else, and any read_only role, only reads.
+quarantine_actions: [data_owner, data_steward, data_custodian]
 
 # Exceptions above baseline go through an access request.
 requests:

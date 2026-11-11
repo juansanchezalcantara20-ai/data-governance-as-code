@@ -119,3 +119,40 @@ def test_grants_never_exceed_policy():
 def test_model_fixture_is_not_shared(model):
     model["domains"]["customer"]["owner"] = None
     assert governance("domains")["domains"]["customer"]["owner"] == "taylor.dummond"
+
+
+def _ds(name):
+    return next(d for d in access.datasets() if d["name"] == name)
+
+
+def test_field_technician_sees_orders_but_not_money():
+    ds = _ds("silver.service_orders")
+    view = access.column_view("rowan.pretendez", ds, ds["columns"])
+    assert view["status"] == "visible" and view["opened_on"] == "visible"
+    assert {view[c] for c in ("price", "planned_labor_cost", "planned_material_cost")} == {"hidden"}
+    assert access.max_level("rowan.pretendez", _ds("gold.service_order_economics")) is None
+
+
+def test_auditor_reads_everything_masked_and_cannot_act():
+    ds = _ds("silver.technicians")
+    view = access.column_view("ellis.checkwell", ds, ds["columns"])
+    assert view["national_id"] == "masked" and view["trade"] == "visible"
+    assert not access.can_act_on_quarantine("ellis.checkwell")
+    assert access.can_act_on_quarantine("riley.placeholder")
+
+
+def test_owner_sees_personal_data_only_in_own_domain():
+    ops, cus = _ds("silver.technicians"), _ds("silver.customers")
+    assert access.column_view("riley.placeholder", ops, ["email"])["email"] == "visible"
+    assert access.column_view("riley.placeholder", cus, ["contact_email"])["contact_email"] == "hidden"
+
+
+def test_column_grants_exclude_higher_classified_columns():
+    g = next(x for x in grants.compile_grants()
+             if x.dataset == "silver.service_orders" and x.principal == "gov_operations_field_technician")
+    assert g.columns and "price" not in g.columns and "status" in g.columns
+
+
+def test_read_only_role_cannot_be_given_quarantine_actions(model):
+    model["policy"]["quarantine_actions"].append("auditor")
+    assert "read_only and cannot act" in _messages(model)

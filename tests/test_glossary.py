@@ -83,3 +83,15 @@ def test_term_used_by_contract_is_not_orphan(ctx):
                          "steward": "sam.samplewood", "status": "draft", "next_review": "2027-01-01"})
     ctx["contracts"] = {"x": C()}
     assert "orphan" not in _errors(copy.copy(ctx))
+
+
+def test_every_term_has_spanish_translation():
+    from govkit.validate.glossary import check_translations
+
+    terms = governance("glossary")["terms"]
+    translations = governance("glossary_translations")["terms"]
+    assert check_translations(terms, translations) == []
+    del translations["asset"]["es"]["example"]
+    translations["site"]["es"]["definition"] = "La sede donde se trabaja."
+    messages = " | ".join(f.message for f in check_translations(terms, translations))
+    assert "missing Spanish 'example'" in messages and "circular Spanish definition" in messages
