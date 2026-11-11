@@ -1,0 +1,60 @@
+{
+ "tables": [
+  {
+   "dataset": "silver.labor_entries",
+   "rows": 56,
+   "reasons": [
+    {
+     "rule": "labor_order_exists",
+     "rows": 51
+    },
+    {
+     "rule": "hours_range",
+     "rows": 5
+    }
+   ]
+  },
+  {
+   "dataset": "silver.material_issues",
+   "rows": 35,
+   "reasons": [
+    {
+     "rule": "issue_order_exists",
+     "rows": 28
+    },
+    {
+     "rule": "issue_cost_matches_master",
+     "rows": 7
+    },
+    {
+     "rule": "issue_unit_cost_positive",
+     "rows": 3
+    }
+   ]
+  },
+  {
+   "dataset": "silver.service_orders",
+   "rows": 12,
+   "reasons": [
+    {
+     "rule": "asset_id_not_null",
+     "rows": 6
+    },
+    {
+     "rule": "closed_after_opened",
+     "rows": 4
+    },
+    {
+     "rule": "opened_on_not_null",
+     "rows": 1
+    },
+    {
+     "rule": "price_non_negative",
+     "rows": 1
+    }
+   ]
+  }
+ ],
+ "total_rows": 103,
+ "note": "Aggregated counts only; quarantined rows are never published."
+}

@@ -1,0 +1,13 @@
+{
+  "name": "data-governance-as-code-e2e",
+  "private": true,
+  "description": "End-to-end browser checks of the demo app (the project itself is Python).",
+  "type": "module",
+  "scripts": {
+    "e2e": "node tests/e2e/app.e2e.mjs",
+    "shots": "node tests/e2e/app.e2e.mjs --shots"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

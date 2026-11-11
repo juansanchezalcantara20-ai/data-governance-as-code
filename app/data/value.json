@@ -1,0 +1,173 @@
+{
+ "currency": "PEN",
+ "facts": {
+  "months_observed": 5.91,
+  "quarantined_rows": 103,
+  "quarantined_by_dataset": {
+   "silver.labor_entries": 56,
+   "silver.material_issues": 35,
+   "silver.service_orders": 12
+  },
+  "blocking_rules_fired": [
+   {
+    "dataset": "silver.labor_entries",
+    "rule": "labor_order_exists",
+    "dimension": "consistency",
+    "rows": 51
+   },
+   {
+    "dataset": "silver.material_issues",
+    "rule": "issue_order_exists",
+    "dimension": "consistency",
+    "rows": 28
+   },
+   {
+    "dataset": "silver.material_issues",
+    "rule": "issue_cost_matches_master",
+    "dimension": "accuracy",
+    "rows": 7
+   },
+   {
+    "dataset": "silver.service_orders",
+    "rule": "asset_id_not_null",
+    "dimension": "completeness",
+    "rows": 6
+   },
+   {
+    "dataset": "silver.labor_entries",
+    "rule": "hours_range",
+    "dimension": "validity",
+    "rows": 5
+   },
+   {
+    "dataset": "silver.service_orders",
+    "rule": "closed_after_opened",
+    "dimension": "consistency",
+    "rows": 4
+   },
+   {
+    "dataset": "silver.material_issues",
+    "rule": "issue_unit_cost_positive",
+    "dimension": "validity",
+    "rows": 3
+   },
+   {
+    "dataset": "silver.service_orders",
+    "rule": "opened_on_not_null",
+    "dimension": "completeness",
+    "rows": 1
+   },
+   {
+    "dataset": "silver.service_orders",
+    "rule": "price_non_negative",
+    "dimension": "validity",
+    "rows": 1
+   }
+  ],
+  "undeclared_pii_columns": [
+   "approver_email"
+  ],
+  "undeclared_pii_rows": 1275,
+  "governed_metrics": 13
+ },
+ "assumptions": {
+  "analyst_hour_cost": {
+   "value": 45,
+   "min": 20,
+   "max": 150,
+   "step": 5,
+   "unit": "PEN per hour",
+   "es": "Costo de una hora de trabajo de analista",
+   "en": "Cost of one analyst hour"
+  },
+  "rework_hours_per_bad_row": {
+   "value": 0.5,
+   "min": 0.1,
+   "max": 4,
+   "step": 0.1,
+   "unit": "hours per row",
+   "es": "Horas de retrabajo por cada dato malo que llega a un reporte (rastrear, corregir, volver a publicar)",
+   "en": "Rework hours for each bad record that reaches a report (trace, fix, republish)"
+  },
+  "bad_rows_per_wrong_decision": {
+   "value": 25,
+   "min": 5,
+   "max": 200,
+   "step": 5,
+   "unit": "rows per decision",
+   "es": "Datos malos que, en promedio, terminan en una decisión equivocada",
+   "en": "Bad records that, on average, end up in one wrong decision"
+  },
+  "wrong_decision_cost": {
+   "value": 3000,
+   "min": 0,
+   "max": 50000,
+   "step": 500,
+   "unit": "PEN per decision",
+   "es": "Costo de una decisión tomada con un dato errado (cotizar mal, reponer de más, priorizar mal)",
+   "en": "Cost of one decision taken on wrong data (mispricing, over-ordering, wrong priority)"
+  },
+  "dispute_hours_per_metric": {
+   "value": 1,
+   "min": 0,
+   "max": 10,
+   "step": 0.5,
+   "unit": "hours per metric per month",
+   "es": "Horas al mes que se pierden discutiendo «cuál número es el correcto», por indicador sin definición única",
+   "en": "Hours per month lost arguing \"which number is right\", per metric without a single definition"
+  },
+  "people_per_dispute": {
+   "value": 3,
+   "min": 1,
+   "max": 10,
+   "step": 1,
+   "unit": "people",
+   "es": "Personas que participan en esa discusión",
+   "en": "People involved in that discussion"
+  },
+  "incident_hours": {
+   "value": 40,
+   "min": 8,
+   "max": 200,
+   "step": 4,
+   "unit": "hours per incident",
+   "es": "Horas para atender un incidente por un dato personal expuesto (investigar, contener, comunicar, corregir)",
+   "en": "Hours to handle an incident with an exposed personal-data field (investigate, contain, communicate, fix)"
+  },
+  "exposure_probability_per_year": {
+   "value": 0.2,
+   "min": 0,
+   "max": 1,
+   "step": 0.05,
+   "unit": "probability per year",
+   "es": "Probabilidad anual de que un dato personal sin base de uso termine expuesto",
+   "en": "Yearly probability that an undeclared personal-data field ends up exposed"
+  }
+ },
+ "result": {
+  "bad_rows_per_month": 17.43,
+  "parts": {
+   "rework": {
+    "hours": 8.71,
+    "pen": 392.13
+   },
+   "wrong_decisions": {
+    "hours": 0.0,
+    "pen": 2091.37,
+    "count": 0.7
+   },
+   "definition_disputes": {
+    "hours": 39.0,
+    "pen": 1755.0
+   },
+   "personal_data_risk": {
+    "hours": 0.67,
+    "pen": 30.0
+   }
+  },
+  "total_hours": 48.4,
+  "total_pen": 4269
+ },
+ "illustrative": true,
+ "legal_context": "Law No. 29733 (Peru) on personal data protection; no fines are estimated."
+}

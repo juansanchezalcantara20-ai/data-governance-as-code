@@ -124,8 +124,33 @@ def check_terms(terms: list[dict], users: dict, domains: dict, models: dict[str,
     return out
 
 
+def check_translations(terms: list[dict], translations: dict) -> list[Finding]:
+    """Every term has a Spanish name, definition and example and an English example; no circular Spanish definition."""
+    out: list[Finding] = []
+    ids = {t["id"] for t in terms}
+    for tid in sorted(ids - translations.keys()):
+        out.append(Finding("glossary", "error", tid, "missing translation in glossary_translations.yaml"))
+    for tid in sorted(translations.keys() - ids):
+        out.append(Finding("glossary", "error", tid, "translation for a term that does not exist"))
+    for tid, tr in translations.items():
+        es, en = tr.get("es") or {}, tr.get("en") or {}
+        for key in ("name", "definition", "example"):
+            if not es.get(key):
+                out.append(Finding("glossary", "error", tid, f"missing Spanish '{key}'"))
+        if not en.get("example"):
+            out.append(Finding("glossary", "error", tid, "missing English example"))
+        if es.get("name") and re.search(rf"\b{re.escape(es['name'])}\b", str(es.get("definition", "")), re.I):
+            out.append(Finding("glossary", "error", tid, "circular Spanish definition: it uses the term itself"))
+    return out
+
+
 def check() -> list[Finding]:
-    return check_terms(
+    from ..paths import governance_dir
+
+    translations_path = governance_dir() / "glossary_translations.yaml"
+    translations = governance("glossary_translations").get("terms", {}) if translations_path.exists() else None
+    findings = [] if translations is None else check_translations(governance("glossary")["terms"], translations)
+    return findings + check_terms(
         terms=governance("glossary")["terms"],
         users={u["id"]: u for u in governance("users")["users"]},
         domains=governance("domains")["domains"],

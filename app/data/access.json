@@ -1,0 +1,1293 @@
+{
+ "levels": [
+  "public",
+  "internal",
+  "confidential",
+  "restricted"
+ ],
+ "personas": [
+  {
+   "role": "data_owner",
+   "user": "riley.placeholder",
+   "name": "Riley Placeholder",
+   "domains": [
+    "operations"
+   ],
+   "can_act_on_quarantine": true,
+   "read_only": false,
+   "datasets": {
+    "bronze.assets": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.technicians": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.customers": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.materials": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.service_orders": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.labor_entries": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.material_issues": {
+     "level": null,
+     "columns": {}
+    },
+    "gold.customer_value": {
+     "level": null,
+     "columns": {
+      "customer_id": "hidden",
+      "company_name": "hidden",
+      "segment": "hidden",
+      "country": "hidden",
+      "contact_name": "hidden",
+      "contact_email": "hidden",
+      "contact_phone": "hidden",
+      "marketing_consent": "hidden",
+      "orders": "hidden",
+      "revenue": "hidden",
+      "gross_margin": "hidden",
+      "last_order_on": "hidden",
+      "customer_tier": "hidden"
+     }
+    },
+    "gold.inventory_position": {
+     "level": null,
+     "columns": {
+      "material_id": "hidden",
+      "description": "hidden",
+      "category": "hidden",
+      "stock_on_hand": "hidden",
+      "reorder_point": "hidden",
+      "stock_value": "hidden",
+      "issued_qty_90d": "hidden",
+      "days_of_cover": "hidden",
+      "below_reorder_point": "hidden"
+     }
+    },
+    "gold.service_order_economics": {
+     "level": "restricted",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "site": "visible",
+      "asset_type": "visible",
+      "service_type": "visible",
+      "status": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "planned_hours": "visible",
+      "actual_hours": "visible",
+      "planned_cost": "visible",
+      "actual_labor_cost": "visible",
+      "actual_material_cost": "visible",
+      "actual_cost": "visible",
+      "cost_variance_pct": "visible",
+      "price": "visible",
+      "gross_margin": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "gold.site_monthly_kpis": {
+     "level": "restricted",
+     "columns": {
+      "site": "visible",
+      "month": "visible",
+      "orders": "visible",
+      "closed_orders": "visible",
+      "actual_hours": "visible",
+      "actual_cost": "visible",
+      "revenue": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "silver.assets": {
+     "level": "restricted",
+     "columns": {
+      "asset_id": "visible",
+      "asset_type": "visible",
+      "manufacturer": "visible",
+      "site": "visible",
+      "operating_hours": "visible",
+      "commissioned_on": "visible"
+     }
+    },
+    "silver.customers": {
+     "level": null,
+     "columns": {
+      "customer_id": "hidden",
+      "company_name": "hidden",
+      "segment": "hidden",
+      "country": "hidden",
+      "contact_name": "hidden",
+      "contact_email": "hidden",
+      "contact_phone": "hidden",
+      "created_on": "hidden",
+      "marketing_consent": "hidden"
+     }
+    },
+    "silver.labor_entries": {
+     "level": "restricted",
+     "columns": {
+      "entry_id": "visible",
+      "order_id": "visible",
+      "technician_id": "visible",
+      "work_date": "visible",
+      "hours": "visible",
+      "approver_email": "visible"
+     }
+    },
+    "silver.material_issues": {
+     "level": null,
+     "columns": {
+      "issue_id": "hidden",
+      "order_id": "hidden",
+      "material_id": "hidden",
+      "quantity": "hidden",
+      "unit_cost": "hidden",
+      "line_cost": "hidden",
+      "issued_on": "hidden"
+     }
+    },
+    "silver.materials": {
+     "level": null,
+     "columns": {
+      "material_id": "hidden",
+      "description": "hidden",
+      "category": "hidden",
+      "unit_cost": "hidden",
+      "stock_on_hand": "hidden",
+      "reorder_point": "hidden",
+      "lead_time_days": "hidden"
+     }
+    },
+    "silver.service_orders": {
+     "level": "restricted",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "service_type": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "status": "visible",
+      "planned_hours": "visible",
+      "planned_labor_cost": "visible",
+      "planned_material_cost": "visible",
+      "price": "visible"
+     }
+    },
+    "silver.technicians": {
+     "level": "restricted",
+     "columns": {
+      "technician_id": "visible",
+      "national_id": "visible",
+      "first_name": "visible",
+      "last_name": "visible",
+      "email": "visible",
+      "phone": "visible",
+      "trade": "visible",
+      "hourly_cost": "visible"
+     }
+    }
+   }
+  },
+  {
+   "role": "data_custodian",
+   "user": "drew.stubbs",
+   "name": "Drew Stubbs",
+   "domains": [
+    "*"
+   ],
+   "can_act_on_quarantine": true,
+   "read_only": false,
+   "datasets": {
+    "bronze.assets": {
+     "level": "confidential",
+     "columns": {}
+    },
+    "bronze.technicians": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.customers": {
+     "level": "confidential",
+     "columns": {}
+    },
+    "bronze.materials": {
+     "level": "confidential",
+     "columns": {}
+    },
+    "bronze.service_orders": {
+     "level": "confidential",
+     "columns": {}
+    },
+    "bronze.labor_entries": {
+     "level": "confidential",
+     "columns": {}
+    },
+    "bronze.material_issues": {
+     "level": "confidential",
+     "columns": {}
+    },
+    "gold.customer_value": {
+     "level": "confidential",
+     "columns": {
+      "customer_id": "visible",
+      "company_name": "visible",
+      "segment": "visible",
+      "country": "visible",
+      "contact_name": "masked",
+      "contact_email": "masked",
+      "contact_phone": "masked",
+      "marketing_consent": "visible",
+      "orders": "visible",
+      "revenue": "visible",
+      "gross_margin": "visible",
+      "last_order_on": "visible",
+      "customer_tier": "visible"
+     }
+    },
+    "gold.inventory_position": {
+     "level": "confidential",
+     "columns": {
+      "material_id": "visible",
+      "description": "visible",
+      "category": "visible",
+      "stock_on_hand": "visible",
+      "reorder_point": "visible",
+      "stock_value": "visible",
+      "issued_qty_90d": "visible",
+      "days_of_cover": "visible",
+      "below_reorder_point": "visible"
+     }
+    },
+    "gold.service_order_economics": {
+     "level": "confidential",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "site": "visible",
+      "asset_type": "visible",
+      "service_type": "visible",
+      "status": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "planned_hours": "visible",
+      "actual_hours": "visible",
+      "planned_cost": "visible",
+      "actual_labor_cost": "visible",
+      "actual_material_cost": "visible",
+      "actual_cost": "visible",
+      "cost_variance_pct": "visible",
+      "price": "visible",
+      "gross_margin": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "gold.site_monthly_kpis": {
+     "level": "confidential",
+     "columns": {
+      "site": "visible",
+      "month": "visible",
+      "orders": "visible",
+      "closed_orders": "visible",
+      "actual_hours": "visible",
+      "actual_cost": "visible",
+      "revenue": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "silver.assets": {
+     "level": "confidential",
+     "columns": {
+      "asset_id": "visible",
+      "asset_type": "visible",
+      "manufacturer": "visible",
+      "site": "visible",
+      "operating_hours": "visible",
+      "commissioned_on": "visible"
+     }
+    },
+    "silver.customers": {
+     "level": "confidential",
+     "columns": {
+      "customer_id": "visible",
+      "company_name": "visible",
+      "segment": "visible",
+      "country": "visible",
+      "contact_name": "masked",
+      "contact_email": "masked",
+      "contact_phone": "masked",
+      "created_on": "visible",
+      "marketing_consent": "visible"
+     }
+    },
+    "silver.labor_entries": {
+     "level": "confidential",
+     "columns": {
+      "entry_id": "visible",
+      "order_id": "visible",
+      "technician_id": "visible",
+      "work_date": "visible",
+      "hours": "visible",
+      "approver_email": "visible"
+     }
+    },
+    "silver.material_issues": {
+     "level": "confidential",
+     "columns": {
+      "issue_id": "visible",
+      "order_id": "visible",
+      "material_id": "visible",
+      "quantity": "visible",
+      "unit_cost": "visible",
+      "line_cost": "visible",
+      "issued_on": "visible"
+     }
+    },
+    "silver.materials": {
+     "level": "confidential",
+     "columns": {
+      "material_id": "visible",
+      "description": "visible",
+      "category": "visible",
+      "unit_cost": "visible",
+      "stock_on_hand": "visible",
+      "reorder_point": "visible",
+      "lead_time_days": "visible"
+     }
+    },
+    "silver.service_orders": {
+     "level": "confidential",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "service_type": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "status": "visible",
+      "planned_hours": "visible",
+      "planned_labor_cost": "visible",
+      "planned_material_cost": "visible",
+      "price": "visible"
+     }
+    },
+    "silver.technicians": {
+     "level": null,
+     "columns": {
+      "technician_id": "hidden",
+      "national_id": "hidden",
+      "first_name": "hidden",
+      "last_name": "hidden",
+      "email": "hidden",
+      "phone": "hidden",
+      "trade": "hidden",
+      "hourly_cost": "hidden"
+     }
+    }
+   }
+  },
+  {
+   "role": "data_consumer",
+   "user": "jamie.fakeley",
+   "name": "Jamie Fakeley",
+   "domains": [
+    "operations",
+    "supply_chain"
+   ],
+   "can_act_on_quarantine": false,
+   "read_only": false,
+   "datasets": {
+    "bronze.assets": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.technicians": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.customers": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.materials": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.service_orders": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.labor_entries": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.material_issues": {
+     "level": null,
+     "columns": {}
+    },
+    "gold.customer_value": {
+     "level": null,
+     "columns": {
+      "customer_id": "hidden",
+      "company_name": "hidden",
+      "segment": "hidden",
+      "country": "hidden",
+      "contact_name": "hidden",
+      "contact_email": "hidden",
+      "contact_phone": "hidden",
+      "marketing_consent": "hidden",
+      "orders": "hidden",
+      "revenue": "hidden",
+      "gross_margin": "hidden",
+      "last_order_on": "hidden",
+      "customer_tier": "hidden"
+     }
+    },
+    "gold.inventory_position": {
+     "level": "internal",
+     "columns": {
+      "material_id": "visible",
+      "description": "visible",
+      "category": "visible",
+      "stock_on_hand": "visible",
+      "reorder_point": "visible",
+      "stock_value": "visible",
+      "issued_qty_90d": "visible",
+      "days_of_cover": "visible",
+      "below_reorder_point": "visible"
+     }
+    },
+    "gold.service_order_economics": {
+     "level": "confidential",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "site": "visible",
+      "asset_type": "visible",
+      "service_type": "visible",
+      "status": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "planned_hours": "visible",
+      "actual_hours": "visible",
+      "planned_cost": "visible",
+      "actual_labor_cost": "visible",
+      "actual_material_cost": "visible",
+      "actual_cost": "visible",
+      "cost_variance_pct": "visible",
+      "price": "visible",
+      "gross_margin": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "gold.site_monthly_kpis": {
+     "level": "confidential",
+     "columns": {
+      "site": "visible",
+      "month": "visible",
+      "orders": "visible",
+      "closed_orders": "visible",
+      "actual_hours": "visible",
+      "actual_cost": "visible",
+      "revenue": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "silver.assets": {
+     "level": null,
+     "columns": {
+      "asset_id": "hidden",
+      "asset_type": "hidden",
+      "manufacturer": "hidden",
+      "site": "hidden",
+      "operating_hours": "hidden",
+      "commissioned_on": "hidden"
+     }
+    },
+    "silver.customers": {
+     "level": null,
+     "columns": {
+      "customer_id": "hidden",
+      "company_name": "hidden",
+      "segment": "hidden",
+      "country": "hidden",
+      "contact_name": "hidden",
+      "contact_email": "hidden",
+      "contact_phone": "hidden",
+      "created_on": "hidden",
+      "marketing_consent": "hidden"
+     }
+    },
+    "silver.labor_entries": {
+     "level": null,
+     "columns": {
+      "entry_id": "hidden",
+      "order_id": "hidden",
+      "technician_id": "hidden",
+      "work_date": "hidden",
+      "hours": "hidden",
+      "approver_email": "hidden"
+     }
+    },
+    "silver.material_issues": {
+     "level": null,
+     "columns": {
+      "issue_id": "hidden",
+      "order_id": "hidden",
+      "material_id": "hidden",
+      "quantity": "hidden",
+      "unit_cost": "hidden",
+      "line_cost": "hidden",
+      "issued_on": "hidden"
+     }
+    },
+    "silver.materials": {
+     "level": null,
+     "columns": {
+      "material_id": "hidden",
+      "description": "hidden",
+      "category": "hidden",
+      "unit_cost": "hidden",
+      "stock_on_hand": "hidden",
+      "reorder_point": "hidden",
+      "lead_time_days": "hidden"
+     }
+    },
+    "silver.service_orders": {
+     "level": null,
+     "columns": {
+      "order_id": "hidden",
+      "customer_id": "hidden",
+      "asset_id": "hidden",
+      "service_type": "hidden",
+      "opened_on": "hidden",
+      "closed_on": "hidden",
+      "status": "hidden",
+      "planned_hours": "hidden",
+      "planned_labor_cost": "hidden",
+      "planned_material_cost": "hidden",
+      "price": "hidden"
+     }
+    },
+    "silver.technicians": {
+     "level": null,
+     "columns": {
+      "technician_id": "hidden",
+      "national_id": "hidden",
+      "first_name": "hidden",
+      "last_name": "hidden",
+      "email": "hidden",
+      "phone": "hidden",
+      "trade": "hidden",
+      "hourly_cost": "hidden"
+     }
+    }
+   }
+  },
+  {
+   "role": "field_technician",
+   "user": "rowan.pretendez",
+   "name": "Rowan Pretendez",
+   "domains": [
+    "operations"
+   ],
+   "can_act_on_quarantine": false,
+   "read_only": false,
+   "datasets": {
+    "bronze.assets": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.technicians": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.customers": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.materials": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.service_orders": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.labor_entries": {
+     "level": null,
+     "columns": {}
+    },
+    "bronze.material_issues": {
+     "level": null,
+     "columns": {}
+    },
+    "gold.customer_value": {
+     "level": null,
+     "columns": {
+      "customer_id": "hidden",
+      "company_name": "hidden",
+      "segment": "hidden",
+      "country": "hidden",
+      "contact_name": "hidden",
+      "contact_email": "hidden",
+      "contact_phone": "hidden",
+      "marketing_consent": "hidden",
+      "orders": "hidden",
+      "revenue": "hidden",
+      "gross_margin": "hidden",
+      "last_order_on": "hidden",
+      "customer_tier": "hidden"
+     }
+    },
+    "gold.inventory_position": {
+     "level": null,
+     "columns": {
+      "material_id": "hidden",
+      "description": "hidden",
+      "category": "hidden",
+      "stock_on_hand": "hidden",
+      "reorder_point": "hidden",
+      "stock_value": "hidden",
+      "issued_qty_90d": "hidden",
+      "days_of_cover": "hidden",
+      "below_reorder_point": "hidden"
+     }
+    },
+    "gold.service_order_economics": {
+     "level": null,
+     "columns": {
+      "order_id": "hidden",
+      "customer_id": "hidden",
+      "asset_id": "hidden",
+      "site": "hidden",
+      "asset_type": "hidden",
+      "service_type": "hidden",
+      "status": "hidden",
+      "opened_on": "hidden",
+      "closed_on": "hidden",
+      "planned_hours": "hidden",
+      "actual_hours": "hidden",
+      "planned_cost": "hidden",
+      "actual_labor_cost": "hidden",
+      "actual_material_cost": "hidden",
+      "actual_cost": "hidden",
+      "cost_variance_pct": "hidden",
+      "price": "hidden",
+      "gross_margin": "hidden",
+      "gross_margin_pct": "hidden"
+     }
+    },
+    "gold.site_monthly_kpis": {
+     "level": null,
+     "columns": {
+      "site": "hidden",
+      "month": "hidden",
+      "orders": "hidden",
+      "closed_orders": "hidden",
+      "actual_hours": "hidden",
+      "actual_cost": "hidden",
+      "revenue": "hidden",
+      "gross_margin_pct": "hidden"
+     }
+    },
+    "silver.assets": {
+     "level": "internal",
+     "columns": {
+      "asset_id": "visible",
+      "asset_type": "visible",
+      "manufacturer": "visible",
+      "site": "visible",
+      "operating_hours": "visible",
+      "commissioned_on": "visible"
+     }
+    },
+    "silver.customers": {
+     "level": null,
+     "columns": {
+      "customer_id": "hidden",
+      "company_name": "hidden",
+      "segment": "hidden",
+      "country": "hidden",
+      "contact_name": "hidden",
+      "contact_email": "hidden",
+      "contact_phone": "hidden",
+      "created_on": "hidden",
+      "marketing_consent": "hidden"
+     }
+    },
+    "silver.labor_entries": {
+     "level": "internal",
+     "columns": {
+      "entry_id": "visible",
+      "order_id": "visible",
+      "technician_id": "visible",
+      "work_date": "visible",
+      "hours": "visible",
+      "approver_email": "visible"
+     }
+    },
+    "silver.material_issues": {
+     "level": null,
+     "columns": {
+      "issue_id": "hidden",
+      "order_id": "hidden",
+      "material_id": "hidden",
+      "quantity": "hidden",
+      "unit_cost": "hidden",
+      "line_cost": "hidden",
+      "issued_on": "hidden"
+     }
+    },
+    "silver.materials": {
+     "level": null,
+     "columns": {
+      "material_id": "hidden",
+      "description": "hidden",
+      "category": "hidden",
+      "unit_cost": "hidden",
+      "stock_on_hand": "hidden",
+      "reorder_point": "hidden",
+      "lead_time_days": "hidden"
+     }
+    },
+    "silver.service_orders": {
+     "level": "internal",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "service_type": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "status": "visible",
+      "planned_hours": "visible",
+      "planned_labor_cost": "hidden",
+      "planned_material_cost": "hidden",
+      "price": "hidden"
+     }
+    },
+    "silver.technicians": {
+     "level": null,
+     "columns": {
+      "technician_id": "hidden",
+      "national_id": "hidden",
+      "first_name": "hidden",
+      "last_name": "hidden",
+      "email": "hidden",
+      "phone": "hidden",
+      "trade": "hidden",
+      "hourly_cost": "hidden"
+     }
+    }
+   }
+  },
+  {
+   "role": "auditor",
+   "user": "ellis.checkwell",
+   "name": "Ellis Checkwell",
+   "domains": [
+    "*"
+   ],
+   "can_act_on_quarantine": false,
+   "read_only": true,
+   "datasets": {
+    "bronze.assets": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "bronze.technicians": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "bronze.customers": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "bronze.materials": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "bronze.service_orders": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "bronze.labor_entries": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "bronze.material_issues": {
+     "level": "restricted",
+     "columns": {}
+    },
+    "gold.customer_value": {
+     "level": "restricted",
+     "columns": {
+      "customer_id": "visible",
+      "company_name": "visible",
+      "segment": "visible",
+      "country": "visible",
+      "contact_name": "masked",
+      "contact_email": "masked",
+      "contact_phone": "masked",
+      "marketing_consent": "visible",
+      "orders": "visible",
+      "revenue": "visible",
+      "gross_margin": "visible",
+      "last_order_on": "visible",
+      "customer_tier": "visible"
+     }
+    },
+    "gold.inventory_position": {
+     "level": "restricted",
+     "columns": {
+      "material_id": "visible",
+      "description": "visible",
+      "category": "visible",
+      "stock_on_hand": "visible",
+      "reorder_point": "visible",
+      "stock_value": "visible",
+      "issued_qty_90d": "visible",
+      "days_of_cover": "visible",
+      "below_reorder_point": "visible"
+     }
+    },
+    "gold.service_order_economics": {
+     "level": "restricted",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "site": "visible",
+      "asset_type": "visible",
+      "service_type": "visible",
+      "status": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "planned_hours": "visible",
+      "actual_hours": "visible",
+      "planned_cost": "visible",
+      "actual_labor_cost": "visible",
+      "actual_material_cost": "visible",
+      "actual_cost": "visible",
+      "cost_variance_pct": "visible",
+      "price": "visible",
+      "gross_margin": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "gold.site_monthly_kpis": {
+     "level": "restricted",
+     "columns": {
+      "site": "visible",
+      "month": "visible",
+      "orders": "visible",
+      "closed_orders": "visible",
+      "actual_hours": "visible",
+      "actual_cost": "visible",
+      "revenue": "visible",
+      "gross_margin_pct": "visible"
+     }
+    },
+    "silver.assets": {
+     "level": "restricted",
+     "columns": {
+      "asset_id": "visible",
+      "asset_type": "visible",
+      "manufacturer": "visible",
+      "site": "visible",
+      "operating_hours": "visible",
+      "commissioned_on": "visible"
+     }
+    },
+    "silver.customers": {
+     "level": "restricted",
+     "columns": {
+      "customer_id": "visible",
+      "company_name": "visible",
+      "segment": "visible",
+      "country": "visible",
+      "contact_name": "masked",
+      "contact_email": "masked",
+      "contact_phone": "masked",
+      "created_on": "visible",
+      "marketing_consent": "visible"
+     }
+    },
+    "silver.labor_entries": {
+     "level": "restricted",
+     "columns": {
+      "entry_id": "visible",
+      "order_id": "visible",
+      "technician_id": "visible",
+      "work_date": "visible",
+      "hours": "visible",
+      "approver_email": "visible"
+     }
+    },
+    "silver.material_issues": {
+     "level": "restricted",
+     "columns": {
+      "issue_id": "visible",
+      "order_id": "visible",
+      "material_id": "visible",
+      "quantity": "visible",
+      "unit_cost": "visible",
+      "line_cost": "visible",
+      "issued_on": "visible"
+     }
+    },
+    "silver.materials": {
+     "level": "restricted",
+     "columns": {
+      "material_id": "visible",
+      "description": "visible",
+      "category": "visible",
+      "unit_cost": "visible",
+      "stock_on_hand": "visible",
+      "reorder_point": "visible",
+      "lead_time_days": "visible"
+     }
+    },
+    "silver.service_orders": {
+     "level": "restricted",
+     "columns": {
+      "order_id": "visible",
+      "customer_id": "visible",
+      "asset_id": "visible",
+      "service_type": "visible",
+      "opened_on": "visible",
+      "closed_on": "visible",
+      "status": "visible",
+      "planned_hours": "visible",
+      "planned_labor_cost": "visible",
+      "planned_material_cost": "visible",
+      "price": "visible"
+     }
+    },
+    "silver.technicians": {
+     "level": "restricted",
+     "columns": {
+      "technician_id": "visible",
+      "national_id": "masked",
+      "first_name": "masked",
+      "last_name": "masked",
+      "email": "masked",
+      "phone": "masked",
+      "trade": "visible",
+      "hourly_cost": "masked"
+     }
+    }
+   }
+  }
+ ],
+ "matrix": [
+  {
+   "role": "data_sponsor",
+   "domains": "all",
+   "layers": [
+    "gold"
+   ],
+   "up_to": "internal",
+   "unmasked_personal_data": false,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    }
+   }
+  },
+  {
+   "role": "governance_council",
+   "domains": "all",
+   "layers": [
+    "gold"
+   ],
+   "up_to": "confidential",
+   "unmasked_personal_data": false,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": false
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": false
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": false
+    }
+   }
+  },
+  {
+   "role": "data_owner",
+   "domains": "assigned",
+   "layers": [
+    "silver",
+    "gold"
+   ],
+   "up_to": "restricted",
+   "unmasked_personal_data": true,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    }
+   }
+  },
+  {
+   "role": "data_steward",
+   "domains": "assigned",
+   "layers": [
+    "bronze",
+    "silver",
+    "gold"
+   ],
+   "up_to": "restricted",
+   "unmasked_personal_data": true,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    }
+   }
+  },
+  {
+   "role": "data_custodian",
+   "domains": "all",
+   "layers": [
+    "bronze",
+    "silver",
+    "gold"
+   ],
+   "up_to": "confidential",
+   "unmasked_personal_data": false,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": false
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": false
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": false
+    }
+   }
+  },
+  {
+   "role": "data_consumer",
+   "domains": "assigned",
+   "layers": [
+    "gold"
+   ],
+   "up_to": "internal",
+   "unmasked_personal_data": false,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    }
+   }
+  },
+  {
+   "role": "field_technician",
+   "domains": "assigned",
+   "layers": [
+    "silver",
+    "gold"
+   ],
+   "up_to": "internal",
+   "unmasked_personal_data": false,
+   "read_only": false,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": false,
+     "restricted": false
+    }
+   }
+  },
+  {
+   "role": "auditor",
+   "domains": "all",
+   "layers": [
+    "bronze",
+    "silver",
+    "gold"
+   ],
+   "up_to": "restricted",
+   "unmasked_personal_data": false,
+   "read_only": true,
+   "cells": {
+    "operations": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    },
+    "supply_chain": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    },
+    "customer": {
+     "public": true,
+     "internal": true,
+     "confidential": true,
+     "restricted": true
+    }
+   }
+  }
+ ],
+ "checks": [
+  {
+   "id": "domain_owner",
+   "passed": true
+  },
+  {
+   "id": "owner_steward",
+   "passed": true
+  },
+  {
+   "id": "justified_access",
+   "passed": true
+  },
+  {
+   "id": "segregation_of_duties",
+   "passed": true
+  },
+  {
+   "id": "exceptions_expire",
+   "passed": true
+  }
+ ],
+ "sod_conflicts": [],
+ "exceptions": [
+  {
+   "user": "Jamie Fakeley",
+   "role": "data_consumer",
+   "domain": "operations",
+   "up_to": "confidential",
+   "ticket": "AR-0001",
+   "requested_by_role": "data_consumer",
+   "approved_by_role": "data_owner",
+   "same_person": false,
+   "approved_on": "2026-10-01",
+   "expires_on": "2026-12-30"
+  }
+ ],
+ "quarantine_actions": [
+  "data_owner",
+  "data_steward",
+  "data_custodian"
+ ]
+}

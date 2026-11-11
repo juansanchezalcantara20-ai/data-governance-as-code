@@ -76,6 +76,7 @@ flowchart LR
 | `gold.customer_value.company_name` | `file:customers.csv.company_name`, `silver.customers.company_name` |
 | `gold.customer_value.contact_email` | `file:customers.csv.contact_email`, `silver.customers.contact_email` |
 | `gold.customer_value.contact_name` | `file:customers.csv.contact_name`, `silver.customers.contact_name` |
+| `gold.customer_value.contact_phone` | `file:customers.csv.contact_phone`, `silver.customers.contact_phone` |
 | `gold.customer_value.country` | `file:customers.csv.country`, `silver.customers.country` |
 | `gold.customer_value.customer_id` | `file:customers.csv.customer_id`, `silver.customers.customer_id` |
 | `gold.customer_value.customer_tier` | `file:service_orders.csv.price`, `silver.service_orders.price` |

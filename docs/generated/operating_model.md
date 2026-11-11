@@ -110,18 +110,49 @@ Analyst or application that uses published data for decisions.
 
 - None on the data itself; decides how to use data within policy.
 
+### Field Technician (`field_technician`)
+
+Uses operational data to plan and carry out field work; has no need for financial or personal data.
+
+**Escalates to:** Data Steward
+
+**Responsibilities**
+
+- Use asset, order and labor data of the assigned domain to plan and execute work.
+- Report data that looks wrong in the field through the quality incident process.
+
+**Decisions**
+
+- None on the data itself; decides how to schedule and execute work within policy.
+
+### Data Auditor (`auditor`)
+
+Independent reviewer who checks that governance controls exist and work, in read-only mode.
+
+**Escalates to:** Governance Council
+
+**Responsibilities**
+
+- Review access grants, segregation of duties and exception expiry.
+- Review quality evidence, quarantine handling and the decision log.
+- Report audit findings to the Governance Council.
+
+**Decisions**
+
+- Raise audit findings and request evidence; never changes data or grants.
+
 ## RACI matrix
 
 R = Responsible · A = Accountable · C = Consulted · I = Informed
 
-| Activity | Data Sponsor | Governance Council | Data Owner | Data Steward | Data Custodian | Data Consumer |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|
-| Define a glossary term |  |  | A | R | C | C |
-| Approve a glossary term |  | C | A | R |  | I |
-| Approve a quality rule |  |  | A | R | C | I |
-| Resolve a quality incident |  |  | I | A | R | I |
-| Approve an access request |  | I | A | R | R |  |
-| Change a data contract |  |  | A | R | R | C |
-| Retire a dataset | I | A | R |  | R | C |
-| Classify a dataset |  | C | A | R | I |  |
-| Approve a governance policy | I | A | C | R |  |  |
+| Activity | Data Sponsor | Governance Council | Data Owner | Data Steward | Data Custodian | Data Consumer | Field Technician | Data Auditor |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Define a glossary term |  |  | A | R | C | C |  |  |
+| Approve a glossary term |  | C | A | R |  | I |  |  |
+| Approve a quality rule |  |  | A | R | C | I |  |  |
+| Resolve a quality incident |  |  | I | A | R | I | C |  |
+| Approve an access request |  | I | A | R | R |  |  | I |
+| Change a data contract |  |  | A | R | R | C |  |  |
+| Retire a dataset | I | A | R |  | R | C |  |  |
+| Classify a dataset |  | C | A | R | I |  |  |  |
+| Approve a governance policy | I | A | C | R |  |  |  | C |

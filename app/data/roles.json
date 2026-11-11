@@ -1,0 +1,251 @@
+{
+ "roles": [
+  {
+   "id": "data_sponsor",
+   "name": "Data Sponsor",
+   "purpose": "Executive who funds the governance programme and owns its outcomes at board level.",
+   "responsibilities": [
+    "Secure budget and people for the governance programme.",
+    "Set data priorities aligned with company strategy.",
+    "Chair escalations the Governance Council cannot resolve."
+   ],
+   "decisions": [
+    "Approve the governance charter and yearly roadmap.",
+    "Resolve cross-domain conflicts escalated by the Council."
+   ],
+   "escalates_to": null
+  },
+  {
+   "id": "governance_council",
+   "name": "Governance Council",
+   "purpose": "Cross-domain body that sets policies and standards and arbitrates between domains.",
+   "responsibilities": [
+    "Approve enterprise policies (classification, access, retention, change management).",
+    "Approve glossary terms shared by more than one domain.",
+    "Review quality and maturity metrics every month.",
+    "Approve the retirement of datasets with downstream consumers."
+   ],
+   "decisions": [
+    "Approve or reject policy changes.",
+    "Arbitrate disputed definitions and ownership."
+   ],
+   "escalates_to": "data_sponsor"
+  },
+  {
+   "id": "data_owner",
+   "name": "Data Owner",
+   "purpose": "Business leader accountable for the data of one domain and the decisions about it.",
+   "responsibilities": [
+    "Be accountable for the quality, classification and use of the domain's data.",
+    "Approve access to confidential and restricted data of the domain.",
+    "Approve breaking changes to the domain's data contracts.",
+    "Appoint at least one Data Steward for the domain."
+   ],
+   "decisions": [
+    "Grant or deny access to the domain's data.",
+    "Accept or reject quality rules and their thresholds.",
+    "Classify the domain's datasets."
+   ],
+   "escalates_to": "governance_council"
+  },
+  {
+   "id": "data_steward",
+   "name": "Data Steward",
+   "purpose": "Subject-matter expert who manages the domain's data day to day.",
+   "responsibilities": [
+    "Draft and maintain glossary terms and data contracts.",
+    "Define quality rules and triage quality incidents and quarantined rows.",
+    "Approve access to internal data of the domain.",
+    "Keep documentation current and run periodic reviews."
+   ],
+   "decisions": [
+    "Accept a glossary definition for review by the Owner.",
+    "Decide how a quality incident is remediated at source."
+   ],
+   "escalates_to": "data_owner"
+  },
+  {
+   "id": "data_custodian",
+   "name": "Data Custodian",
+   "purpose": "Technical role that operates the platform where data is stored, moved and secured.",
+   "responsibilities": [
+    "Run and monitor pipelines; implement contracts and quality rules in code.",
+    "Implement access grants and masking exactly as the policy states.",
+    "Manage backups, retention and decommissioning of datasets."
+   ],
+   "decisions": [
+    "Choose technical implementation within the agreed contract and policy."
+   ],
+   "escalates_to": "data_steward"
+  },
+  {
+   "id": "data_consumer",
+   "name": "Data Consumer",
+   "purpose": "Analyst or application that uses published data for decisions.",
+   "responsibilities": [
+    "Use data according to its classification and contract.",
+    "Report suspected quality issues through the incident process.",
+    "Request access through the access workflow, never ad hoc."
+   ],
+   "decisions": [
+    "None on the data itself; decides how to use data within policy."
+   ],
+   "escalates_to": "data_steward"
+  },
+  {
+   "id": "field_technician",
+   "name": "Field Technician",
+   "purpose": "Uses operational data to plan and carry out field work; has no need for financial or personal data.",
+   "responsibilities": [
+    "Use asset, order and labor data of the assigned domain to plan and execute work.",
+    "Report data that looks wrong in the field through the quality incident process."
+   ],
+   "decisions": [
+    "None on the data itself; decides how to schedule and execute work within policy."
+   ],
+   "escalates_to": "data_steward"
+  },
+  {
+   "id": "auditor",
+   "name": "Data Auditor",
+   "purpose": "Independent reviewer who checks that governance controls exist and work, in read-only mode.",
+   "responsibilities": [
+    "Review access grants, segregation of duties and exception expiry.",
+    "Review quality evidence, quarantine handling and the decision log.",
+    "Report audit findings to the Governance Council."
+   ],
+   "decisions": [
+    "Raise audit findings and request evidence; never changes data or grants."
+   ],
+   "escalates_to": "governance_council"
+  }
+ ],
+ "raci": [
+  {
+   "id": "define_glossary_term",
+   "name": "Define a glossary term",
+   "description": "Draft the definition, formula, source and rules of a business term.",
+   "raci": {
+    "data_steward": "R",
+    "data_owner": "A",
+    "data_consumer": "C",
+    "data_custodian": "C"
+   }
+  },
+  {
+   "id": "approve_glossary_term",
+   "name": "Approve a glossary term",
+   "description": "Move a term from draft to approved; shared terms go to the Council.",
+   "raci": {
+    "data_owner": "A",
+    "data_steward": "R",
+    "governance_council": "C",
+    "data_consumer": "I"
+   }
+  },
+  {
+   "id": "approve_quality_rule",
+   "name": "Approve a quality rule",
+   "description": "Accept a new or changed rule and its severity in a data contract.",
+   "raci": {
+    "data_owner": "A",
+    "data_steward": "R",
+    "data_custodian": "C",
+    "data_consumer": "I"
+   }
+  },
+  {
+   "id": "resolve_quality_incident",
+   "name": "Resolve a quality incident",
+   "description": "Triage quarantined rows or failed checks, fix at source and close the incident.",
+   "raci": {
+    "data_steward": "A",
+    "data_custodian": "R",
+    "data_owner": "I",
+    "data_consumer": "I",
+    "field_technician": "C"
+   }
+  },
+  {
+   "id": "approve_access_request",
+   "name": "Approve an access request",
+   "description": "Grant time-bound access above a user's role baseline. Requester can never approve.",
+   "raci": {
+    "data_owner": "A",
+    "data_steward": "R",
+    "data_custodian": "R",
+    "governance_council": "I",
+    "auditor": "I"
+   }
+  },
+  {
+   "id": "change_data_contract",
+   "name": "Change a data contract",
+   "description": "Version a contract. Breaking changes need a major version and Owner approval.",
+   "raci": {
+    "data_owner": "A",
+    "data_steward": "R",
+    "data_custodian": "R",
+    "data_consumer": "C"
+   }
+  },
+  {
+   "id": "retire_dataset",
+   "name": "Retire a dataset",
+   "description": "Deprecate, notify consumers, wait the notice period and decommission.",
+   "raci": {
+    "governance_council": "A",
+    "data_owner": "R",
+    "data_custodian": "R",
+    "data_consumer": "C",
+    "data_sponsor": "I"
+   }
+  },
+  {
+   "id": "classify_dataset",
+   "name": "Classify a dataset",
+   "description": "Assign public, internal, confidential or restricted and the PII tags.",
+   "raci": {
+    "data_owner": "A",
+    "data_steward": "R",
+    "governance_council": "C",
+    "data_custodian": "I"
+   }
+  },
+  {
+   "id": "approve_policy",
+   "name": "Approve a governance policy",
+   "description": "Adopt or change an enterprise data policy or standard.",
+   "raci": {
+    "governance_council": "A",
+    "data_steward": "R",
+    "data_owner": "C",
+    "auditor": "C",
+    "data_sponsor": "I"
+   }
+  }
+ ],
+ "domains": [
+  {
+   "id": "operations",
+   "name": "Field operations",
+   "description": "Assets, field technicians, service orders and hours booked against them.",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward"
+  },
+  {
+   "id": "supply_chain",
+   "name": "Supply chain",
+   "description": "Material master, warehouse issues to service orders and inventory position.",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward"
+  },
+  {
+   "id": "customer",
+   "name": "Customer",
+   "description": "Customer accounts, business contacts and customer value.",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward"
+  }
+ ]
+}

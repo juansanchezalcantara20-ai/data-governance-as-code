@@ -130,6 +130,23 @@ def masks_sql() -> str:
                 lines.append(f"CREATE OR REPLACE FUNCTION {fn}(v {dtype}) RETURNS {dtype}\n"
                              f"  RETURN CASE WHEN {check} THEN v ELSE {masked} END;")
             alters.append(f"ALTER TABLE {_fq(c.name)} ALTER COLUMN {p.name} SET MASK {fn};")
+    lv = access.levels()
+    lines += ["", "-- Column-level classification: columns classified above their dataset return NULL to readers",
+              "-- whose role baseline does not reach that level (Unity Catalog has no column GRANT).", ""]
+    for c in contracts_mod.load_all():
+        for p in c.properties:
+            if not p.classification or lv[p.classification] <= lv[c.classification] or p.pii:
+                continue
+            groups = [grants.group_name(r, None if b["domains"] == "all" else c.domain) for r, b in pol.items()
+                      if lv[b["up_to"]] >= lv[p.classification]]
+            check = " OR ".join(f"is_account_group_member('{g}')" for g in groups)
+            dtype = TYPES.get(p.physical_type, "STRING")
+            fn = f"{CATALOG}.{c.layer}.mask_{c.domain}_{p.classification}_{dtype.lower()}"
+            if (fn, dtype) not in made:
+                made.add((fn, dtype))
+                lines.append(f"CREATE OR REPLACE FUNCTION {fn}(v {dtype}) RETURNS {dtype}\n"
+                             f"  RETURN CASE WHEN {check} THEN v ELSE CAST(NULL AS {dtype}) END;")
+            alters.append(f"ALTER TABLE {_fq(c.name)} ALTER COLUMN {p.name} SET MASK {fn};")
     return BANNER + "\n".join(lines + [""] + alters) + "\n"
 
 

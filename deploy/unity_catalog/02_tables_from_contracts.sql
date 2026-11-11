@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS governance_demo.gold.customer_value (
   country STRING COMMENT 'Country.',
   contact_name STRING COMMENT 'Contact person.',
   contact_email STRING COMMENT 'Contact email.',
+  contact_phone STRING COMMENT 'Contact phone for the account team.',
   marketing_consent BOOLEAN COMMENT 'Consent flag.',
   orders BIGINT COMMENT 'Non-cancelled orders.',
   revenue DOUBLE COMMENT 'Billable amount.',
@@ -15,7 +16,7 @@ CREATE TABLE IF NOT EXISTS governance_demo.gold.customer_value (
   last_order_on DATE COMMENT 'Most recent order date.',
   customer_tier STRING NOT NULL COMMENT 'ABC tier.',
   CONSTRAINT pk_customer_value PRIMARY KEY (customer_id)
-) COMMENT 'Orders, revenue, margin and ABC tier per customer account, with the business contact. Contract urn:datacontract:customer:gold.customer_value v1.0.0.';
+) COMMENT 'Orders, revenue, margin and ABC tier per customer account, with the business contact. Contract urn:datacontract:customer:gold.customer_value v1.1.0.';
 
 CREATE TABLE IF NOT EXISTS governance_demo.gold.inventory_position (
   material_id STRING NOT NULL COMMENT 'Material code.',
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS governance_demo.silver.service_orders (
   planned_material_cost DOUBLE COMMENT 'Quoted material cost.',
   price DOUBLE NOT NULL COMMENT 'Billable amount excluding tax.',
   CONSTRAINT pk_service_orders PRIMARY KEY (order_id)
-) COMMENT 'Validated service orders. Orders failing a blocking rule are quarantined with the reason. Contract urn:datacontract:operations:silver.service_orders v1.1.0.';
+) COMMENT 'Validated service orders. Orders failing a blocking rule are quarantined with the reason. Contract urn:datacontract:operations:silver.service_orders v1.2.0.';
 
 CREATE TABLE IF NOT EXISTS governance_demo.silver.technicians (
   technician_id STRING NOT NULL COMMENT 'Technician code TE-nnn.',

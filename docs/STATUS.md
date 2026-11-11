@@ -58,6 +58,17 @@ a working engine; see `docs/DECISIONS.md` (D-001).
 - Repository hygiene: changelog, contributing guide, security policy, code of conduct, CODEOWNERS, PR template,
   governance issue forms, pre-commit, CI on Python 3.10 and 3.12 — D-028.
 
+## Navigable demo (prompt 1b)
+
+| Part | Status |
+|---|---|
+| App architecture, `export-app`, honesty lock, Pages workflow, ES/EN, personas, hash routes | ✅ done |
+| 11 screens, guided tour, readability rules | ✅ done |
+| README showcase, GIF, social preview | ✅ done |
+| Value model with illustrative assumptions | ✅ done |
+| Project 2 KPI catalog governed | ✅ done |
+| Tests (data, readability, browser desktop and mobile) | ✅ done |
+
 ## Pending
 
 | Item | Why it is pending |

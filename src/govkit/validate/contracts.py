@@ -59,8 +59,11 @@ def check_contract(c: contracts_mod.Contract, users: dict, domains: dict, levels
         err(f"steward '{c.steward}' is not a steward of domain '{c.domain}'")
     if c.classification not in levels:
         err(f"unknown classification '{c.classification}'")
-    elif c.pii_columns and levels[c.classification] < levels["confidential"]:
-        err(f"has personal data ({', '.join(c.pii_columns)}) but is classified '{c.classification}'")
+    else:
+        for col in c.pii_columns:
+            eff = c.column_classification(col, levels)
+            if levels[eff] < levels["confidential"]:
+                err(f"has personal data ({col}) but it is classified '{eff}'; must be confidential or restricted")
     if not any(s.get("property") in ("latency", "frequency") for s in raw.get("slaProperties") or []):
         err("no freshness SLA (latency or frequency)")
     policy = c.change_policy
@@ -78,6 +81,10 @@ def check_contract(c: contracts_mod.Contract, users: dict, domains: dict, levels
             err(f"column '{p.name}' has unknown logicalType '{p.logical_type}'")
         if p.business_name and p.business_name not in terms:
             err(f"column '{p.name}' businessName '{p.business_name}' is not a glossary term")
+        if p.classification and p.classification not in levels:
+            err(f"column '{p.name}' has unknown classification '{p.classification}'")
+        elif p.classification and c.classification in levels and levels[p.classification] < levels[c.classification]:
+            err(f"column '{p.name}' is classified below its dataset ('{p.classification}' < '{c.classification}')")
         if p.pii and p.pii not in PII_CATEGORIES:
             err(f"column '{p.name}' has unknown personal-data category '{p.pii}'")
     for r in c.rules:

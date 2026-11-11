@@ -50,10 +50,12 @@ CREATE TABLE IF NOT EXISTS meta.audit_log (
 
 def connect(path: Path | str | None = None, read_only: bool = False) -> duckdb.DuckDBPyConnection:
     path = Path(path or db_path())
+    # One thread: parallel aggregation sums floats in a varying order, which can move a rounded cent between runs.
+    # Single-threaded execution keeps every published number byte-for-byte reproducible.
     if read_only:
-        return duckdb.connect(str(path), read_only=True)
+        return duckdb.connect(str(path), read_only=True, config={"threads": 1})
     path.parent.mkdir(parents=True, exist_ok=True)
-    con = duckdb.connect(str(path))
+    con = duckdb.connect(str(path), config={"threads": 1})
     for schema in SCHEMAS:
         con.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
     con.execute(DDL)

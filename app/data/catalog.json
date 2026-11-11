@@ -1,0 +1,3149 @@
+{
+ "datasets": [
+  {
+   "id": "bronze.assets",
+   "layer": "bronze",
+   "domain": "operations",
+   "classification": "internal",
+   "contract_version": null,
+   "rows": 60,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Asset master as exported by the asset register.",
+   "usage": null,
+   "system": "Enterprise asset register (fictional)",
+   "columns": [
+    {
+     "name": "asset_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "asset_type",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "manufacturer",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "site",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "operating_hours",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "commissioned_on",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:assets.csv"
+   ],
+   "downstream": [
+    "silver.assets"
+   ],
+   "sample": [
+    {
+     "asset_id": "AS-0001",
+     "asset_type": "Haul truck",
+     "manufacturer": "OEM Alpha",
+     "site": "Site East",
+     "operating_hours": "16549",
+     "commissioned_on": "2023-10-13"
+    },
+    {
+     "asset_id": "AS-0002",
+     "asset_type": "Wheel loader",
+     "manufacturer": "OEM Alpha",
+     "site": "Site Central",
+     "operating_hours": "6197",
+     "commissioned_on": "2019-08-31"
+    },
+    {
+     "asset_id": "AS-0003",
+     "asset_type": "Pump station",
+     "manufacturer": "OEM Alpha",
+     "site": "Site North",
+     "operating_hours": "6640",
+     "commissioned_on": "2023-11-01"
+    },
+    {
+     "asset_id": "AS-0004",
+     "asset_type": "Wheel loader",
+     "manufacturer": "OEM Alpha",
+     "site": "Site Central",
+     "operating_hours": "13531",
+     "commissioned_on": "2018-12-31"
+    },
+    {
+     "asset_id": "AS-0005",
+     "asset_type": "Generator set",
+     "manufacturer": "OEM Delta",
+     "site": "Site South",
+     "operating_hours": "29939",
+     "commissioned_on": "2019-09-05"
+    }
+   ]
+  },
+  {
+   "id": "bronze.customers",
+   "layer": "bronze",
+   "domain": "customer",
+   "classification": "confidential",
+   "contract_version": null,
+   "rows": 120,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Customer accounts with a contact person.",
+   "usage": null,
+   "system": "CRM (fictional)",
+   "columns": [
+    {
+     "name": "customer_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "company_name",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "segment",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "country",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_name",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_email",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": "email",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_phone",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": "phone",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "created_on",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "marketing_consent",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:customers.csv"
+   ],
+   "downstream": [
+    "silver.customers"
+   ],
+   "sample": [
+    {
+     "customer_id": "CU-0001",
+     "company_name": "Sampleton Group 1",
+     "segment": "Energy",
+     "country": "Peru",
+     "contact_name": "P. F.",
+     "contact_email": "p***@example.org",
+     "contact_phone": "*****1580",
+     "created_on": "2023-01-06",
+     "marketing_consent": "Y"
+    },
+    {
+     "customer_id": "CU-0002",
+     "company_name": "Dummington Works 2",
+     "segment": "Energy",
+     "country": "Mexico",
+     "contact_name": "A. E.",
+     "contact_email": "a***@example.org",
+     "contact_phone": "*****4260",
+     "created_on": "2022-11-30",
+     "marketing_consent": "Y"
+    },
+    {
+     "customer_id": "CU-0003",
+     "company_name": "Lorem Works 3",
+     "segment": "Mining",
+     "country": "Chile",
+     "contact_name": "W. N.",
+     "contact_email": "***",
+     "contact_phone": "*****2446",
+     "created_on": "2024-12-03",
+     "marketing_consent": "Y"
+    },
+    {
+     "customer_id": "CU-0004",
+     "company_name": "Ipsumson Works 4",
+     "segment": "Mining",
+     "country": "Chile",
+     "contact_name": "W. F.",
+     "contact_email": "w***@example.org",
+     "contact_phone": "*****2847",
+     "created_on": "2026-02-05",
+     "marketing_consent": "Y"
+    },
+    {
+     "customer_id": "CU-0005",
+     "company_name": "Synthwood Group 5",
+     "segment": "Mining",
+     "country": "Colombia",
+     "contact_name": "Z. P.",
+     "contact_email": "z***@example.org",
+     "contact_phone": "*****3856",
+     "created_on": "2026-08-07",
+     "marketing_consent": "yes"
+    }
+   ]
+  },
+  {
+   "id": "bronze.labor_entries",
+   "layer": "bronze",
+   "domain": "operations",
+   "classification": "internal",
+   "contract_version": null,
+   "rows": 1331,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Hours booked by technicians against service orders.",
+   "usage": null,
+   "system": "Timesheet app (fictional)",
+   "columns": [
+    {
+     "name": "entry_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "technician_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "work_date",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "hours",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "approver_email",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": "email",
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:labor_entries.csv"
+   ],
+   "downstream": [
+    "silver.labor_entries"
+   ],
+   "sample": [
+    {
+     "entry_id": "LE-000001",
+     "order_id": "SO-000001",
+     "technician_id": "TE-034",
+     "work_date": "2026-08-25",
+     "hours": "11.5",
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000002",
+     "order_id": "SO-000001",
+     "technician_id": "TE-008",
+     "work_date": "2026-08-24",
+     "hours": "7.9",
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000003",
+     "order_id": "SO-000001",
+     "technician_id": "TE-008",
+     "work_date": "2026-08-22",
+     "hours": "3.8",
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000004",
+     "order_id": "SO-000001",
+     "technician_id": "TE-020",
+     "work_date": "2026-08-26",
+     "hours": "7.3",
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000005",
+     "order_id": "SO-000001",
+     "technician_id": "TE-029",
+     "work_date": "2026-08-25",
+     "hours": "9.8",
+     "approver_email": "e***@example.org"
+    }
+   ]
+  },
+  {
+   "id": "bronze.material_issues",
+   "layer": "bronze",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "contract_version": null,
+   "rows": 785,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Materials issued from the warehouse to service orders.",
+   "usage": null,
+   "system": "ERP materials module (fictional)",
+   "columns": [
+    {
+     "name": "issue_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "material_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "quantity",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "unit_cost",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "issued_on",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:material_issues.csv"
+   ],
+   "downstream": [
+    "silver.material_issues"
+   ],
+   "sample": [
+    {
+     "issue_id": "MI-000001",
+     "order_id": "SO-000001",
+     "material_id": "MA-0004",
+     "quantity": "12",
+     "unit_cost": "145.46",
+     "issued_on": "2026-08-24"
+    },
+    {
+     "issue_id": "MI-000002",
+     "order_id": "SO-000001",
+     "material_id": "MA-0004",
+     "quantity": "5",
+     "unit_cost": "143.45",
+     "issued_on": "2026-08-24"
+    },
+    {
+     "issue_id": "MI-000003",
+     "order_id": "SO-000001",
+     "material_id": "MA-0005",
+     "quantity": "7",
+     "unit_cost": "650.95",
+     "issued_on": "2026-08-24"
+    },
+    {
+     "issue_id": "MI-000004",
+     "order_id": "SO-000001",
+     "material_id": "MA-0008",
+     "quantity": "8",
+     "unit_cost": "287.64",
+     "issued_on": "2026-08-23"
+    },
+    {
+     "issue_id": "MI-000005",
+     "order_id": "SO-000004",
+     "material_id": "MA-0012",
+     "quantity": "9",
+     "unit_cost": "394.01",
+     "issued_on": "2026-05-13"
+    }
+   ]
+  },
+  {
+   "id": "bronze.materials",
+   "layer": "bronze",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "contract_version": null,
+   "rows": 12,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Material master with stock and reorder parameters.",
+   "usage": null,
+   "system": "ERP materials module (fictional)",
+   "columns": [
+    {
+     "name": "material_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "description",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "category",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "unit_cost",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "stock_on_hand",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "reorder_point",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "lead_time_days",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:materials.csv"
+   ],
+   "downstream": [
+    "silver.materials"
+   ],
+   "sample": [
+    {
+     "material_id": "MA-0001",
+     "description": "Oil filter",
+     "category": "Filters",
+     "unit_cost": "85.0",
+     "stock_on_hand": "100",
+     "reorder_point": "42",
+     "lead_time_days": "18"
+    },
+    {
+     "material_id": "MA-0002",
+     "description": "Air filter",
+     "category": "Filters",
+     "unit_cost": "64.0",
+     "stock_on_hand": "68",
+     "reorder_point": "23",
+     "lead_time_days": "6"
+    },
+    {
+     "material_id": "MA-0003",
+     "description": "Hydraulic hose",
+     "category": "Hydraulics",
+     "unit_cost": "420.0",
+     "stock_on_hand": "9",
+     "reorder_point": "13",
+     "lead_time_days": "34"
+    },
+    {
+     "material_id": "MA-0004",
+     "description": "Seal kit",
+     "category": "Hydraulics",
+     "unit_cost": "150.0",
+     "stock_on_hand": "168",
+     "reorder_point": "48",
+     "lead_time_days": "21"
+    },
+    {
+     "material_id": "MA-0005",
+     "description": "Proximity sensor",
+     "category": "Electrical",
+     "unit_cost": "610.0",
+     "stock_on_hand": "46",
+     "reorder_point": "44",
+     "lead_time_days": "9"
+    }
+   ]
+  },
+  {
+   "id": "bronze.service_orders",
+   "layer": "bronze",
+   "domain": "operations",
+   "classification": "confidential",
+   "contract_version": null,
+   "rows": 405,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Service orders with plan, price and status. Dates arrive in two formats.",
+   "usage": null,
+   "system": "Field service management (fictional)",
+   "columns": [
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "customer_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "asset_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "service_type",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "opened_on",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "closed_on",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "status",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_hours",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_labor_cost",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_material_cost",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "price",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:service_orders.csv"
+   ],
+   "downstream": [
+    "silver.service_orders"
+   ],
+   "sample": [
+    {
+     "order_id": "SO-000001",
+     "customer_id": "CU-0072",
+     "asset_id": "AS-0024",
+     "service_type": "Corrective maintenance",
+     "opened_on": "2026-08-21",
+     "closed_on": null,
+     "status": "Open",
+     "planned_hours": "38",
+     "planned_labor_cost": "1198.67",
+     "planned_material_cost": "1050.8",
+     "price": "2838.74"
+    },
+    {
+     "order_id": "SO-000002",
+     "customer_id": "CU-0020",
+     "asset_id": "AS-0039",
+     "service_type": "Corrective maintenance",
+     "opened_on": "2026-06-23",
+     "closed_on": "2026-06-25",
+     "status": "Closed",
+     "planned_hours": "19",
+     "planned_labor_cost": "578.87",
+     "planned_material_cost": "6479.61",
+     "price": "9819.69"
+    },
+    {
+     "order_id": "SO-000003",
+     "customer_id": "CU-0073",
+     "asset_id": "AS-0020",
+     "service_type": "Inspection",
+     "opened_on": "2026-09-20",
+     "closed_on": "2026-10-10",
+     "status": "Closed",
+     "planned_hours": "84",
+     "planned_labor_cost": "3118.47",
+     "planned_material_cost": "4664.37",
+     "price": "10140.37"
+    },
+    {
+     "order_id": "SO-000004",
+     "customer_id": "CU-0077",
+     "asset_id": "AS-0031",
+     "service_type": "Installation",
+     "opened_on": "2026-05-12",
+     "closed_on": "2026-05-26",
+     "status": "Closed",
+     "planned_hours": "157",
+     "planned_labor_cost": "5289.67",
+     "planned_material_cost": "8109.15",
+     "price": "18914.17"
+    },
+    {
+     "order_id": "SO-000005",
+     "customer_id": "CU-0049",
+     "asset_id": "AS-0010",
+     "service_type": "Corrective maintenance",
+     "opened_on": "05/06/2026",
+     "closed_on": "2026-06-07",
+     "status": "Closed",
+     "planned_hours": "157",
+     "planned_labor_cost": "5615.17",
+     "planned_material_cost": "4813.24",
+     "price": "14248.91"
+    }
+   ]
+  },
+  {
+   "id": "bronze.technicians",
+   "layer": "bronze",
+   "domain": "operations",
+   "classification": "restricted",
+   "contract_version": null,
+   "rows": 45,
+   "quarantined": 0,
+   "quality_score": null,
+   "description": "Field technicians with personal and compensation data.",
+   "usage": null,
+   "system": "HR system (fictional)",
+   "columns": [
+    {
+     "name": "technician_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "national_id",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": "national_id",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "first_name",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "last_name",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "email",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": "email",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "phone",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": "phone",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "trade",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "hourly_cost",
+     "type": "VARCHAR",
+     "description": null,
+     "classification": "restricted",
+     "personal_data": "compensation",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "file:technicians.csv"
+   ],
+   "downstream": [
+    "silver.technicians"
+   ],
+   "sample": [
+    {
+     "technician_id": "TE-001",
+     "national_id": "****0176",
+     "first_name": "M.",
+     "last_name": "E.",
+     "email": "m***@example.org",
+     "phone": "*****6185",
+     "trade": "Instrument technician",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-002",
+     "national_id": "****0041",
+     "first_name": "C.",
+     "last_name": "F.",
+     "email": "c***@example.org",
+     "phone": "*****3727",
+     "trade": "Mechanic",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-003",
+     "national_id": "****8019",
+     "first_name": "H.",
+     "last_name": "F.",
+     "email": "h***@example.org",
+     "phone": "*****3013",
+     "trade": "Electrician",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-004",
+     "national_id": "****3163",
+     "first_name": "F.",
+     "last_name": "M.",
+     "email": "f***@example.org",
+     "phone": "*****5215",
+     "trade": "Supervisor",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-005",
+     "national_id": "****3144",
+     "first_name": "V.",
+     "last_name": "S.",
+     "email": "v***@example.org",
+     "phone": "*****6015",
+     "trade": "Mechanic",
+     "hourly_cost": "[redacted]"
+    }
+   ]
+  },
+  {
+   "id": "silver.assets",
+   "layer": "silver",
+   "domain": "operations",
+   "classification": "internal",
+   "contract_version": "1.0.0",
+   "rows": 60,
+   "quarantined": 0,
+   "quality_score": 100.0,
+   "description": "Single source of truth for the equipment the company maintains and where it is installed.",
+   "usage": "Join key for service orders; site attribution for operational KPIs.",
+   "system": null,
+   "columns": [
+    {
+     "name": "asset_id",
+     "type": "VARCHAR",
+     "description": "Asset code AS-nnnn.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Asset",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "asset_type",
+     "type": "VARCHAR",
+     "description": "Equipment family.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Asset type",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "manufacturer",
+     "type": "VARCHAR",
+     "description": "Fictional manufacturer label.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "site",
+     "type": "VARCHAR",
+     "description": "Installation site.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Site",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "operating_hours",
+     "type": "INTEGER",
+     "description": "Cumulative hour-meter reading.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Operating hours",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "commissioned_on",
+     "type": "DATE",
+     "description": "Date the asset entered service.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.assets"
+   ],
+   "downstream": [
+    "gold.service_order_economics"
+   ],
+   "sample": [
+    {
+     "asset_id": "AS-0001",
+     "asset_type": "Haul truck",
+     "manufacturer": "OEM Alpha",
+     "site": "Site East",
+     "operating_hours": 16549,
+     "commissioned_on": "2023-10-13"
+    },
+    {
+     "asset_id": "AS-0002",
+     "asset_type": "Wheel loader",
+     "manufacturer": "OEM Alpha",
+     "site": "Site Central",
+     "operating_hours": 6197,
+     "commissioned_on": "2019-08-31"
+    },
+    {
+     "asset_id": "AS-0003",
+     "asset_type": "Pump station",
+     "manufacturer": "OEM Alpha",
+     "site": "Site North",
+     "operating_hours": 6640,
+     "commissioned_on": "2023-11-01"
+    },
+    {
+     "asset_id": "AS-0004",
+     "asset_type": "Wheel loader",
+     "manufacturer": "OEM Alpha",
+     "site": "Site Central",
+     "operating_hours": 13531,
+     "commissioned_on": "2018-12-31"
+    },
+    {
+     "asset_id": "AS-0005",
+     "asset_type": "Generator set",
+     "manufacturer": "OEM Delta",
+     "site": "Site South",
+     "operating_hours": 29939,
+     "commissioned_on": "2019-09-05"
+    }
+   ]
+  },
+  {
+   "id": "silver.customers",
+   "layer": "silver",
+   "domain": "customer",
+   "classification": "confidential",
+   "contract_version": "1.0.0",
+   "rows": 120,
+   "quarantined": 0,
+   "quality_score": 99.49,
+   "description": "Customer accounts with their business contact and marketing consent.",
+   "usage": "Customer attribution of orders; key-account analysis.",
+   "system": null,
+   "columns": [
+    {
+     "name": "customer_id",
+     "type": "VARCHAR",
+     "description": "Account code CU-nnnn.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "company_name",
+     "type": "VARCHAR",
+     "description": "Legal name (fictional).",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "segment",
+     "type": "VARCHAR",
+     "description": "Industry.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer segment",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "country",
+     "type": "VARCHAR",
+     "description": "Country of the account.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_name",
+     "type": "VARCHAR",
+     "description": "Contact person.",
+     "classification": "confidential",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": "Business contact",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_email",
+     "type": "VARCHAR",
+     "description": "Contact email.",
+     "classification": "confidential",
+     "personal_data": "email",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_phone",
+     "type": "VARCHAR",
+     "description": "Contact phone.",
+     "classification": "confidential",
+     "personal_data": "phone",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "created_on",
+     "type": "DATE",
+     "description": "Account creation date.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "marketing_consent",
+     "type": "BOOLEAN",
+     "description": "Consent to commercial communications.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Marketing consent",
+     "required": true,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.customers"
+   ],
+   "downstream": [
+    "gold.customer_value"
+   ],
+   "sample": [
+    {
+     "customer_id": "CU-0001",
+     "company_name": "Sampleton Group 1",
+     "segment": "Energy",
+     "country": "Peru",
+     "contact_name": "P. F.",
+     "contact_email": "p***@example.org",
+     "contact_phone": "*****1580",
+     "created_on": "2023-01-06",
+     "marketing_consent": true
+    },
+    {
+     "customer_id": "CU-0002",
+     "company_name": "Dummington Works 2",
+     "segment": "Energy",
+     "country": "Mexico",
+     "contact_name": "A. E.",
+     "contact_email": "a***@example.org",
+     "contact_phone": "*****4260",
+     "created_on": "2022-11-30",
+     "marketing_consent": true
+    },
+    {
+     "customer_id": "CU-0003",
+     "company_name": "Lorem Works 3",
+     "segment": "Mining",
+     "country": "Chile",
+     "contact_name": "W. N.",
+     "contact_email": "***",
+     "contact_phone": "*****2446",
+     "created_on": "2024-12-03",
+     "marketing_consent": true
+    },
+    {
+     "customer_id": "CU-0004",
+     "company_name": "Ipsumson Works 4",
+     "segment": "Mining",
+     "country": "Chile",
+     "contact_name": "W. F.",
+     "contact_email": "w***@example.org",
+     "contact_phone": "*****2847",
+     "created_on": "2026-02-05",
+     "marketing_consent": true
+    },
+    {
+     "customer_id": "CU-0005",
+     "company_name": "Synthwood Group 5",
+     "segment": "Mining",
+     "country": "Colombia",
+     "contact_name": "Z. P.",
+     "contact_email": "z***@example.org",
+     "contact_phone": "*****3856",
+     "created_on": "2026-08-07",
+     "marketing_consent": true
+    }
+   ]
+  },
+  {
+   "id": "silver.labor_entries",
+   "layer": "silver",
+   "domain": "operations",
+   "classification": "internal",
+   "contract_version": "1.0.0",
+   "rows": 1275,
+   "quarantined": 56,
+   "quality_score": 99.58,
+   "description": "Validated hours booked by technicians against service orders.",
+   "usage": "Actual labor hours and cost per service order.",
+   "system": null,
+   "columns": [
+    {
+     "name": "entry_id",
+     "type": "VARCHAR",
+     "description": "Entry id LE-nnnnnn.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Labor entry",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": "Service order charged.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "technician_id",
+     "type": "VARCHAR",
+     "description": "Technician who worked.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "work_date",
+     "type": "DATE",
+     "description": "Day worked.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "hours",
+     "type": "DOUBLE",
+     "description": "Hours booked.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Labor hours",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "approver_email",
+     "type": "VARCHAR",
+     "description": "Email of the supervisor who approved the entry.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": "email",
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.labor_entries"
+   ],
+   "downstream": [
+    "gold.service_order_economics"
+   ],
+   "sample": [
+    {
+     "entry_id": "LE-000001",
+     "order_id": "SO-000001",
+     "technician_id": "TE-034",
+     "work_date": "2026-08-25",
+     "hours": 11.5,
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000002",
+     "order_id": "SO-000001",
+     "technician_id": "TE-008",
+     "work_date": "2026-08-24",
+     "hours": 7.9,
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000003",
+     "order_id": "SO-000001",
+     "technician_id": "TE-008",
+     "work_date": "2026-08-22",
+     "hours": 3.8,
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000004",
+     "order_id": "SO-000001",
+     "technician_id": "TE-020",
+     "work_date": "2026-08-26",
+     "hours": 7.3,
+     "approver_email": "e***@example.org"
+    },
+    {
+     "entry_id": "LE-000005",
+     "order_id": "SO-000001",
+     "technician_id": "TE-029",
+     "work_date": "2026-08-25",
+     "hours": 9.8,
+     "approver_email": "e***@example.org"
+    }
+   ]
+  },
+  {
+   "id": "silver.material_issues",
+   "layer": "silver",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "contract_version": "1.0.0",
+   "rows": 750,
+   "quarantined": 35,
+   "quality_score": 99.63,
+   "description": "Validated warehouse issues to service orders with line cost.",
+   "usage": "Actual material cost per order; consumption for inventory cover.",
+   "system": null,
+   "columns": [
+    {
+     "name": "issue_id",
+     "type": "VARCHAR",
+     "description": "Issue id MI-nnnnnn.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Material issue",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": "Service order charged.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "material_id",
+     "type": "VARCHAR",
+     "description": "Material issued.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "quantity",
+     "type": "INTEGER",
+     "description": "Units issued.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "unit_cost",
+     "type": "DOUBLE",
+     "description": "Unit cost at issue.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "line_cost",
+     "type": "DOUBLE",
+     "description": "Quantity times unit cost.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "issued_on",
+     "type": "DATE",
+     "description": "Issue date.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.material_issues"
+   ],
+   "downstream": [
+    "gold.inventory_position",
+    "gold.service_order_economics"
+   ],
+   "sample": [
+    {
+     "issue_id": "MI-000001",
+     "order_id": "SO-000001",
+     "material_id": "MA-0004",
+     "quantity": 12,
+     "unit_cost": 145.46,
+     "line_cost": 1745.52,
+     "issued_on": "2026-08-24"
+    },
+    {
+     "issue_id": "MI-000002",
+     "order_id": "SO-000001",
+     "material_id": "MA-0004",
+     "quantity": 5,
+     "unit_cost": 143.45,
+     "line_cost": 717.25,
+     "issued_on": "2026-08-24"
+    },
+    {
+     "issue_id": "MI-000003",
+     "order_id": "SO-000001",
+     "material_id": "MA-0005",
+     "quantity": 7,
+     "unit_cost": 650.95,
+     "line_cost": 4556.65,
+     "issued_on": "2026-08-24"
+    },
+    {
+     "issue_id": "MI-000004",
+     "order_id": "SO-000001",
+     "material_id": "MA-0008",
+     "quantity": 8,
+     "unit_cost": 287.64,
+     "line_cost": 2301.12,
+     "issued_on": "2026-08-23"
+    },
+    {
+     "issue_id": "MI-000005",
+     "order_id": "SO-000004",
+     "material_id": "MA-0012",
+     "quantity": 9,
+     "unit_cost": 394.01,
+     "line_cost": 3546.09,
+     "issued_on": "2026-05-13"
+    }
+   ]
+  },
+  {
+   "id": "silver.materials",
+   "layer": "silver",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "contract_version": "1.0.0",
+   "rows": 12,
+   "quarantined": 0,
+   "quality_score": 100.0,
+   "description": "Material master with standard cost and stock parameters; reference for issued costs.",
+   "usage": "Inventory position, accuracy check of issued unit costs.",
+   "system": null,
+   "columns": [
+    {
+     "name": "material_id",
+     "type": "VARCHAR",
+     "description": "Material code MA-nnnn.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Material",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "description",
+     "type": "VARCHAR",
+     "description": "Material description.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "category",
+     "type": "VARCHAR",
+     "description": "Material category.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "unit_cost",
+     "type": "DOUBLE",
+     "description": "Standard unit cost.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Unit cost",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "stock_on_hand",
+     "type": "INTEGER",
+     "description": "Units in stock.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Stock on hand",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "reorder_point",
+     "type": "INTEGER",
+     "description": "Replenishment trigger.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Reorder point",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "lead_time_days",
+     "type": "INTEGER",
+     "description": "Supplier lead time in days.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.materials"
+   ],
+   "downstream": [
+    "gold.inventory_position"
+   ],
+   "sample": [
+    {
+     "material_id": "MA-0001",
+     "description": "Oil filter",
+     "category": "Filters",
+     "unit_cost": 85.0,
+     "stock_on_hand": 100,
+     "reorder_point": 42,
+     "lead_time_days": 18
+    },
+    {
+     "material_id": "MA-0002",
+     "description": "Air filter",
+     "category": "Filters",
+     "unit_cost": 64.0,
+     "stock_on_hand": 68,
+     "reorder_point": 23,
+     "lead_time_days": 6
+    },
+    {
+     "material_id": "MA-0003",
+     "description": "Hydraulic hose",
+     "category": "Hydraulics",
+     "unit_cost": 420.0,
+     "stock_on_hand": 9,
+     "reorder_point": 13,
+     "lead_time_days": 34
+    },
+    {
+     "material_id": "MA-0004",
+     "description": "Seal kit",
+     "category": "Hydraulics",
+     "unit_cost": 150.0,
+     "stock_on_hand": 168,
+     "reorder_point": 48,
+     "lead_time_days": 21
+    },
+    {
+     "material_id": "MA-0005",
+     "description": "Proximity sensor",
+     "category": "Electrical",
+     "unit_cost": 610.0,
+     "stock_on_hand": 46,
+     "reorder_point": 44,
+     "lead_time_days": 9
+    }
+   ]
+  },
+  {
+   "id": "silver.service_orders",
+   "layer": "silver",
+   "domain": "operations",
+   "classification": "internal",
+   "contract_version": "1.2.0",
+   "rows": 388,
+   "quarantined": 12,
+   "quality_score": 99.84,
+   "description": "Validated service orders. Orders failing a blocking rule are quarantined with the reason.",
+   "usage": "Base of all service economics and site KPIs. Price and planned costs are confidential columns; the rest is internal so field teams can plan work.",
+   "system": null,
+   "columns": [
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": "Order number SO-nnnnnn.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Service order",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "customer_id",
+     "type": "VARCHAR",
+     "description": "Buying company.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "asset_id",
+     "type": "VARCHAR",
+     "description": "Asset serviced.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Asset",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "service_type",
+     "type": "VARCHAR",
+     "description": "Nature of work.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Service type",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "opened_on",
+     "type": "DATE",
+     "description": "Creation date.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order open date",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "closed_on",
+     "type": "DATE",
+     "description": "Completion date.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order close date",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "status",
+     "type": "VARCHAR",
+     "description": "Normalised status.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order status",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_hours",
+     "type": "INTEGER",
+     "description": "Quoted labor hours.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_labor_cost",
+     "type": "DOUBLE",
+     "description": "Quoted labor cost.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_material_cost",
+     "type": "DOUBLE",
+     "description": "Quoted material cost.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "price",
+     "type": "DOUBLE",
+     "description": "Billable amount excluding tax.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order price",
+     "required": true,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.service_orders"
+   ],
+   "downstream": [
+    "gold.service_order_economics"
+   ],
+   "sample": [
+    {
+     "order_id": "SO-000001",
+     "customer_id": "CU-0072",
+     "asset_id": "AS-0024",
+     "service_type": "Corrective maintenance",
+     "opened_on": "2026-08-21",
+     "closed_on": "NaT",
+     "status": "OPEN",
+     "planned_hours": 38,
+     "planned_labor_cost": 1198.67,
+     "planned_material_cost": 1050.8,
+     "price": 2838.74
+    },
+    {
+     "order_id": "SO-000002",
+     "customer_id": "CU-0020",
+     "asset_id": "AS-0039",
+     "service_type": "Corrective maintenance",
+     "opened_on": "2026-06-23",
+     "closed_on": "2026-06-25",
+     "status": "CLOSED",
+     "planned_hours": 19,
+     "planned_labor_cost": 578.87,
+     "planned_material_cost": 6479.61,
+     "price": 9819.69
+    },
+    {
+     "order_id": "SO-000003",
+     "customer_id": "CU-0073",
+     "asset_id": "AS-0020",
+     "service_type": "Inspection",
+     "opened_on": "2026-09-20",
+     "closed_on": "2026-10-10",
+     "status": "CLOSED",
+     "planned_hours": 84,
+     "planned_labor_cost": 3118.47,
+     "planned_material_cost": 4664.37,
+     "price": 10140.37
+    },
+    {
+     "order_id": "SO-000004",
+     "customer_id": "CU-0077",
+     "asset_id": "AS-0031",
+     "service_type": "Installation",
+     "opened_on": "2026-05-12",
+     "closed_on": "2026-05-26",
+     "status": "CLOSED",
+     "planned_hours": 157,
+     "planned_labor_cost": 5289.67,
+     "planned_material_cost": 8109.15,
+     "price": 18914.17
+    },
+    {
+     "order_id": "SO-000005",
+     "customer_id": "CU-0049",
+     "asset_id": "AS-0010",
+     "service_type": "Corrective maintenance",
+     "opened_on": "2026-06-05",
+     "closed_on": "2026-06-07",
+     "status": "CLOSED",
+     "planned_hours": 157,
+     "planned_labor_cost": 5615.17,
+     "planned_material_cost": 4813.24,
+     "price": 14248.91
+    }
+   ]
+  },
+  {
+   "id": "silver.technicians",
+   "layer": "silver",
+   "domain": "operations",
+   "classification": "restricted",
+   "contract_version": "1.0.0",
+   "rows": 45,
+   "quarantined": 0,
+   "quality_score": 99.63,
+   "description": "Field technicians with trade and fully loaded hourly cost, used to cost labor.",
+   "usage": "Labor costing in gold.service_order_economics. Personal data is masked outside the owning domain.",
+   "system": null,
+   "columns": [
+    {
+     "name": "technician_id",
+     "type": "VARCHAR",
+     "description": "Technician code TE-nnn.",
+     "classification": "restricted",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Technician",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "national_id",
+     "type": "VARCHAR",
+     "description": "National identity number (8 digits).",
+     "classification": "restricted",
+     "personal_data": "national_id",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "first_name",
+     "type": "VARCHAR",
+     "description": "Given name.",
+     "classification": "restricted",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "last_name",
+     "type": "VARCHAR",
+     "description": "Family name.",
+     "classification": "restricted",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "email",
+     "type": "VARCHAR",
+     "description": "Work email.",
+     "classification": "restricted",
+     "personal_data": "email",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "phone",
+     "type": "VARCHAR",
+     "description": "Mobile number.",
+     "classification": "restricted",
+     "personal_data": "phone",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "trade",
+     "type": "VARCHAR",
+     "description": "Craft or specialty.",
+     "classification": "restricted",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Trade",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "hourly_cost",
+     "type": "DOUBLE",
+     "description": "Fully loaded cost per hour.",
+     "classification": "restricted",
+     "personal_data": "compensation",
+     "undeclared_personal_data": null,
+     "business_term": "Hourly labor cost",
+     "required": true,
+     "key": false
+    }
+   ],
+   "consumers": [],
+   "upstream": [
+    "bronze.technicians"
+   ],
+   "downstream": [
+    "gold.service_order_economics"
+   ],
+   "sample": [
+    {
+     "technician_id": "TE-001",
+     "national_id": "****0176",
+     "first_name": "M.",
+     "last_name": "E.",
+     "email": "m***@example.org",
+     "phone": "*****6185",
+     "trade": "Instrument technician",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-002",
+     "national_id": "****0041",
+     "first_name": "C.",
+     "last_name": "F.",
+     "email": "c***@example.org",
+     "phone": "*****3727",
+     "trade": "Mechanic",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-003",
+     "national_id": "****8019",
+     "first_name": "H.",
+     "last_name": "F.",
+     "email": "h***@example.org",
+     "phone": "*****3013",
+     "trade": "Electrician",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-004",
+     "national_id": "****3163",
+     "first_name": "F.",
+     "last_name": "M.",
+     "email": "f***@example.org",
+     "phone": "*****5215",
+     "trade": "Supervisor",
+     "hourly_cost": "[redacted]"
+    },
+    {
+     "technician_id": "TE-005",
+     "national_id": "****3144",
+     "first_name": "V.",
+     "last_name": "S.",
+     "email": "v***@example.org",
+     "phone": "*****6015",
+     "trade": "Mechanic",
+     "hourly_cost": "[redacted]"
+    }
+   ]
+  },
+  {
+   "id": "gold.customer_value",
+   "layer": "gold",
+   "domain": "customer",
+   "classification": "confidential",
+   "contract_version": "1.1.0",
+   "rows": 120,
+   "quarantined": 0,
+   "quality_score": 100.0,
+   "description": "Orders, revenue, margin and ABC tier per customer account, with the business contact.",
+   "usage": "Key-account review. Contact data is masked unless the reader's role allows clear text.",
+   "system": null,
+   "columns": [
+    {
+     "name": "customer_id",
+     "type": "VARCHAR",
+     "description": "Account code.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "company_name",
+     "type": "VARCHAR",
+     "description": "Legal name (fictional).",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "segment",
+     "type": "VARCHAR",
+     "description": "Industry.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer segment",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "country",
+     "type": "VARCHAR",
+     "description": "Country.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_name",
+     "type": "VARCHAR",
+     "description": "Contact person.",
+     "classification": "confidential",
+     "personal_data": "name",
+     "undeclared_personal_data": null,
+     "business_term": "Business contact",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_email",
+     "type": "VARCHAR",
+     "description": "Contact email.",
+     "classification": "confidential",
+     "personal_data": "email",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "contact_phone",
+     "type": "VARCHAR",
+     "description": "Contact phone for the account team.",
+     "classification": "confidential",
+     "personal_data": "phone",
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "marketing_consent",
+     "type": "BOOLEAN",
+     "description": "Consent flag.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Marketing consent",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "orders",
+     "type": "BIGINT",
+     "description": "Non-cancelled orders.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "revenue",
+     "type": "DOUBLE",
+     "description": "Billable amount.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer revenue",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "gross_margin",
+     "type": "DOUBLE",
+     "description": "Margin generated.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Gross margin",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "last_order_on",
+     "type": "DATE",
+     "description": "Most recent order date.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "customer_tier",
+     "type": "VARCHAR",
+     "description": "ABC tier.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer tier",
+     "required": true,
+     "key": false
+    }
+   ],
+   "consumers": [
+    "Key-account review"
+   ],
+   "upstream": [
+    "gold.service_order_economics",
+    "silver.customers"
+   ],
+   "downstream": [
+    "exposure:Key-account review"
+   ],
+   "sample": [
+    {
+     "customer_id": "CU-0001",
+     "company_name": "Sampleton Group 1",
+     "segment": "Energy",
+     "country": "Peru",
+     "contact_name": "P. F.",
+     "contact_email": "p***@example.org",
+     "contact_phone": "*****1580",
+     "marketing_consent": true,
+     "orders": 4,
+     "revenue": 44803.21,
+     "gross_margin": 11354.77,
+     "last_order_on": "2026-09-04",
+     "customer_tier": "B"
+    },
+    {
+     "customer_id": "CU-0002",
+     "company_name": "Dummington Works 2",
+     "segment": "Energy",
+     "country": "Mexico",
+     "contact_name": "A. E.",
+     "contact_email": "a***@example.org",
+     "contact_phone": "*****4260",
+     "marketing_consent": true,
+     "orders": 4,
+     "revenue": 41870.83,
+     "gross_margin": 18942.02,
+     "last_order_on": "2026-10-20",
+     "customer_tier": "B"
+    },
+    {
+     "customer_id": "CU-0003",
+     "company_name": "Lorem Works 3",
+     "segment": "Mining",
+     "country": "Chile",
+     "contact_name": "W. N.",
+     "contact_email": "***",
+     "contact_phone": "*****2446",
+     "marketing_consent": true,
+     "orders": 4,
+     "revenue": 42080.66,
+     "gross_margin": 20596.34,
+     "last_order_on": "2026-09-26",
+     "customer_tier": "B"
+    },
+    {
+     "customer_id": "CU-0004",
+     "company_name": "Ipsumson Works 4",
+     "segment": "Mining",
+     "country": "Chile",
+     "contact_name": "W. F.",
+     "contact_email": "w***@example.org",
+     "contact_phone": "*****2847",
+     "marketing_consent": true,
+     "orders": 3,
+     "revenue": 34168.24,
+     "gross_margin": 19753.61,
+     "last_order_on": "2026-06-09",
+     "customer_tier": "B"
+    },
+    {
+     "customer_id": "CU-0005",
+     "company_name": "Synthwood Group 5",
+     "segment": "Mining",
+     "country": "Colombia",
+     "contact_name": "Z. P.",
+     "contact_email": "z***@example.org",
+     "contact_phone": "*****3856",
+     "marketing_consent": true,
+     "orders": 4,
+     "revenue": 36761.39,
+     "gross_margin": 26864.79,
+     "last_order_on": "2026-10-28",
+     "customer_tier": "B"
+    }
+   ]
+  },
+  {
+   "id": "gold.inventory_position",
+   "layer": "gold",
+   "domain": "supply_chain",
+   "classification": "internal",
+   "contract_version": "1.0.0",
+   "rows": 12,
+   "quarantined": 0,
+   "quality_score": 100.0,
+   "description": "Stock value, recent consumption, days of cover and reorder alerts per material.",
+   "usage": "Replenishment report.",
+   "system": null,
+   "columns": [
+    {
+     "name": "material_id",
+     "type": "VARCHAR",
+     "description": "Material code.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Material",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "description",
+     "type": "VARCHAR",
+     "description": "Material description.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "category",
+     "type": "VARCHAR",
+     "description": "Material category.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "stock_on_hand",
+     "type": "INTEGER",
+     "description": "Units in stock.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Stock on hand",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "reorder_point",
+     "type": "INTEGER",
+     "description": "Replenishment trigger.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Reorder point",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "stock_value",
+     "type": "DOUBLE",
+     "description": "Value of stock.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Stock value",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "issued_qty_90d",
+     "type": "BIGINT",
+     "description": "Units issued in the last 90 days.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "days_of_cover",
+     "type": "DOUBLE",
+     "description": "Days stock lasts.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Days of cover",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "below_reorder_point",
+     "type": "BOOLEAN",
+     "description": "Replenishment needed.",
+     "classification": "internal",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Below reorder point",
+     "required": true,
+     "key": false
+    }
+   ],
+   "consumers": [
+    "Replenishment report"
+   ],
+   "upstream": [
+    "silver.material_issues",
+    "silver.materials"
+   ],
+   "downstream": [
+    "exposure:Replenishment report"
+   ],
+   "sample": [
+    {
+     "material_id": "MA-0001",
+     "description": "Oil filter",
+     "category": "Filters",
+     "stock_on_hand": 100,
+     "reorder_point": 42,
+     "stock_value": 8500.0,
+     "issued_qty_90d": 253,
+     "days_of_cover": 35.6,
+     "below_reorder_point": false
+    },
+    {
+     "material_id": "MA-0002",
+     "description": "Air filter",
+     "category": "Filters",
+     "stock_on_hand": 68,
+     "reorder_point": 23,
+     "stock_value": 4352.0,
+     "issued_qty_90d": 313,
+     "days_of_cover": 19.6,
+     "below_reorder_point": false
+    },
+    {
+     "material_id": "MA-0003",
+     "description": "Hydraulic hose",
+     "category": "Hydraulics",
+     "stock_on_hand": 9,
+     "reorder_point": 13,
+     "stock_value": 3780.0,
+     "issued_qty_90d": 192,
+     "days_of_cover": 4.2,
+     "below_reorder_point": true
+    },
+    {
+     "material_id": "MA-0004",
+     "description": "Seal kit",
+     "category": "Hydraulics",
+     "stock_on_hand": 168,
+     "reorder_point": 48,
+     "stock_value": 25200.0,
+     "issued_qty_90d": 304,
+     "days_of_cover": 49.7,
+     "below_reorder_point": false
+    },
+    {
+     "material_id": "MA-0005",
+     "description": "Proximity sensor",
+     "category": "Electrical",
+     "stock_on_hand": 46,
+     "reorder_point": 44,
+     "stock_value": 28060.0,
+     "issued_qty_90d": 211,
+     "days_of_cover": 19.6,
+     "below_reorder_point": false
+    }
+   ]
+  },
+  {
+   "id": "gold.service_order_economics",
+   "layer": "gold",
+   "domain": "operations",
+   "classification": "confidential",
+   "contract_version": "2.0.0",
+   "rows": 365,
+   "quarantined": 0,
+   "quality_score": 99.89,
+   "description": "Plan versus actual cost, cost variance and gross margin for every non-cancelled service order.",
+   "usage": "Service profitability dashboard; customer value.",
+   "system": null,
+   "columns": [
+    {
+     "name": "order_id",
+     "type": "VARCHAR",
+     "description": "Order number.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Service order",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "customer_id",
+     "type": "VARCHAR",
+     "description": "Buying company.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Customer",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "asset_id",
+     "type": "VARCHAR",
+     "description": "Asset serviced.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Asset",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "site",
+     "type": "VARCHAR",
+     "description": "Site of the asset.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Site",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "asset_type",
+     "type": "VARCHAR",
+     "description": "Equipment family.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Asset type",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "service_type",
+     "type": "VARCHAR",
+     "description": "Nature of work.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Service type",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "status",
+     "type": "VARCHAR",
+     "description": "OPEN or CLOSED.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order status",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "opened_on",
+     "type": "DATE",
+     "description": "Creation date.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order open date",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "closed_on",
+     "type": "DATE",
+     "description": "Completion date.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order close date",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_hours",
+     "type": "INTEGER",
+     "description": "Quoted labor hours.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "actual_hours",
+     "type": "DOUBLE",
+     "description": "Hours booked.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Labor hours",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "planned_cost",
+     "type": "DOUBLE",
+     "description": "Quoted cost.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Planned cost",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "actual_labor_cost",
+     "type": "DOUBLE",
+     "description": "Labor cost incurred.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Actual labor cost",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "actual_material_cost",
+     "type": "DOUBLE",
+     "description": "Material cost incurred.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Actual material cost",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "actual_cost",
+     "type": "DOUBLE",
+     "description": "Total cost incurred.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Actual cost",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "cost_variance_pct",
+     "type": "DOUBLE",
+     "description": "Cost overrun in percent.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Cost variance",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "price",
+     "type": "DOUBLE",
+     "description": "Billable amount.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Order price",
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "gross_margin",
+     "type": "DOUBLE",
+     "description": "Price minus actual cost.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Gross margin",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "gross_margin_pct",
+     "type": "DOUBLE",
+     "description": "Margin over price.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Gross margin %",
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [
+    "Service profitability dashboard"
+   ],
+   "upstream": [
+    "silver.assets",
+    "silver.labor_entries",
+    "silver.material_issues",
+    "silver.service_orders",
+    "silver.technicians"
+   ],
+   "downstream": [
+    "exposure:Service profitability dashboard",
+    "gold.customer_value",
+    "gold.site_monthly_kpis"
+   ],
+   "sample": [
+    {
+     "order_id": "SO-000001",
+     "customer_id": "CU-0072",
+     "asset_id": "AS-0024",
+     "site": "Site Central",
+     "asset_type": "Wheel loader",
+     "service_type": "Corrective maintenance",
+     "status": "OPEN",
+     "opened_on": "2026-08-21",
+     "closed_on": "NaT",
+     "planned_hours": 38,
+     "actual_hours": 51.5,
+     "planned_cost": 2249.47,
+     "actual_labor_cost": 1985.86,
+     "actual_material_cost": 9320.54,
+     "actual_cost": 11306.4,
+     "cost_variance_pct": 402.63,
+     "price": 2838.74,
+     "gross_margin": -8467.66,
+     "gross_margin_pct": -298.29
+    },
+    {
+     "order_id": "SO-000002",
+     "customer_id": "CU-0020",
+     "asset_id": "AS-0039",
+     "site": "Site Central",
+     "asset_type": "Haul truck",
+     "service_type": "Corrective maintenance",
+     "status": "CLOSED",
+     "opened_on": "2026-06-23",
+     "closed_on": "2026-06-25",
+     "planned_hours": 19,
+     "actual_hours": 39.3,
+     "planned_cost": 7058.48,
+     "actual_labor_cost": 1370.27,
+     "actual_material_cost": 0.0,
+     "actual_cost": 1370.27,
+     "cost_variance_pct": -80.59,
+     "price": 9819.69,
+     "gross_margin": 8449.42,
+     "gross_margin_pct": 86.05
+    },
+    {
+     "order_id": "SO-000003",
+     "customer_id": "CU-0073",
+     "asset_id": "AS-0020",
+     "site": "Site East",
+     "asset_type": "Pump station",
+     "service_type": "Inspection",
+     "status": "CLOSED",
+     "opened_on": "2026-09-20",
+     "closed_on": "2026-10-10",
+     "planned_hours": 84,
+     "actual_hours": 43.5,
+     "planned_cost": 7782.84,
+     "actual_labor_cost": 1731.76,
+     "actual_material_cost": 0.0,
+     "actual_cost": 1731.76,
+     "cost_variance_pct": -77.75,
+     "price": 10140.37,
+     "gross_margin": 8408.61,
+     "gross_margin_pct": 82.92
+    },
+    {
+     "order_id": "SO-000004",
+     "customer_id": "CU-0077",
+     "asset_id": "AS-0031",
+     "site": "Site Central",
+     "asset_type": "Generator set",
+     "service_type": "Installation",
+     "status": "CLOSED",
+     "opened_on": "2026-05-12",
+     "closed_on": "2026-05-26",
+     "planned_hours": 157,
+     "actual_hours": 36.4,
+     "planned_cost": 13398.82,
+     "actual_labor_cost": 1230.45,
+     "actual_material_cost": 7449.49,
+     "actual_cost": 8679.94,
+     "cost_variance_pct": -35.22,
+     "price": 18914.17,
+     "gross_margin": 10234.23,
+     "gross_margin_pct": 54.11
+    },
+    {
+     "order_id": "SO-000005",
+     "customer_id": "CU-0049",
+     "asset_id": "AS-0010",
+     "site": "Site North",
+     "asset_type": "Haul truck",
+     "service_type": "Corrective maintenance",
+     "status": "CLOSED",
+     "opened_on": "2026-06-05",
+     "closed_on": "2026-06-07",
+     "planned_hours": 157,
+     "actual_hours": 35.9,
+     "planned_cost": 10428.41,
+     "actual_labor_cost": 1666.77,
+     "actual_material_cost": 0.0,
+     "actual_cost": 1666.77,
+     "cost_variance_pct": -84.02,
+     "price": 14248.91,
+     "gross_margin": 12582.14,
+     "gross_margin_pct": 88.3
+    }
+   ]
+  },
+  {
+   "id": "gold.site_monthly_kpis",
+   "layer": "gold",
+   "domain": "operations",
+   "classification": "confidential",
+   "contract_version": "1.0.0",
+   "rows": 30,
+   "quarantined": 0,
+   "quality_score": 100.0,
+   "description": "Monthly orders, hours, cost, revenue and margin per site.",
+   "usage": "Service profitability dashboard (management view).",
+   "system": null,
+   "columns": [
+    {
+     "name": "site",
+     "type": "VARCHAR",
+     "description": "Site.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Site",
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "month",
+     "type": "DATE",
+     "description": "First day of the month.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": true
+    },
+    {
+     "name": "orders",
+     "type": "BIGINT",
+     "description": "Non-cancelled orders opened.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": null,
+     "required": true,
+     "key": false
+    },
+    {
+     "name": "closed_orders",
+     "type": "BIGINT",
+     "description": "Orders closed.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Closed orders",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "actual_hours",
+     "type": "DOUBLE",
+     "description": "Hours booked.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Labor hours",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "actual_cost",
+     "type": "DOUBLE",
+     "description": "Cost incurred.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Actual cost",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "revenue",
+     "type": "DOUBLE",
+     "description": "Billable amount.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Revenue",
+     "required": false,
+     "key": false
+    },
+    {
+     "name": "gross_margin_pct",
+     "type": "DOUBLE",
+     "description": "Margin over revenue.",
+     "classification": "confidential",
+     "personal_data": null,
+     "undeclared_personal_data": null,
+     "business_term": "Gross margin %",
+     "required": false,
+     "key": false
+    }
+   ],
+   "consumers": [
+    "Service profitability dashboard"
+   ],
+   "upstream": [
+    "gold.service_order_economics"
+   ],
+   "downstream": [
+    "exposure:Service profitability dashboard"
+   ],
+   "sample": [
+    {
+     "site": "Site Central",
+     "month": "2026-05-01",
+     "orders": 9,
+     "closed_orders": 3,
+     "actual_hours": 231.3,
+     "actual_cost": 41833.65,
+     "revenue": 102829.44,
+     "gross_margin_pct": 59.32
+    },
+    {
+     "site": "Site Central",
+     "month": "2026-06-01",
+     "orders": 17,
+     "closed_orders": 13,
+     "actual_hours": 442.2,
+     "actual_cost": 69161.84,
+     "revenue": 176625.86,
+     "gross_margin_pct": 60.84
+    },
+    {
+     "site": "Site Central",
+     "month": "2026-07-01",
+     "orders": 11,
+     "closed_orders": 10,
+     "actual_hours": 271.5,
+     "actual_cost": 45988.42,
+     "revenue": 120638.11,
+     "gross_margin_pct": 61.88
+    },
+    {
+     "site": "Site Central",
+     "month": "2026-08-01",
+     "orders": 19,
+     "closed_orders": 13,
+     "actual_hours": 490.0,
+     "actual_cost": 80238.02,
+     "revenue": 200730.3,
+     "gross_margin_pct": 60.03
+    },
+    {
+     "site": "Site Central",
+     "month": "2026-09-01",
+     "orders": 22,
+     "closed_orders": 20,
+     "actual_hours": 547.4,
+     "actual_cost": 87120.83,
+     "revenue": 233808.52,
+     "gross_margin_pct": 62.74
+    }
+   ]
+  }
+ ],
+ "domain_people": {
+  "operations": {
+   "owner": "Riley Placeholder",
+   "stewards": [
+    "Sam Samplewood"
+   ]
+  },
+  "supply_chain": {
+   "owner": "Jordan Mockwell",
+   "stewards": [
+    "Casey Testa"
+   ]
+  },
+  "customer": {
+   "owner": "Taylor Dummond",
+   "stewards": [
+    "Alex Exampleton"
+   ]
+  }
+ }
+}

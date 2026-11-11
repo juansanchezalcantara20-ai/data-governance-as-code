@@ -2,7 +2,7 @@ apiVersion: v3.0.2
 kind: DataContract
 id: urn:datacontract:customer:gold.customer_value
 name: gold.customer_value
-version: 1.0.0
+version: 1.1.0
 status: active
 domain: customer
 dataProduct: Customer value
@@ -39,6 +39,7 @@ schema:
       - {name: contact_name, logicalType: string, physicalType: VARCHAR, tags: ["pii:name"], businessName: Business contact,
          description: Contact person.}
       - {name: contact_email, logicalType: string, physicalType: VARCHAR, tags: ["pii:email"], description: Contact email.}
+      - {name: contact_phone, logicalType: string, physicalType: VARCHAR, tags: ["pii:phone"], description: Contact phone for the account team.}
       - {name: marketing_consent, logicalType: boolean, physicalType: BOOLEAN, businessName: Marketing consent, description: Consent flag.}
       - {name: orders, logicalType: integer, physicalType: BIGINT, description: Non-cancelled orders.}
       - {name: revenue, logicalType: number, physicalType: DOUBLE, businessName: Customer revenue, description: Billable amount.}

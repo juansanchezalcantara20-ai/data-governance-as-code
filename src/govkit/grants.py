@@ -22,6 +22,7 @@ class Grant:
     dataset: str
     kind: str        # group | user
     note: str = ""
+    columns: tuple[str, ...] = ()   # empty = whole table; otherwise a column-level grant
 
 
 def group_name(role: str, domain: str | None) -> str:
@@ -58,7 +59,12 @@ def compile_grants() -> list[Grant]:
                 continue
             masked = bool(ds["pii"]) and not b.get("unmasked_pii")
             note = "personal data masked" if masked else ""
-            grants.append(Grant(group_name(role, None if b["domains"] == "all" else ds["domain"]), ds["name"], "group", note))
+            hidden = [c for c, cls in ds.get("column_classification", {}).items() if lv[cls] > lv[b["up_to"]]]
+            cols = tuple(c for c in ds.get("columns", []) if c not in hidden) if hidden else ()
+            if hidden:
+                note = (note + "; " if note else "") + "without " + ", ".join(hidden)
+            grants.append(Grant(group_name(role, None if b["domains"] == "all" else ds["domain"]), ds["name"], "group",
+                                note, cols))
         for u in access.users().values():
             for g in u.get("access", []):
                 if g.get("basis") != "request" or g["domain"] not in ("*", ds["domain"]) or ds["layer"] not in g["layers"]:
@@ -85,5 +91,6 @@ def render_postgres() -> str:
     for gr in compile_grants():
         target = gr.principal if gr.kind == "group" else f'"{gr.principal}"'
         note = f"  -- {gr.note}" if gr.note else ""
-        lines.append(f"GRANT SELECT ON {gr.dataset} TO {target};{note}")
+        cols = f" ({', '.join(gr.columns)})" if gr.columns else ""
+        lines.append(f"GRANT SELECT{cols} ON {gr.dataset} TO {target};{note}")
     return "\n".join(lines) + "\n"

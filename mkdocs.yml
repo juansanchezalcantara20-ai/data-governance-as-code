@@ -1,0 +1,53 @@
+site_name: govkit · Data Governance as Code — technical documentation
+site_description: Governance as code on a Medallion lakehouse. Synthetic data.
+repo_url: https://github.com/juansanchezalcantara20-ai/data-governance-as-code
+edit_uri: ""
+docs_dir: docs
+site_dir: site/docs
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle: {icon: material/weather-sunny, name: Light mode}
+  features: [navigation.sections, search.highlight, content.code.copy]
+markdown_extensions:
+  - tables
+  - admonition
+  - toc: {permalink: true}
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+exclude_docs: |
+  ci_history.yaml
+  capturas/
+not_in_nav: |
+  es/*
+nav:
+  - Home: README.md
+  - Status: STATUS.md
+  - Decisions: DECISIONS.md
+  - Breaking-change example: examples/breaking-change.md
+  - Generated:
+      - Operating model (roles, RACI): generated/operating_model.md
+      - Access model: generated/access_model.md
+      - Business glossary: generated/glossary.md
+      - Data contracts: generated/contracts.md
+      - Quality report: generated/quality_report.md
+      - Lineage: generated/lineage.md
+      - DAMA-DMBOK2 maturity: generated/maturity.md
+  - Español:
+      - Documentación: es/README.md
+      - Decisiones: es/decisiones.md
+      - Ejemplo de cambio que rompe: es/ejemplo-cambio-que-rompe.md
+      - Despliegue en Unity Catalog: es/despliegue-unity-catalog.md
+hooks:
+  - docs_hooks/repo_links.py

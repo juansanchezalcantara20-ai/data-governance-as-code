@@ -2,19 +2,24 @@
 -- Review before running in Databricks (see deploy/unity_catalog/README.md). Do not edit by hand.
 
 -- Groups must exist first (workspace or account identity settings). Membership derived from users.yaml:
+--   gov_auditor: ellis.checkwell@example.org
 --   gov_customer_data_consumer: robin.notreal@example.org
 --   gov_customer_data_owner: taylor.dummond@example.org
 --   gov_customer_data_steward: alex.exampleton@example.org
+--   gov_customer_field_technician: (no members)
 --   gov_data_custodian: drew.stubbs@example.org
 --   gov_data_sponsor: morgan.fictive@example.org
 --   gov_governance_council: quinn.synthia@example.org
 --   gov_operations_data_consumer: jamie.fakeley@example.org
 --   gov_operations_data_owner: riley.placeholder@example.org
 --   gov_operations_data_steward: sam.samplewood@example.org
+--   gov_operations_field_technician: rowan.pretendez@example.org
 --   gov_supply_chain_data_consumer: jamie.fakeley@example.org
 --   gov_supply_chain_data_owner: jordan.mockwell@example.org
 --   gov_supply_chain_data_steward: casey.testa@example.org
+--   gov_supply_chain_field_technician: (no members)
 
+GRANT USE CATALOG ON CATALOG governance_demo TO `gov_auditor`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_customer_data_owner`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_customer_data_steward`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_data_custodian`;
@@ -22,10 +27,14 @@ GRANT USE CATALOG ON CATALOG governance_demo TO `gov_data_sponsor`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_governance_council`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_operations_data_owner`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_operations_data_steward`;
+GRANT USE CATALOG ON CATALOG governance_demo TO `gov_operations_field_technician`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_supply_chain_data_consumer`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_supply_chain_data_owner`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `gov_supply_chain_data_steward`;
+GRANT USE CATALOG ON CATALOG governance_demo TO `gov_supply_chain_field_technician`;
 GRANT USE CATALOG ON CATALOG governance_demo TO `jamie.fakeley@example.org`;
+GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_auditor`;
+GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_auditor`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_customer_data_owner`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_customer_data_owner`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_customer_data_steward`;
@@ -38,51 +47,71 @@ GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_operations_data_owner`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_operations_data_owner`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_operations_data_steward`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_operations_data_steward`;
+GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_operations_field_technician`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_supply_chain_data_consumer`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_supply_chain_data_owner`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_supply_chain_data_owner`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_supply_chain_data_steward`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_supply_chain_data_steward`;
+GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `gov_supply_chain_field_technician`;
+GRANT USE SCHEMA ON SCHEMA governance_demo.silver TO `gov_supply_chain_field_technician`;
 GRANT USE SCHEMA ON SCHEMA governance_demo.gold TO `jamie.fakeley@example.org`;
 
+GRANT SELECT ON TABLE governance_demo.gold.customer_value TO `gov_auditor`;  -- personal data masked
 GRANT SELECT ON TABLE governance_demo.gold.customer_value TO `gov_customer_data_owner`;
 GRANT SELECT ON TABLE governance_demo.gold.customer_value TO `gov_customer_data_steward`;
 GRANT SELECT ON TABLE governance_demo.gold.customer_value TO `gov_data_custodian`;  -- personal data masked
 GRANT SELECT ON TABLE governance_demo.gold.customer_value TO `gov_governance_council`;  -- personal data masked
+GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_data_sponsor`;
 GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_governance_council`;
 GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_supply_chain_data_consumer`;
 GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_supply_chain_data_owner`;
 GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_supply_chain_data_steward`;
+GRANT SELECT ON TABLE governance_demo.gold.inventory_position TO `gov_supply_chain_field_technician`;
+GRANT SELECT ON TABLE governance_demo.gold.service_order_economics TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.gold.service_order_economics TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.gold.service_order_economics TO `gov_governance_council`;
 GRANT SELECT ON TABLE governance_demo.gold.service_order_economics TO `gov_operations_data_owner`;
 GRANT SELECT ON TABLE governance_demo.gold.service_order_economics TO `gov_operations_data_steward`;
 GRANT SELECT ON TABLE governance_demo.gold.service_order_economics TO `jamie.fakeley@example.org`;  -- AR-0001, expires 2026-12-30
+GRANT SELECT ON TABLE governance_demo.gold.site_monthly_kpis TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.gold.site_monthly_kpis TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.gold.site_monthly_kpis TO `gov_governance_council`;
 GRANT SELECT ON TABLE governance_demo.gold.site_monthly_kpis TO `gov_operations_data_owner`;
 GRANT SELECT ON TABLE governance_demo.gold.site_monthly_kpis TO `gov_operations_data_steward`;
 GRANT SELECT ON TABLE governance_demo.gold.site_monthly_kpis TO `jamie.fakeley@example.org`;  -- AR-0001, expires 2026-12-30
+GRANT SELECT ON TABLE governance_demo.silver.assets TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.silver.assets TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.silver.assets TO `gov_operations_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.assets TO `gov_operations_data_steward`;
+GRANT SELECT ON TABLE governance_demo.silver.assets TO `gov_operations_field_technician`;
+GRANT SELECT ON TABLE governance_demo.silver.customers TO `gov_auditor`;  -- personal data masked
 GRANT SELECT ON TABLE governance_demo.silver.customers TO `gov_customer_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.customers TO `gov_customer_data_steward`;
 GRANT SELECT ON TABLE governance_demo.silver.customers TO `gov_data_custodian`;  -- personal data masked
+GRANT SELECT ON TABLE governance_demo.silver.labor_entries TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.silver.labor_entries TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.silver.labor_entries TO `gov_operations_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.labor_entries TO `gov_operations_data_steward`;
+GRANT SELECT ON TABLE governance_demo.silver.labor_entries TO `gov_operations_field_technician`;
+GRANT SELECT ON TABLE governance_demo.silver.material_issues TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.silver.material_issues TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.silver.material_issues TO `gov_supply_chain_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.material_issues TO `gov_supply_chain_data_steward`;
+GRANT SELECT ON TABLE governance_demo.silver.material_issues TO `gov_supply_chain_field_technician`;
+GRANT SELECT ON TABLE governance_demo.silver.materials TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.silver.materials TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.silver.materials TO `gov_supply_chain_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.materials TO `gov_supply_chain_data_steward`;
+GRANT SELECT ON TABLE governance_demo.silver.materials TO `gov_supply_chain_field_technician`;
+GRANT SELECT ON TABLE governance_demo.silver.service_orders TO `gov_auditor`;
 GRANT SELECT ON TABLE governance_demo.silver.service_orders TO `gov_data_custodian`;
 GRANT SELECT ON TABLE governance_demo.silver.service_orders TO `gov_operations_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.service_orders TO `gov_operations_data_steward`;
+GRANT SELECT ON TABLE governance_demo.silver.service_orders TO `gov_operations_field_technician`;  -- without planned_labor_cost, planned_material_cost, price
+GRANT SELECT ON TABLE governance_demo.silver.technicians TO `gov_auditor`;  -- personal data masked
 GRANT SELECT ON TABLE governance_demo.silver.technicians TO `gov_operations_data_owner`;
 GRANT SELECT ON TABLE governance_demo.silver.technicians TO `gov_operations_data_steward`;
 

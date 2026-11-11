@@ -1,0 +1,1515 @@
+{
+ "terms": [
+  {
+   "id": "asset",
+   "type": "concept",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Asset",
+    "es": "Activo"
+   },
+   "definition": {
+    "en": "A physical piece of equipment the company maintains for a customer",
+    "es": "Equipo físico que la empresa mantiene para un cliente, identificado con un código AS-nnnn."
+   },
+   "example": {
+    "en": "AS-0042, a haul truck installed at Site North.",
+    "es": "AS-0042, un camión de acarreo instalado en Site North."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.assets",
+    "column": "asset_id"
+   },
+   "quality_rules": [
+    "asset_id_not_null",
+    "asset_id_unique",
+    "asset_id_format"
+   ],
+   "synonyms": [
+    "equipment",
+    "unit"
+   ],
+   "related": [
+    "asset_type",
+    "site",
+    "service_order"
+   ],
+   "used_in": [
+    "gold.service_order_economics.asset_id",
+    "silver.assets.asset_id",
+    "silver.service_orders.asset_id"
+   ]
+  },
+  {
+   "id": "below_reorder_point",
+   "type": "metric",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Below reorder point",
+    "es": "Bajo punto de reposición"
+   },
+   "definition": {
+    "en": "Flag raised when inventory has fallen to or under the replenishment trigger level.",
+    "es": "Alerta que se enciende cuando el inventario cayó al nivel de compra o por debajo."
+   },
+   "example": {
+    "en": "12 V battery with 0 units: flag raised.",
+    "es": "Batería de 12 V con 0 unidades: alerta encendida."
+   },
+   "formula": "stock on hand ≤ reorder point",
+   "depends_on": [
+    "stock_on_hand",
+    "reorder_point"
+   ],
+   "source": {
+    "table": "gold.inventory_position",
+    "column": "below_reorder_point"
+   },
+   "quality_rules": [],
+   "synonyms": [],
+   "related": [],
+   "used_in": [
+    "gold.inventory_position.below_reorder_point"
+   ]
+  },
+  {
+   "id": "customer_tier",
+   "type": "metric",
+   "domain": "customer",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Customer tier",
+    "es": "Categoría de cliente"
+   },
+   "definition": {
+    "en": "ABC ranking of accounts by billings: A from 60,000, B from 25,000, C otherwise.",
+    "es": "Clasificación A, B o C según lo facturado: A desde S/ 60 000, B desde S/ 25 000, C el resto."
+   },
+   "example": {
+    "en": "CU-0007 is tier A.",
+    "es": "CU-0007 es categoría A."
+   },
+   "formula": "A if customer revenue ≥ 60000; B if ≥ 25000; else C",
+   "depends_on": [
+    "customer_revenue"
+   ],
+   "source": {
+    "table": "gold.customer_value",
+    "column": "customer_tier"
+   },
+   "quality_rules": [
+    "tier_valid"
+   ],
+   "synonyms": [
+    "ABC class"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.customer_value.customer_tier"
+   ]
+  },
+  {
+   "id": "customer",
+   "type": "concept",
+   "domain": "customer",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Customer",
+    "es": "Cliente"
+   },
+   "definition": {
+    "en": "Company that buys field services",
+    "es": "Empresa que compra servicios de campo, identificada con un código CU-nnnn."
+   },
+   "example": {
+    "en": "CU-0007, a fictional energy company.",
+    "es": "CU-0007, una empresa ficticia del rubro energía."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.customers",
+    "column": "customer_id"
+   },
+   "quality_rules": [
+    "customer_id_not_null",
+    "customer_id_unique"
+   ],
+   "synonyms": [
+    "account",
+    "client"
+   ],
+   "related": [
+    "service_order",
+    "customer_segment"
+   ],
+   "used_in": [
+    "gold.customer_value.customer_id",
+    "gold.service_order_economics.customer_id",
+    "silver.customers.customer_id",
+    "silver.service_orders.customer_id"
+   ]
+  },
+  {
+   "id": "marketing_consent",
+   "type": "attribute",
+   "domain": "customer",
+   "status": "approved",
+   "next_review": "2027-01-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Marketing consent",
+    "es": "Consentimiento comercial"
+   },
+   "definition": {
+    "en": "Explicit permission from the business contact to receive commercial communications.",
+    "es": "Permiso expreso del contacto para recibir comunicaciones comerciales."
+   },
+   "example": {
+    "en": "Yes, given on 2026-03-02.",
+    "es": "Sí, otorgado el 02/03/2026."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.customers",
+    "column": "marketing_consent"
+   },
+   "quality_rules": [
+    "marketing_consent_not_null"
+   ],
+   "synonyms": [],
+   "related": [
+    "business_contact"
+   ],
+   "used_in": [
+    "gold.customer_value.marketing_consent",
+    "silver.customers.marketing_consent"
+   ]
+  },
+  {
+   "id": "business_contact",
+   "type": "attribute",
+   "domain": "customer",
+   "status": "approved",
+   "next_review": "2027-01-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Business contact",
+    "es": "Contacto comercial"
+   },
+   "definition": {
+    "en": "Person at the buying company the account team talks to. Personal data",
+    "es": "Persona de la empresa compradora con la que habla el equipo comercial. Es un dato personal y se enmascara por defecto."
+   },
+   "example": {
+    "en": "A. F., shown masked.",
+    "es": "A. F., visto enmascarado."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.customers",
+    "column": "contact_name"
+   },
+   "quality_rules": [
+    "contact_email_format"
+   ],
+   "synonyms": [],
+   "related": [
+    "marketing_consent"
+   ],
+   "used_in": [
+    "gold.customer_value.contact_name",
+    "silver.customers.contact_name"
+   ]
+  },
+  {
+   "id": "planned_cost",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Planned cost",
+    "es": "Costo planificado"
+   },
+   "definition": {
+    "en": "Total cost estimated when the service order was quoted.",
+    "es": "Costo total estimado cuando se cotizó el trabajo."
+   },
+   "example": {
+    "en": "PEN 9,400 (3,100 labor + 6,300 materials).",
+    "es": "S/ 9 400 (S/ 3 100 de mano de obra + S/ 6 300 de materiales)."
+   },
+   "formula": "planned labor cost + planned material cost",
+   "depends_on": [],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "planned_cost"
+   },
+   "quality_rules": [],
+   "synonyms": [],
+   "related": [
+    "cost_variance"
+   ],
+   "used_in": [
+    "gold.service_order_economics.planned_cost"
+   ]
+  },
+  {
+   "id": "hourly_labor_cost",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-01-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Hourly labor cost",
+    "es": "Costo por hora de mano de obra"
+   },
+   "definition": {
+    "en": "Fully loaded cost to the company of one hour of a technician's time. Restricted compensation data.",
+    "es": "Lo que le cuesta a la empresa una hora de trabajo de una persona de campo, con cargas incluidas. Es información de remuneración, restringida."
+   },
+   "example": {
+    "en": "PEN 38.50 per hour.",
+    "es": "S/ 38,50 por hora."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.technicians",
+    "column": "hourly_cost"
+   },
+   "quality_rules": [
+    "hourly_cost_not_null",
+    "hourly_cost_range"
+   ],
+   "synonyms": [
+    "labor rate"
+   ],
+   "related": [
+    "actual_labor_cost"
+   ],
+   "used_in": [
+    "silver.technicians.hourly_cost"
+   ]
+  },
+  {
+   "id": "actual_cost",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Actual cost",
+    "es": "Costo real"
+   },
+   "definition": {
+    "en": "Full cost incurred to deliver a service order.",
+    "es": "Todo lo que se gastó para entregar el trabajo: mano de obra más materiales."
+   },
+   "example": {
+    "en": "PEN 924 labor + PEN 5,980 materials = PEN 6,904.",
+    "es": "S/ 924 de mano de obra + S/ 5 980 de materiales = S/ 6 904."
+   },
+   "formula": "actual labor cost + actual material cost",
+   "depends_on": [
+    "actual_labor_cost",
+    "actual_material_cost"
+   ],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "actual_cost"
+   },
+   "quality_rules": [
+    "actual_cost_non_negative"
+   ],
+   "synonyms": [],
+   "related": [
+    "gross_margin",
+    "cost_variance"
+   ],
+   "used_in": [
+    "gold.service_order_economics.actual_cost",
+    "gold.site_monthly_kpis.actual_cost"
+   ]
+  },
+  {
+   "id": "actual_labor_cost",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Actual labor cost",
+    "es": "Costo real de mano de obra"
+   },
+   "definition": {
+    "en": "Cost of the time technicians actually booked on a service order.",
+    "es": "Lo que costó el tiempo que realmente se trabajó en una orden."
+   },
+   "example": {
+    "en": "3 entries of 8 hours at PEN 38.50 = PEN 924.",
+    "es": "3 registros de 8 horas a S/ 38,50 = S/ 924."
+   },
+   "formula": "Σ (labor hours × hourly labor cost)",
+   "depends_on": [
+    "labor_hours",
+    "hourly_labor_cost"
+   ],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "actual_labor_cost"
+   },
+   "quality_rules": [
+    "labor_cost_reconciles"
+   ],
+   "synonyms": [],
+   "related": [
+    "actual_cost"
+   ],
+   "used_in": [
+    "gold.service_order_economics.actual_labor_cost"
+   ]
+  },
+  {
+   "id": "actual_material_cost",
+   "type": "metric",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Actual material cost",
+    "es": "Costo real de materiales"
+   },
+   "definition": {
+    "en": "Value of the materials charged to a service order.",
+    "es": "Valor de los repuestos y consumibles cargados a un trabajo."
+   },
+   "example": {
+    "en": "2 filters at PEN 85 + 1 hose at PEN 420 = PEN 590.",
+    "es": "2 filtros a S/ 85 + 1 manguera a S/ 420 = S/ 590."
+   },
+   "formula": "Σ (quantity × issued unit cost) over the order's material issues",
+   "depends_on": [
+    "material_issue"
+   ],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "actual_material_cost"
+   },
+   "quality_rules": [
+    "material_cost_reconciles"
+   ],
+   "synonyms": [],
+   "related": [],
+   "used_in": [
+    "gold.service_order_economics.actual_material_cost"
+   ]
+  },
+  {
+   "id": "unit_cost",
+   "type": "attribute",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Unit cost",
+    "es": "Costo unitario"
+   },
+   "definition": {
+    "en": "Standard purchase cost of one unit of a material",
+    "es": "Costo estándar de compra de una unidad, registrado en el maestro de materiales."
+   },
+   "example": {
+    "en": "PEN 420 per hydraulic hose.",
+    "es": "S/ 420 por manguera hidráulica."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.materials",
+    "column": "unit_cost"
+   },
+   "quality_rules": [
+    "unit_cost_positive"
+   ],
+   "synonyms": [],
+   "related": [
+    "stock_value"
+   ],
+   "used_in": [
+    "silver.materials.unit_cost"
+   ]
+  },
+  {
+   "id": "cost_variance",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Cost variance",
+    "es": "Desviación de costo"
+   },
+   "definition": {
+    "en": "Percentage by which incurred cost deviates from the quoted estimate; positive means overrun.",
+    "es": "Cuánto se alejó en porcentaje lo gastado de lo estimado al cotizar; positivo significa sobrecosto."
+   },
+   "example": {
+    "en": "Estimated PEN 9,400, spent PEN 6,904: −27%.",
+    "es": "Se estimó S/ 9 400 y se gastó S/ 6 904: −27 %."
+   },
+   "formula": "100 × (actual cost / planned cost − 1)",
+   "depends_on": [
+    "actual_cost",
+    "planned_cost"
+   ],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "cost_variance_pct"
+   },
+   "quality_rules": [],
+   "synonyms": [
+    "cost overrun"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.service_order_economics.cost_variance_pct"
+   ]
+  },
+  {
+   "id": "days_of_cover",
+   "type": "metric",
+   "domain": "supply_chain",
+   "status": "draft",
+   "next_review": "2026-12-15",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Days of cover",
+    "es": "Días de cobertura"
+   },
+   "definition": {
+    "en": "How long current inventory lasts at the recent consumption pace. Draft until the 90-day window is agreed.",
+    "es": "Cuántos días alcanzan las existencias al ritmo de consumo reciente. En revisión hasta acordar la ventana de 90 días."
+   },
+   "example": {
+    "en": "36 units with 18 used in 90 days: 180 days.",
+    "es": "36 unidades con 18 usadas en 90 días: 180 días."
+   },
+   "formula": "stock on hand / (units issued in the last 90 days / 90)",
+   "depends_on": [
+    "stock_on_hand",
+    "material_issue"
+   ],
+   "source": {
+    "table": "gold.inventory_position",
+    "column": "days_of_cover"
+   },
+   "quality_rules": [],
+   "synonyms": [],
+   "related": [],
+   "used_in": [
+    "gold.inventory_position.days_of_cover"
+   ]
+  },
+  {
+   "id": "trade",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Trade",
+    "es": "Especialidad"
+   },
+   "definition": {
+    "en": "Craft or specialty of a technician (mechanic",
+    "es": "Oficio de quien trabaja en campo: mecánico, electricista, instrumentista, soldador o supervisor."
+   },
+   "example": {
+    "en": "Instrument technician.",
+    "es": "Instrumentista."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.technicians",
+    "column": "trade"
+   },
+   "quality_rules": [
+    "trade_valid"
+   ],
+   "synonyms": [
+    "craft"
+   ],
+   "related": [
+    "technician"
+   ],
+   "used_in": [
+    "silver.technicians.trade"
+   ]
+  },
+  {
+   "id": "order_status",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Order status",
+    "es": "Estado de la orden"
+   },
+   "definition": {
+    "en": "Lifecycle stage of a service order (OPEN",
+    "es": "Etapa del ciclo de vida: abierta, cerrada o cancelada. Solo las cerradas tienen fecha de cierre."
+   },
+   "example": {
+    "en": "CLOSED.",
+    "es": "Cerrada."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.service_orders",
+    "column": "status"
+   },
+   "quality_rules": [
+    "status_valid"
+   ],
+   "synonyms": [],
+   "related": [
+    "order_close_date"
+   ],
+   "used_in": [
+    "gold.service_order_economics.status",
+    "silver.service_orders.status"
+   ]
+  },
+  {
+   "id": "stock_on_hand",
+   "type": "attribute",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Stock on hand",
+    "es": "Existencias"
+   },
+   "definition": {
+    "en": "Units of a material physically available in the warehouse.",
+    "es": "Unidades físicamente disponibles en el almacén."
+   },
+   "example": {
+    "en": "36 units.",
+    "es": "36 unidades."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.materials",
+    "column": "stock_on_hand"
+   },
+   "quality_rules": [
+    "stock_non_negative"
+   ],
+   "synonyms": [
+    "on-hand quantity"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.inventory_position.stock_on_hand",
+    "silver.materials.stock_on_hand"
+   ]
+  },
+  {
+   "id": "order_open_date",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Order open date",
+    "es": "Fecha de apertura de la orden"
+   },
+   "definition": {
+    "en": "Calendar day on which a service order was created in the field service system.",
+    "es": "Día en que se creó el trabajo en el sistema de gestión de servicios de campo."
+   },
+   "example": {
+    "en": "2026-10-14.",
+    "es": "14/10/2026."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.service_orders",
+    "column": "opened_on"
+   },
+   "quality_rules": [
+    "opened_on_not_null",
+    "freshness_sla"
+   ],
+   "synonyms": [],
+   "related": [
+    "order_close_date"
+   ],
+   "used_in": [
+    "gold.service_order_economics.opened_on",
+    "silver.service_orders.opened_on"
+   ]
+  },
+  {
+   "id": "order_close_date",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Order close date",
+    "es": "Fecha de cierre de la orden"
+   },
+   "definition": {
+    "en": "Calendar day on which work was completed and administratively closed; never earlier than the open date.",
+    "es": "Día en que el trabajo terminó y se cerró administrativamente; nunca antes de la fecha de apertura."
+   },
+   "example": {
+    "en": "2026-10-21.",
+    "es": "21/10/2026."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.service_orders",
+    "column": "closed_on"
+   },
+   "quality_rules": [
+    "closed_after_opened",
+    "closed_orders_have_date"
+   ],
+   "synonyms": [],
+   "related": [
+    "order_open_date",
+    "order_status"
+   ],
+   "used_in": [
+    "gold.service_order_economics.closed_on",
+    "silver.service_orders.closed_on"
+   ]
+  },
+  {
+   "id": "operating_hours",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Operating hours",
+    "es": "Horas de operación"
+   },
+   "definition": {
+    "en": "Cumulative running time recorded by the equipment hour meter.",
+    "es": "Tiempo de funcionamiento acumulado que registra el horómetro del equipo."
+   },
+   "example": {
+    "en": "12,480 hours.",
+    "es": "12 480 horas."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.assets",
+    "column": "operating_hours"
+   },
+   "quality_rules": [
+    "operating_hours_non_negative"
+   ],
+   "synonyms": [
+    "hour meter reading"
+   ],
+   "related": [
+    "asset"
+   ],
+   "used_in": [
+    "silver.assets.operating_hours"
+   ]
+  },
+  {
+   "id": "labor_hours",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Labor hours",
+    "es": "Horas trabajadas"
+   },
+   "definition": {
+    "en": "Time booked in a labor entry",
+    "es": "Tiempo anotado en un registro de tareo, entre media hora y 24 horas."
+   },
+   "example": {
+    "en": "7.5 hours.",
+    "es": "7,5 horas."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.labor_entries",
+    "column": "hours"
+   },
+   "quality_rules": [
+    "hours_not_null",
+    "hours_range"
+   ],
+   "synonyms": [
+    "man-hours"
+   ],
+   "related": [
+    "actual_labor_cost"
+   ],
+   "used_in": [
+    "gold.service_order_economics.actual_hours",
+    "gold.site_monthly_kpis.actual_hours",
+    "silver.labor_entries.hours"
+   ]
+  },
+  {
+   "id": "revenue",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Revenue",
+    "es": "Ingresos"
+   },
+   "definition": {
+    "en": "Billable amount of all non-cancelled service orders in a period.",
+    "es": "Monto facturable de todos los trabajos no cancelados de un periodo."
+   },
+   "example": {
+    "en": "PEN 1.2 million in October.",
+    "es": "S/ 1,2 millones en octubre."
+   },
+   "formula": "Σ order price of non-cancelled service orders",
+   "depends_on": [
+    "order_price"
+   ],
+   "source": {
+    "table": "gold.site_monthly_kpis",
+    "column": "revenue"
+   },
+   "quality_rules": [
+    "revenue_reconciles"
+   ],
+   "synonyms": [
+    "sales"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.site_monthly_kpis.revenue"
+   ]
+  },
+  {
+   "id": "customer_revenue",
+   "type": "metric",
+   "domain": "customer",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Customer revenue",
+    "es": "Ingresos por cliente"
+   },
+   "definition": {
+    "en": "Billable amount generated by one buying company across its non-cancelled service orders.",
+    "es": "Monto facturable que generó una empresa compradora en sus trabajos no cancelados."
+   },
+   "example": {
+    "en": "CU-0007: PEN 74,300.",
+    "es": "CU-0007: S/ 74 300."
+   },
+   "formula": "Σ order price per customer",
+   "depends_on": [
+    "order_price",
+    "customer"
+   ],
+   "source": {
+    "table": "gold.customer_value",
+    "column": "revenue"
+   },
+   "quality_rules": [
+    "customer_revenue_reconciles"
+   ],
+   "synonyms": [],
+   "related": [
+    "customer_tier"
+   ],
+   "used_in": [
+    "gold.customer_value.revenue"
+   ]
+  },
+  {
+   "id": "gross_margin",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Gross margin",
+    "es": "Margen bruto"
+   },
+   "definition": {
+    "en": "Money left from a service order after paying for labor and materials.",
+    "es": "Dinero que queda de un trabajo después de pagar mano de obra y materiales."
+   },
+   "example": {
+    "en": "PEN 12,800 − PEN 6,904 = PEN 5,896.",
+    "es": "S/ 12 800 − S/ 6 904 = S/ 5 896."
+   },
+   "formula": "order price − actual cost",
+   "depends_on": [
+    "order_price",
+    "actual_cost"
+   ],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "gross_margin"
+   },
+   "quality_rules": [
+    "margin_definition_holds"
+   ],
+   "synonyms": [],
+   "related": [
+    "gross_margin_pct"
+   ],
+   "used_in": [
+    "gold.customer_value.gross_margin",
+    "gold.service_order_economics.gross_margin"
+   ]
+  },
+  {
+   "id": "gross_margin_pct",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Gross margin %",
+    "es": "Margen bruto %"
+   },
+   "definition": {
+    "en": "Profitability of service work expressed as a share of what the customer is billed.",
+    "es": "Rentabilidad del trabajo expresada como parte de lo que se factura al cliente."
+   },
+   "example": {
+    "en": "PEN 5,896 of PEN 12,800: 46%.",
+    "es": "S/ 5 896 de S/ 12 800: 46 de cada 100 soles facturados."
+   },
+   "formula": "100 × gross margin / order price",
+   "depends_on": [
+    "gross_margin",
+    "order_price"
+   ],
+   "source": {
+    "table": "gold.service_order_economics",
+    "column": "gross_margin_pct"
+   },
+   "quality_rules": [
+    "margin_pct_plausible"
+   ],
+   "synonyms": [
+    "margin percentage"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.service_order_economics.gross_margin_pct",
+    "gold.site_monthly_kpis.gross_margin_pct"
+   ]
+  },
+  {
+   "id": "material",
+   "type": "concept",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Material",
+    "es": "Material"
+   },
+   "definition": {
+    "en": "Spare part or consumable kept in the warehouse and identified by an MA-nnnn code.",
+    "es": "Repuesto o consumible que se guarda en almacén, identificado con un código MA-nnnn."
+   },
+   "example": {
+    "en": "MA-0003, hydraulic hose.",
+    "es": "MA-0003, manguera hidráulica."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.materials",
+    "column": "material_id"
+   },
+   "quality_rules": [
+    "material_id_not_null",
+    "material_id_unique"
+   ],
+   "synonyms": [
+    "part",
+    "SKU"
+   ],
+   "related": [
+    "material_issue",
+    "stock_on_hand"
+   ],
+   "used_in": [
+    "gold.inventory_position.material_id",
+    "silver.materials.material_id"
+   ]
+  },
+  {
+   "id": "service_order",
+   "type": "concept",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Service order",
+    "es": "Orden de servicio"
+   },
+   "definition": {
+    "en": "Authorised unit of field work for one customer and one asset",
+    "es": "Trabajo de campo autorizado para un cliente y un equipo, con plan, precio y estado."
+   },
+   "example": {
+    "en": "SO-000123: preventive maintenance on asset AS-0042.",
+    "es": "SO-000123: mantenimiento preventivo del activo AS-0042."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.service_orders",
+    "column": "order_id"
+   },
+   "quality_rules": [
+    "order_id_not_null",
+    "order_id_unique",
+    "order_id_format",
+    "asset_id_exists",
+    "customer_id_exists"
+   ],
+   "synonyms": [
+    "work order",
+    "SO"
+   ],
+   "related": [
+    "asset",
+    "customer",
+    "labor_entry",
+    "material_issue"
+   ],
+   "used_in": [
+    "gold.service_order_economics.order_id",
+    "silver.service_orders.order_id"
+   ]
+  },
+  {
+   "id": "order_price",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Order price",
+    "es": "Precio de la orden"
+   },
+   "definition": {
+    "en": "Amount billable to the customer for a service order",
+    "es": "Monto que se factura al cliente por el trabajo, sin impuestos."
+   },
+   "example": {
+    "en": "PEN 12,800.",
+    "es": "S/ 12 800."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.service_orders",
+    "column": "price"
+   },
+   "quality_rules": [
+    "price_not_null",
+    "price_non_negative"
+   ],
+   "synonyms": [
+    "billing amount"
+   ],
+   "related": [
+    "gross_margin",
+    "revenue"
+   ],
+   "used_in": [
+    "gold.service_order_economics.price",
+    "silver.service_orders.price"
+   ]
+  },
+  {
+   "id": "reorder_point",
+   "type": "attribute",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Reorder point",
+    "es": "Punto de reposición"
+   },
+   "definition": {
+    "en": "Inventory level at which a replenishment purchase must be triggered.",
+    "es": "Nivel de inventario en el que hay que lanzar una compra para reponer."
+   },
+   "example": {
+    "en": "20 units.",
+    "es": "20 unidades."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.materials",
+    "column": "reorder_point"
+   },
+   "quality_rules": [
+    "reorder_point_non_negative"
+   ],
+   "synonyms": [
+    "ROP"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.inventory_position.reorder_point",
+    "silver.materials.reorder_point"
+   ]
+  },
+  {
+   "id": "labor_entry",
+   "type": "concept",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Labor entry",
+    "es": "Registro de horas"
+   },
+   "definition": {
+    "en": "Hours one technician worked on one service order on one day",
+    "es": "Horas que una persona trabajó en una orden en un día, tal como se anotaron en la aplicación de tareo."
+   },
+   "example": {
+    "en": "LE-000881: 8 hours on 2026-10-15.",
+    "es": "LE-000881: 8 horas el 15/10/2026."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.labor_entries",
+    "column": "entry_id"
+   },
+   "quality_rules": [
+    "entry_id_unique",
+    "labor_order_exists",
+    "labor_technician_exists"
+   ],
+   "synonyms": [
+    "timesheet line"
+   ],
+   "related": [
+    "technician",
+    "labor_hours"
+   ],
+   "used_in": [
+    "silver.labor_entries.entry_id"
+   ]
+  },
+  {
+   "id": "material_issue",
+   "type": "concept",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Material issue",
+    "es": "Salida de almacén"
+   },
+   "definition": {
+    "en": "Warehouse movement that charges a quantity of a material to a service order.",
+    "es": "Movimiento que carga una cantidad de un repuesto o consumible a una orden de trabajo."
+   },
+   "example": {
+    "en": "MI-000412: 2 oil filters for SO-000123.",
+    "es": "MI-000412: 2 filtros de aceite para SO-000123."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.material_issues",
+    "column": "issue_id"
+   },
+   "quality_rules": [
+    "issue_id_unique",
+    "issue_order_exists",
+    "issue_material_exists",
+    "issue_cost_matches_master"
+   ],
+   "synonyms": [
+    "goods issue"
+   ],
+   "related": [
+    "material",
+    "service_order"
+   ],
+   "used_in": [
+    "silver.material_issues.issue_id"
+   ]
+  },
+  {
+   "id": "site",
+   "type": "concept",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Site",
+    "es": "Sede"
+   },
+   "definition": {
+    "en": "Operating location where an asset is installed and where field work is performed.",
+    "es": "Lugar de operación donde está instalado un equipo y donde se hace el trabajo de campo."
+   },
+   "example": {
+    "en": "Site East.",
+    "es": "Site East."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.assets",
+    "column": "site"
+   },
+   "quality_rules": [
+    "site_not_null"
+   ],
+   "synonyms": [
+    "location"
+   ],
+   "related": [
+    "asset"
+   ],
+   "used_in": [
+    "gold.service_order_economics.site",
+    "gold.site_monthly_kpis.site",
+    "silver.assets.site"
+   ]
+  },
+  {
+   "id": "customer_segment",
+   "type": "attribute",
+   "domain": "customer",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Customer segment",
+    "es": "Segmento de cliente"
+   },
+   "definition": {
+    "en": "Industry the buying company belongs to (mining",
+    "es": "Industria a la que pertenece la empresa compradora: minería, energía, construcción o agricultura."
+   },
+   "example": {
+    "en": "Construction.",
+    "es": "Construcción."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.customers",
+    "column": "segment"
+   },
+   "quality_rules": [
+    "segment_valid"
+   ],
+   "synonyms": [
+    "industry"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.customer_value.segment",
+    "silver.customers.segment"
+   ]
+  },
+  {
+   "id": "asset_type",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Asset type",
+    "es": "Tipo de activo"
+   },
+   "definition": {
+    "en": "Family of equipment (haul truck",
+    "es": "Familia del equipo: camión de acarreo, cargador frontal, perforadora, estación de bombeo o grupo electrógeno."
+   },
+   "example": {
+    "en": "Drill rig.",
+    "es": "Perforadora."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.assets",
+    "column": "asset_type"
+   },
+   "quality_rules": [
+    "asset_type_valid"
+   ],
+   "synonyms": [],
+   "related": [
+    "asset"
+   ],
+   "used_in": [
+    "gold.service_order_economics.asset_type",
+    "silver.assets.asset_type"
+   ]
+  },
+  {
+   "id": "service_type",
+   "type": "attribute",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Service type",
+    "es": "Tipo de servicio"
+   },
+   "definition": {
+    "en": "Nature of the work requested (preventive maintenance",
+    "es": "Naturaleza del trabajo pedido: mantenimiento preventivo, mantenimiento correctivo, instalación o inspección."
+   },
+   "example": {
+    "en": "Corrective maintenance.",
+    "es": "Mantenimiento correctivo."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.service_orders",
+    "column": "service_type"
+   },
+   "quality_rules": [
+    "service_type_valid"
+   ],
+   "synonyms": [],
+   "related": [
+    "service_order"
+   ],
+   "used_in": [
+    "gold.service_order_economics.service_type",
+    "silver.service_orders.service_type"
+   ]
+  },
+  {
+   "id": "technician",
+   "type": "concept",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Technician",
+    "es": "Técnico"
+   },
+   "definition": {
+    "en": "Employee who performs field work and books hours against service orders.",
+    "es": "Trabajador que hace trabajo de campo y registra sus horas contra las órdenes."
+   },
+   "example": {
+    "en": "TE-017, electrician.",
+    "es": "TE-017, electricista."
+   },
+   "formula": null,
+   "depends_on": [],
+   "source": {
+    "table": "silver.technicians",
+    "column": "technician_id"
+   },
+   "quality_rules": [
+    "technician_id_not_null",
+    "technician_id_unique"
+   ],
+   "synonyms": [],
+   "related": [
+    "trade",
+    "labor_entry"
+   ],
+   "used_in": [
+    "silver.technicians.technician_id"
+   ]
+  },
+  {
+   "id": "stock_value",
+   "type": "metric",
+   "domain": "supply_chain",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Stock value",
+    "es": "Valor del inventario"
+   },
+   "definition": {
+    "en": "Money tied up in warehouse inventory for a material.",
+    "es": "Dinero inmovilizado en almacén por cada repuesto o consumible."
+   },
+   "example": {
+    "en": "36 units × PEN 420 = PEN 15,120.",
+    "es": "36 unidades × S/ 420 = S/ 15 120."
+   },
+   "formula": "stock on hand × unit cost",
+   "depends_on": [
+    "stock_on_hand",
+    "unit_cost"
+   ],
+   "source": {
+    "table": "gold.inventory_position",
+    "column": "stock_value"
+   },
+   "quality_rules": [
+    "stock_value_non_negative"
+   ],
+   "synonyms": [
+    "inventory value"
+   ],
+   "related": [],
+   "used_in": [
+    "gold.inventory_position.stock_value"
+   ]
+  },
+  {
+   "id": "closed_orders",
+   "type": "metric",
+   "domain": "operations",
+   "status": "approved",
+   "next_review": "2027-03-31",
+   "owner_role": "data_owner",
+   "steward_role": "data_steward",
+   "name": {
+    "en": "Closed orders",
+    "es": "Órdenes cerradas"
+   },
+   "definition": {
+    "en": "Number of service orders completed in a period.",
+    "es": "Cantidad de trabajos terminados en un periodo."
+   },
+   "example": {
+    "en": "Site North closed 41 orders in September.",
+    "es": "Site North cerró 41 trabajos en setiembre."
+   },
+   "formula": "count of service orders with order status = CLOSED",
+   "depends_on": [
+    "order_status",
+    "service_order"
+   ],
+   "source": {
+    "table": "gold.site_monthly_kpis",
+    "column": "closed_orders"
+   },
+   "quality_rules": [
+    "closed_not_above_total"
+   ],
+   "synonyms": [],
+   "related": [],
+   "used_in": [
+    "gold.site_monthly_kpis.closed_orders"
+   ]
+  }
+ ]
+}
