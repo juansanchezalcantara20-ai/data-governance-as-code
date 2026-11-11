@@ -1,0 +1,16 @@
+{
+ "company": "Servicios Andinos de Campo S.A.C.",
+ "as_of": "2026-10-31",
+ "repository": "https://github.com/juansanchezalcantara20-ai/data-governance-as-code",
+ "health": {
+  "rules_total": 102,
+  "rules_passing": 89,
+  "quarantined_rows": 103,
+  "contracts_active": 11,
+  "datasets": 18,
+  "terms_total": 38,
+  "terms_with_owner": 38,
+  "maturity_mean": 2.3,
+  "open_alerts": 14
+ }
+}

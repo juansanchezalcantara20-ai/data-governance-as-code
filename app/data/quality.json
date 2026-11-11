@@ -1,0 +1,1942 @@
+{
+ "as_of": "2026-10-31",
+ "status": "warning",
+ "by_dimension": {
+  "completeness": {
+   "rules": 45,
+   "pass_rate": 99.96,
+   "failed_rows": 7,
+   "failing_rules": 2
+  },
+  "uniqueness": {
+   "rules": 11,
+   "pass_rate": 100.0,
+   "failed_rows": 0,
+   "failing_rules": 0
+  },
+  "validity": {
+   "rules": 27,
+   "pass_rate": 99.43,
+   "failed_rows": 31,
+   "failing_rules": 7
+  },
+  "consistency": {
+   "rules": 9,
+   "pass_rate": 99.07,
+   "failed_rows": 83,
+   "failing_rules": 3
+  },
+  "accuracy": {
+   "rules": 5,
+   "pass_rate": 99.82,
+   "failed_rows": 7,
+   "failing_rules": 1
+  },
+  "timeliness": {
+   "rules": 5,
+   "pass_rate": 100.0,
+   "failed_rows": 0,
+   "failing_rules": 0
+  }
+ },
+ "by_domain": {
+  "customer": {
+   "pass": 11,
+   "fail": 0,
+   "warn": 1
+  },
+  "supply_chain": {
+   "pass": 21,
+   "fail": 3,
+   "warn": 0
+  },
+  "operations": {
+   "pass": 57,
+   "fail": 6,
+   "warn": 3
+  }
+ },
+ "rules": [
+  {
+   "dataset": "gold.customer_value",
+   "domain": "customer",
+   "rule": "customer_id_not_null",
+   "kind": "notNull",
+   "column": "customer_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.customer_value",
+   "domain": "customer",
+   "rule": "customer_id_unique",
+   "kind": "unique",
+   "column": "customer_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.customer_value",
+   "domain": "customer",
+   "rule": "customer_revenue_reconciles",
+   "kind": "sql",
+   "column": null,
+   "dimension": "accuracy",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT abs((SELECT sum(revenue) FROM {object}) - (SELECT sum(price) FROM gold.service_order_economics))",
+    "mustBeLessThan": 1
+   }
+  },
+  {
+   "dataset": "gold.customer_value",
+   "domain": "customer",
+   "rule": "customer_tier_not_null",
+   "kind": "notNull",
+   "column": "customer_tier",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.customer_value",
+   "domain": "customer",
+   "rule": "tier_valid",
+   "kind": "validValues",
+   "column": "customer_tier",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "A",
+     "B",
+     "C"
+    ]
+   }
+  },
+  {
+   "dataset": "gold.inventory_position",
+   "domain": "supply_chain",
+   "rule": "below_reorder_point_not_null",
+   "kind": "notNull",
+   "column": "below_reorder_point",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.inventory_position",
+   "domain": "supply_chain",
+   "rule": "material_id_not_null",
+   "kind": "notNull",
+   "column": "material_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.inventory_position",
+   "domain": "supply_chain",
+   "rule": "material_id_unique",
+   "kind": "unique",
+   "column": "material_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.inventory_position",
+   "domain": "supply_chain",
+   "rule": "stock_value_non_negative",
+   "kind": "range",
+   "column": "stock_value",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "actual_cost_non_negative",
+   "kind": "range",
+   "column": "actual_cost",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "actual_cost_not_null",
+   "kind": "notNull",
+   "column": "actual_cost",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "asset_id_not_null",
+   "kind": "notNull",
+   "column": "asset_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "customer_id_not_null",
+   "kind": "notNull",
+   "column": "customer_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "freshness_sla",
+   "kind": "freshness",
+   "column": null,
+   "dimension": "timeliness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "column": "opened_on",
+    "maxAgeDays": 3.0
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "labor_cost_reconciles",
+   "kind": "sql",
+   "column": null,
+   "dimension": "accuracy",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT abs((SELECT sum(actual_labor_cost) FROM {object}) - (SELECT sum(l.hours * t.hourly_cost) FROM silver.labor_entries l JOIN silver.technicians t USING (technician_id) WHERE l.order_id IN (SELECT order_id FROM {object})))",
+    "mustBeLessThan": 1
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "margin_definition_holds",
+   "kind": "sql",
+   "column": null,
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT count(*) FROM {object} WHERE abs(gross_margin - (price - actual_cost)) > 0.02",
+    "mustBe": 0
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "margin_pct_plausible",
+   "kind": "range",
+   "column": "gross_margin_pct",
+   "dimension": "validity",
+   "severity": "warning",
+   "origin": "declared",
+   "evaluated": 365,
+   "failed": 12,
+   "pass_rate": 96.71,
+   "status": "warn",
+   "args": {
+    "min": -100,
+    "max": 100
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "material_cost_reconciles",
+   "kind": "sql",
+   "column": null,
+   "dimension": "accuracy",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT abs((SELECT sum(actual_material_cost) FROM {object}) - (SELECT sum(line_cost) FROM silver.material_issues WHERE order_id IN (SELECT order_id FROM {object})))",
+    "mustBeLessThan": 1
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "no_cancelled_orders",
+   "kind": "validValues",
+   "column": "status",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "OPEN",
+     "CLOSED"
+    ]
+   }
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "opened_on_not_null",
+   "kind": "notNull",
+   "column": "opened_on",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "order_id_not_null",
+   "kind": "notNull",
+   "column": "order_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "order_id_unique",
+   "kind": "unique",
+   "column": "order_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "price_not_null",
+   "kind": "notNull",
+   "column": "price",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.service_order_economics",
+   "domain": "operations",
+   "rule": "site_not_null",
+   "kind": "notNull",
+   "column": "site",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 365,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "closed_not_above_total",
+   "kind": "sql",
+   "column": null,
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT count(*) FROM {object} WHERE closed_orders > orders",
+    "mustBe": 0
+   }
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "freshness_sla",
+   "kind": "freshness",
+   "column": null,
+   "dimension": "timeliness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "column": "month",
+    "maxAgeDays": 31.0
+   }
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "month_not_null",
+   "kind": "notNull",
+   "column": "month",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 30,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "orders_not_null",
+   "kind": "notNull",
+   "column": "orders",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 30,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "primary_key_unique",
+   "kind": "sql",
+   "column": null,
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT count(*) - count(DISTINCT (site, month)) FROM {object}",
+    "mustBe": 0
+   }
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "revenue_reconciles",
+   "kind": "sql",
+   "column": null,
+   "dimension": "accuracy",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT abs((SELECT sum(revenue) FROM {object}) - (SELECT sum(price) FROM gold.service_order_economics))",
+    "mustBeLessThan": 1
+   }
+  },
+  {
+   "dataset": "gold.site_monthly_kpis",
+   "domain": "operations",
+   "rule": "site_not_null",
+   "kind": "notNull",
+   "column": "site",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 30,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "asset_id_format",
+   "kind": "pattern",
+   "column": "asset_id",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "pattern": "^AS-\\d{4}$"
+   }
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "asset_id_not_null",
+   "kind": "notNull",
+   "column": "asset_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "asset_id_unique",
+   "kind": "unique",
+   "column": "asset_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "asset_type_not_null",
+   "kind": "notNull",
+   "column": "asset_type",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "asset_type_valid",
+   "kind": "validValues",
+   "column": "asset_type",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "Haul truck",
+     "Wheel loader",
+     "Drill rig",
+     "Pump station",
+     "Generator set"
+    ]
+   }
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "asset_volume",
+   "kind": "rowCount",
+   "column": null,
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 10
+   }
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "operating_hours_non_negative",
+   "kind": "range",
+   "column": "operating_hours",
+   "dimension": "validity",
+   "severity": "warning",
+   "origin": "declared",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.assets",
+   "domain": "operations",
+   "rule": "site_not_null",
+   "kind": "notNull",
+   "column": "site",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 60,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "company_name_not_null",
+   "kind": "notNull",
+   "column": "company_name",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "contact_email_format",
+   "kind": "pattern",
+   "column": "contact_email",
+   "dimension": "validity",
+   "severity": "warning",
+   "origin": "declared",
+   "evaluated": 120,
+   "failed": 8,
+   "pass_rate": 93.33,
+   "status": "warn",
+   "args": {
+    "pattern": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$"
+   }
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "created_on_not_null",
+   "kind": "notNull",
+   "column": "created_on",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "customer_id_not_null",
+   "kind": "notNull",
+   "column": "customer_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "customer_id_unique",
+   "kind": "unique",
+   "column": "customer_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "marketing_consent_not_null",
+   "kind": "notNull",
+   "column": "marketing_consent",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.customers",
+   "domain": "customer",
+   "rule": "segment_valid",
+   "kind": "validValues",
+   "column": "segment",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 120,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "Mining",
+     "Energy",
+     "Construction",
+     "Agriculture"
+    ]
+   }
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "entry_id_not_null",
+   "kind": "notNull",
+   "column": "entry_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "entry_id_unique",
+   "kind": "unique",
+   "column": "entry_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "freshness_sla",
+   "kind": "freshness",
+   "column": null,
+   "dimension": "timeliness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "column": "work_date",
+    "maxAgeDays": 3.0
+   }
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "hours_not_null",
+   "kind": "notNull",
+   "column": "hours",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "hours_range",
+   "kind": "range",
+   "column": "hours",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1331,
+   "failed": 5,
+   "pass_rate": 99.62,
+   "status": "fail",
+   "args": {
+    "min": 0.5,
+    "max": 24
+   }
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "labor_order_exists",
+   "kind": "references",
+   "column": "order_id",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1331,
+   "failed": 51,
+   "pass_rate": 96.17,
+   "status": "fail",
+   "args": {
+    "table": "silver.service_orders",
+    "column": "order_id"
+   }
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "labor_technician_exists",
+   "kind": "references",
+   "column": "technician_id",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "table": "silver.technicians",
+    "column": "technician_id"
+   }
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "order_id_not_null",
+   "kind": "notNull",
+   "column": "order_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "technician_id_not_null",
+   "kind": "notNull",
+   "column": "technician_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.labor_entries",
+   "domain": "operations",
+   "rule": "work_date_not_null",
+   "kind": "notNull",
+   "column": "work_date",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1331,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "freshness_sla",
+   "kind": "freshness",
+   "column": null,
+   "dimension": "timeliness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "column": "issued_on",
+    "maxAgeDays": 3.0
+   }
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issue_cost_matches_master",
+   "kind": "tolerance",
+   "column": "unit_cost",
+   "dimension": "accuracy",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 785,
+   "failed": 7,
+   "pass_rate": 99.11,
+   "status": "fail",
+   "args": {
+    "key": "material_id",
+    "referenceTable": "silver.materials",
+    "referenceKey": "material_id",
+    "referenceColumn": "unit_cost",
+    "maxDeviationPct": 25
+   }
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issue_id_not_null",
+   "kind": "notNull",
+   "column": "issue_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issue_id_unique",
+   "kind": "unique",
+   "column": "issue_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issue_material_exists",
+   "kind": "references",
+   "column": "material_id",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "table": "silver.materials",
+    "column": "material_id"
+   }
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issue_order_exists",
+   "kind": "references",
+   "column": "order_id",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 785,
+   "failed": 28,
+   "pass_rate": 96.43,
+   "status": "fail",
+   "args": {
+    "table": "silver.service_orders",
+    "column": "order_id"
+   }
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issue_unit_cost_positive",
+   "kind": "range",
+   "column": "unit_cost",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 785,
+   "failed": 3,
+   "pass_rate": 99.62,
+   "status": "fail",
+   "args": {
+    "min": 0.01
+   }
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "issued_on_not_null",
+   "kind": "notNull",
+   "column": "issued_on",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "material_id_not_null",
+   "kind": "notNull",
+   "column": "material_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "order_id_not_null",
+   "kind": "notNull",
+   "column": "order_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "quantity_not_null",
+   "kind": "notNull",
+   "column": "quantity",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "quantity_positive",
+   "kind": "range",
+   "column": "quantity",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 1
+   }
+  },
+  {
+   "dataset": "silver.material_issues",
+   "domain": "supply_chain",
+   "rule": "unit_cost_not_null",
+   "kind": "notNull",
+   "column": "unit_cost",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 785,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "description_not_null",
+   "kind": "notNull",
+   "column": "description",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "material_id_not_null",
+   "kind": "notNull",
+   "column": "material_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "material_id_unique",
+   "kind": "unique",
+   "column": "material_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "reorder_point_non_negative",
+   "kind": "range",
+   "column": "reorder_point",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "stock_non_negative",
+   "kind": "range",
+   "column": "stock_on_hand",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "unit_cost_not_null",
+   "kind": "notNull",
+   "column": "unit_cost",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.materials",
+   "domain": "supply_chain",
+   "rule": "unit_cost_positive",
+   "kind": "range",
+   "column": "unit_cost",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 12,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0.01
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "asset_id_exists",
+   "kind": "references",
+   "column": "asset_id",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "table": "silver.assets",
+    "column": "asset_id"
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "asset_id_not_null",
+   "kind": "notNull",
+   "column": "asset_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 400,
+   "failed": 6,
+   "pass_rate": 98.5,
+   "status": "fail",
+   "args": {}
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "closed_after_opened",
+   "kind": "expression",
+   "column": "closed_on",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 4,
+   "pass_rate": 99.0,
+   "status": "fail",
+   "args": {
+    "sql": "closed_on IS NULL OR closed_on >= opened_on"
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "closed_orders_have_date",
+   "kind": "sql",
+   "column": null,
+   "dimension": "completeness",
+   "severity": "warning",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "query": "SELECT count(*) FROM {object} WHERE status = 'CLOSED' AND closed_on IS NULL",
+    "mustBe": 0
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "customer_id_exists",
+   "kind": "references",
+   "column": "customer_id",
+   "dimension": "consistency",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "table": "silver.customers",
+    "column": "customer_id"
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "customer_id_not_null",
+   "kind": "notNull",
+   "column": "customer_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "freshness_sla",
+   "kind": "freshness",
+   "column": null,
+   "dimension": "timeliness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "column": "opened_on",
+    "maxAgeDays": 3.0
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "opened_on_not_null",
+   "kind": "notNull",
+   "column": "opened_on",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 400,
+   "failed": 1,
+   "pass_rate": 99.75,
+   "status": "fail",
+   "args": {}
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "order_id_format",
+   "kind": "pattern",
+   "column": "order_id",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "pattern": "^SO-\\d{6}$"
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "order_id_not_null",
+   "kind": "notNull",
+   "column": "order_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "order_id_unique",
+   "kind": "unique",
+   "column": "order_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "order_volume",
+   "kind": "rowCount",
+   "column": null,
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 1,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 100
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "planned_hours_non_negative",
+   "kind": "range",
+   "column": "planned_hours",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "planned_labor_cost_non_negative",
+   "kind": "range",
+   "column": "planned_labor_cost",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "planned_material_cost_non_negative",
+   "kind": "range",
+   "column": "planned_material_cost",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "price_non_negative",
+   "kind": "range",
+   "column": "price",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 1,
+   "pass_rate": 99.75,
+   "status": "fail",
+   "args": {
+    "min": 0
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "price_not_null",
+   "kind": "notNull",
+   "column": "price",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "service_type_valid",
+   "kind": "validValues",
+   "column": "service_type",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "Preventive maintenance",
+     "Corrective maintenance",
+     "Installation",
+     "Inspection"
+    ]
+   }
+  },
+  {
+   "dataset": "silver.service_orders",
+   "domain": "operations",
+   "rule": "status_valid",
+   "kind": "validValues",
+   "column": "status",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 400,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "OPEN",
+     "CLOSED",
+     "CANCELLED"
+    ]
+   }
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "hourly_cost_not_null",
+   "kind": "notNull",
+   "column": "hourly_cost",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 45,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "hourly_cost_range",
+   "kind": "range",
+   "column": "hourly_cost",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 45,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "min": 10,
+    "max": 200
+   }
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "national_id_format",
+   "kind": "pattern",
+   "column": "national_id",
+   "dimension": "validity",
+   "severity": "warning",
+   "origin": "declared",
+   "evaluated": 45,
+   "failed": 1,
+   "pass_rate": 97.78,
+   "status": "warn",
+   "args": {
+    "pattern": "^\\d{8}$"
+   }
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "technician_email_format",
+   "kind": "pattern",
+   "column": "email",
+   "dimension": "validity",
+   "severity": "warning",
+   "origin": "declared",
+   "evaluated": 45,
+   "failed": 1,
+   "pass_rate": 97.78,
+   "status": "warn",
+   "args": {
+    "pattern": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$"
+   }
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "technician_id_not_null",
+   "kind": "notNull",
+   "column": "technician_id",
+   "dimension": "completeness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 45,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "technician_id_unique",
+   "kind": "unique",
+   "column": "technician_id",
+   "dimension": "uniqueness",
+   "severity": "error",
+   "origin": "derived",
+   "evaluated": 45,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {}
+  },
+  {
+   "dataset": "silver.technicians",
+   "domain": "operations",
+   "rule": "trade_valid",
+   "kind": "validValues",
+   "column": "trade",
+   "dimension": "validity",
+   "severity": "error",
+   "origin": "declared",
+   "evaluated": 45,
+   "failed": 0,
+   "pass_rate": 100.0,
+   "status": "pass",
+   "args": {
+    "values": [
+     "Mechanic",
+     "Electrician",
+     "Instrument technician",
+     "Welder",
+     "Supervisor"
+    ]
+   }
+  }
+ ],
+ "glossary_coverage": [
+  {
+   "term": "Asset",
+   "rules": 3,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Asset type",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Site",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Operating hours",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Technician",
+   "rules": 2,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Trade",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Hourly labor cost",
+   "rules": 2,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Service order",
+   "rules": 5,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Service type",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Order status",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Order open date",
+   "rules": 2,
+   "pass_rate": 99.88
+  },
+  {
+   "term": "Order close date",
+   "rules": 2,
+   "pass_rate": 99.5
+  },
+  {
+   "term": "Order price",
+   "rules": 2,
+   "pass_rate": 99.88
+  },
+  {
+   "term": "Planned cost",
+   "rules": 0,
+   "pass_rate": null
+  },
+  {
+   "term": "Labor entry",
+   "rules": 3,
+   "pass_rate": 98.72
+  },
+  {
+   "term": "Labor hours",
+   "rules": 2,
+   "pass_rate": 99.81
+  },
+  {
+   "term": "Actual labor cost",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Actual cost",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Cost variance",
+   "rules": 0,
+   "pass_rate": null
+  },
+  {
+   "term": "Gross margin",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Gross margin %",
+   "rules": 1,
+   "pass_rate": 96.71
+  },
+  {
+   "term": "Closed orders",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Revenue",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Material",
+   "rules": 2,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Unit cost",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Stock on hand",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Reorder point",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Material issue",
+   "rules": 4,
+   "pass_rate": 98.89
+  },
+  {
+   "term": "Actual material cost",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Stock value",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Days of cover",
+   "rules": 0,
+   "pass_rate": null
+  },
+  {
+   "term": "Below reorder point",
+   "rules": 0,
+   "pass_rate": null
+  },
+  {
+   "term": "Customer",
+   "rules": 2,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Customer segment",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Business contact",
+   "rules": 1,
+   "pass_rate": 93.33
+  },
+  {
+   "term": "Marketing consent",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Customer revenue",
+   "rules": 1,
+   "pass_rate": 100.0
+  },
+  {
+   "term": "Customer tier",
+   "rules": 1,
+   "pass_rate": 100.0
+  }
+ ]
+}
