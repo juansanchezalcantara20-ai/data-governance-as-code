@@ -40,7 +40,7 @@ def out_dir() -> Path:
 
 def _clean(v):
     if isinstance(v, float):
-        return round(v, 4)
+        return None if v != v else round(v, 4)   # NaN (pandas null) -> null
     if isinstance(v, (dt.date, dt.datetime)):
         return v.isoformat()[:10]
     if isinstance(v, dict):
@@ -364,7 +364,7 @@ def build(con: duckdb.DuckDBPyConnection | None = None) -> dict[str, dict]:
 
 
 def serialise(doc: dict) -> str:
-    return json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=False) + "\n"
+    return json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=False, allow_nan=False) + "\n"
 
 
 def write(folder: Path | None = None) -> list[Path]:

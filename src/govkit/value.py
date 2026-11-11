@@ -8,6 +8,7 @@ assumptions; a test keeps both in step.
 
 from __future__ import annotations
 
+import math
 import re
 from datetime import date
 
@@ -54,6 +55,12 @@ def facts(con: duckdb.DuckDBPyConnection, as_of: date) -> dict:
     }
 
 
+def _half_up(x: float, digits: int = 0) -> float:
+    """Round half away from zero, like JavaScript's Math.round for positive values (Python's round is banker's)."""
+    q = 10 ** digits
+    return math.floor(x * q + 0.5) / q
+
+
 def compute(f: dict, a: dict[str, float]) -> dict:
     """Monthly hours and soles not lost. Keep in step with app/js/value.js (same formula)."""
     rows_pm = f["quarantined_rows"] / f["months_observed"]
@@ -69,10 +76,10 @@ def compute(f: dict, a: dict[str, float]) -> dict:
     }
     for p in parts.values():
         for k in list(p):
-            p[k] = round(p[k], 2)
+            p[k] = _half_up(p[k], 2)
     return {
-        "bad_rows_per_month": round(rows_pm, 2),
+        "bad_rows_per_month": _half_up(rows_pm, 2),
         "parts": parts,
-        "total_hours": round(sum(p["hours"] for p in parts.values()), 1),
-        "total_pen": round(sum(p["pen"] for p in parts.values())),
+        "total_hours": _half_up(sum(p["hours"] for p in parts.values()), 1),
+        "total_pen": int(_half_up(sum(p["pen"] for p in parts.values()))),
     }
