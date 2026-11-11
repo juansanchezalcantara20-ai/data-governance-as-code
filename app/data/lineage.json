@@ -594,12 +594,6 @@
   ],
   [
    "gold.customer_value",
-   "contact_phone",
-   "silver.customers",
-   "contact_phone"
-  ],
-  [
-   "gold.customer_value",
    "country",
    "silver.customers",
    "country"
